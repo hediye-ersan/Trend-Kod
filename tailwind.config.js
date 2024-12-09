@@ -8,10 +8,19 @@ export default {
     extend: {
       colors: {
         background: '#FFFFFF',
-        primaryText:'#252B42'
+        primaryText:'#252B42',
+        secondText: '#737373'
       },
       fontFamily: {
         montserrat: ['Montserrat','sans-serif'],
+      },
+      fontSize: {
+        'h5': '1rem',
+        'h2': '2.5rem',
+        'h1': '3.5rem',
+        'h3': '1.5rem',
+        'h4': '1.25rem',
+        'h6': '0.875rem'
       }
     },
   },
