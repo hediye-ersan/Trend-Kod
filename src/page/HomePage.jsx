@@ -1,10 +1,11 @@
+import Footer from '../layout/Footer'
+
 function HomePage() {
 
     return (
 <div>
-    <image></image>
-    <p></p>
+   <Footer/>
 </div>
     );
 }
-export default HomePage();
+export default HomePage;
