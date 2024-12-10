@@ -3,6 +3,7 @@ import ProductCard from '../components/ProductCard';
 import CardList from '../components/Card';
 import Footer from '../layout/Footer'
 import Navbar from '../layout/Header';
+import PostCardList from '../components/PostCard';
 
 
 
@@ -13,7 +14,7 @@ function HomePage() {
     return (
         <div>
             <Navbar />
-            <section className='bg-gradient-to-r from-cyan-300 to-teal-200 text-center rounded-[20px] mx-2 px-10 pt-24 '>
+            <section className='bg-gradient-to-r from-cyan-300 to-teal-200 text-center rounded-[20px] mx-2 px-12 pt-24 '>
                 <div>
                     <h5 className='text-[#2A7CC7] text-h5 font-bold'>SUMMER 2020</h5>
                     <h2 className='text-primaryText text-h2 font-bold py-8'>NEW
@@ -27,7 +28,7 @@ function HomePage() {
                         </button>
                     </div>
                 </div>
-                <div>
+                <div className='flex justify-center'>
                     <img src='/images/figure1.png' />
                 </div>
             </section>
@@ -37,8 +38,8 @@ function HomePage() {
 
 
             <section className='py-20'>
-                <div className='p-16 flex flex-col gap-2'>
-                    <h5 className='text-h5 text-bold text-blueText font-bold'>Featured Products</h5>
+                <div className='p-16 flex flex-col gap-2 font-bold'>
+                    <h5 className='text-h5  text-blueText '>Featured Products</h5>
                     <h2 className='text-h2'>We love what we do</h2>
                     <p className='text-h6 text-secondText'>Problems trying to resolve the conflict between the two major realms of Classical physics:Newtonian mechanics
                     </p>
@@ -52,19 +53,19 @@ function HomePage() {
             </section>
 
             <section className='py-20'>
-                <div className='text-center px-16'>
+                <div className='text-center px-16 font-bold leading-loose'>
                     <h4 className='text-h4 text-secondText'>Featured Products</h4>
                     <h3 className='text-h3 font-bold'>THE BEST SERVICES</h3>
                     <h6 className='text-h6 text-secondText'>Problems trying to resolve
                         the conflict between </h6>
                 </div>
-                <div className='flex flex-wrap justify-center gap-4'>
+                <div className='flex flex-wrap justify-center gap-4 py-20'>
                     <img src='/images/icon1.png' alt='Easy Wins' />
                     <img src='/images/icon2.png' alt='Concrete' />
                     <img src='/images/icon3.png' alt='Hack Growth' />
                 </div>
             </section>
-
+        <PostCardList/>
             <Footer />
         </div>
     );
