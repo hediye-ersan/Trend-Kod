@@ -1,7 +1,10 @@
 import IconList from '../components/IconCard';
 import ProductCard from '../components/ProductCard';
+import CardList from '../components/Card';
 import Footer from '../layout/Footer'
 import Navbar from '../layout/Header';
+
+
 
 
 
@@ -27,54 +30,7 @@ function HomePage() {
                 </div>
             </section>
             <IconList />
-            <section className="grid grid-cols-1 md:grid-cols-3 gap-4 justify-items-center">
-                <div className="relative overflow-hidden">
-
-                    <img
-                        src="./images/Card1.png"
-                        alt="Top Product"
-
-                    />
-
-                    <div className="absolute bottom-0 left-0 w-full h-2/5 bg-[#2D8BC0BF] bg-opacity-70 flex flex-col items-center justify-center text-white text-center p-4">
-                        <h3 className="text-lg font-bold mb-2">Top Product Of the Week</h3>
-                        <button className="px-4 py-2 bg-transparent rounded border-white border-2 hover:text-white transition duration-300">
-                            Explore Items
-                        </button>
-                    </div>
-                </div>
-
-                <div className="relative overflow-hidden ">
-
-                    <img
-                        src="./images/Card2.png"
-                        alt="Top Product"
-
-                    />
-
-                    <div className="absolute bottom-0 left-0 w-full h-2/5 bg-[#2D8BC0BF] bg-opacity-70 flex flex-col items-center justify-center text-white text-center p-4">
-                        <h3 className="text-lg font-bold mb-2">Top Product Of the Week</h3>
-                        <button className="px-4 py-2 bg-transparent rounded border-white border-2 hover:text-white transition duration-300">
-                            Explore Items
-                        </button>
-                    </div>
-                </div>
-                <div className="relative overflow-hidden ">
-
-                    <img
-                        src="./images/Card3.png"
-                        alt="Top Product"
-
-                    />
-
-                    <div className="absolute bottom-0 left-0 w-full h-2/5 bg-[#2D8BC0BF] bg-opacity-70 flex flex-col items-center justify-center text-white text-center p-4">
-                        <h3 className="text-lg font-bold mb-2">Top Product Of the Week</h3>
-                        <button className="px-4 py-2 bg-transparent rounded border-white border-2 hover:text-white transition duration-300">
-                            Explore Items
-                        </button>
-                    </div>
-                </div>
-            </section>
+            <CardList/>
             <ProductCard />
 
 
