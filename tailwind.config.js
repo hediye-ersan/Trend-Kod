@@ -9,7 +9,8 @@ export default {
       colors: {
         background: '#FFFFFF',
         primaryText:'#252B42',
-        secondText: '#737373'
+        secondText: '#737373',
+        blueText: '#23A6F0'
       },
       fontFamily: {
         montserrat: ['Montserrat','sans-serif'],
