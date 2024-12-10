@@ -49,7 +49,7 @@ const IconList = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-16">
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-16 py-32">
       {icons.map((icon, index) => (
         <IconCard
           key={index}

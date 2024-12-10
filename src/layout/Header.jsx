@@ -14,7 +14,7 @@ const Navbar = () => {
 
   return (
     <>
-    <nav className="bg-transparent px-4 py-2 flex items-center justify-between">
+    <nav className="bg-transparent px-8  flex items-center justify-between py-8">
       {/* Sol Taraf */}
       <div className="text-xl font-bold">Bandage</div>
 
@@ -37,7 +37,7 @@ const Navbar = () => {
       {/* Açılır Menü */}
       {isMenuOpen && (
         <div className="bg-gray-50 w-full py-4 flex
-        flex-col">
+        flex-col ">
           <ul className='flex flex-col flex-wrap content-center gap-8 text-3xl'>
             <li>
               <button
