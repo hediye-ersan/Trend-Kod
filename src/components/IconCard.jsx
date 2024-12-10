@@ -2,7 +2,7 @@ import React from 'react';
 
 const IconCard = ({ imageSrc, link, altText }) => {
   return (
-    <a href={link} target="_blank" rel="noopener noreferrer">
+    <a href={link} >
       <div className="flex justify-center items-center">
         <img
           src={imageSrc}
@@ -17,32 +17,32 @@ const IconCard = ({ imageSrc, link, altText }) => {
 const IconList = () => {
   const icons = [
     {
-      imageSrc: './images/gry1.png',
+      imageSrc: './images/logo1.svg',
       link: '#',
       altText: 'Icon 1',
     },
     {
-      imageSrc: './images/gry2.png',
+      imageSrc: './images/logo2.svg',
       link: '#',
       altText: 'Icon 2',
     },
     {
-      imageSrc: './images/gry3.png',
+      imageSrc: './images/logo3.svg',
       link: '#',
       altText: 'Icon 3',
     },
     {
-      imageSrc: './images/gry4.png',
+      imageSrc: './images/logo4.svg',
       link: '#',
       altText: 'Icon 4',
     },
     {
-      imageSrc: './images/gry5.png',
+      imageSrc: './images/logo5.svg',
       link: '#',
       altText: 'Icon 5',
     },
     {
-      imageSrc: './images/gry6.png',
+      imageSrc: './images/logo6.svg',
       link: '#',
       altText: 'Icon 6',
     },
