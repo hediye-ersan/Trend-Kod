@@ -14,8 +14,8 @@ function HomePage() {
     return (
         <div>
             <Navbar />
-            <section className='bg-gradient-to-r from-cyan-300 to-teal-200 text-center rounded-[20px] mx-2 px-12 pt-24 '>
-                <div>
+            <section className='bg-gradient-to-r from-cyan-300 to-teal-200 text-center rounded-[20px] mx-2 px-12 pt-24 sm:pt-0 sm:flex'>
+                <div className='p-16 text-left sm:flex sm:flex-col sm:justify-center'>
                     <h5 className='text-[#2A7CC7] text-h5 font-bold'>SUMMER 2020</h5>
                     <h2 className='text-primaryText text-h2 font-bold py-8'>NEW
                         COLLECTION</h2>
@@ -28,7 +28,7 @@ function HomePage() {
                         </button>
                     </div>
                 </div>
-                <div className='flex justify-center'>
+                <div className='flex justify-center sm:justify-end'>
                     <img src='/images/figure1.png' />
                 </div>
             </section>
@@ -46,7 +46,7 @@ function HomePage() {
                     <p className='text-h6 text-secondText'> Problems trying to resolve the conflict between the two major realms of Classical physics:
                         Newtonian mechanics </p>
                 </div>
-                <div className='flex justify-between px-3'>
+                <div className='flex justify-between px-3 h-auto'>
                     <img src='/images/featured1.png' />
                     <img src='/images/featured2.png' />
                 </div>
