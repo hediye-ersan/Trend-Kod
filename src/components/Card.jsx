@@ -19,17 +19,17 @@ const Card = ({ imageSrc, title, buttonText }) => {
 const CardList = () => {
     const cards = [
         {
-            imageSrc: './images/Card1.png',
+            imageSrc: './images/card1.png',
             title: 'Top Product Of the Week',
             buttonText: 'Explore Items',
         },
         {
-            imageSrc: './images/Card2.png',
+            imageSrc: './images/card2.png',
             title: 'Top Product Of the Week',
             buttonText: 'Explore Items',
         },
         {
-            imageSrc: './images/Card3.png',
+            imageSrc: './images/card3.png',
             title: 'Top Product Of the Week',
             buttonText: 'Explore Items',
         },
