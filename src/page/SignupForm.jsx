@@ -48,10 +48,10 @@ const SignupForm = () => {
 
   // Watch role_id değişikliklerini, setValue ile formda güncelle
   useEffect(() => {
-    setValue("role_id", selectedRole);  // selectedRole'e göre role_id'yi güncelliyoruz
+    setValue("role_id", selectedRole);
   }, [selectedRole, setValue]);
 
-  // Form submit handler
+ 
   const onSubmit = async (data) => {
     setLoading(true);
     try {
@@ -59,23 +59,23 @@ const SignupForm = () => {
       const payload =
         data.role_id === "store"
           ? {
-              name: data.name,
-              email: data.email,
-              password: data.password,
-              role_id: data.role_id,
-              store: {
-                name: data.store_name,
-                phone: data.store_phone,
-                tax_no: data.tax_no,
-                bank_account: data.bank_account,
-              },
-            }
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            role_id: data.role_id,
+            store: {
+              name: data.store_name,
+              phone: data.store_phone,
+              tax_no: data.tax_no,
+              bank_account: data.bank_account,
+            },
+          }
           : {
-              name: data.name,
-              email: data.email,
-              password: data.password,
-              role_id: data.role_id,
-            };
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            role_id: data.role_id,
+          };
 
       // Verileri API'ye gönder
       const response = await api.post("/signup", payload);
@@ -83,7 +83,7 @@ const SignupForm = () => {
       // Başarılı yanıt geldiğinde
       if (response.data?.message) {
         alert(response.data.message); // Başarılı mesajı göster
-        history.push("/"); // Ana sayfaya yönlendir
+        history.push("/", { email: data.email, password: data.password }); // LoginForm'a yönlendir
       }
     } catch (error) {
       setError("api", {
@@ -98,23 +98,23 @@ const SignupForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="signup-form space-y-4 p-6 bg-gray-50 rounded-lg shadow-lg">
       {errors.api && <p className="text-red-600 text-sm">{errors.api.message}</p>}
-      
+
       <div className="flex flex-col">
         <label className="font-medium text-gray-700">Name</label>
-        <input className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500" {...register("name", { required: "Name is required", minLength: 3 })} />
+        <input className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500" id="name"
+          {...register('name', { required: true, minLength: 3 })} />
         <p className="text-red-600 text-sm">{errors.name?.message}</p>
       </div>
-      
+
       <div className="flex flex-col">
         <label className="font-medium text-gray-700">Email</label>
         <input
           className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: "Enter a valid email",
-            },
+          id="email"
+          type="email"
+          {...register('email', {
+            required: true,
+            pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
           })}
         />
         <p className="text-red-600 text-sm">{errors.email?.message}</p>
@@ -122,30 +122,37 @@ const SignupForm = () => {
 
       <div className="flex flex-col">
         <label className="font-medium text-gray-700">Password</label>
-        <input type="password" className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500" {...register("password", { required: "Password is required" })} />
+        <input className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500" id="password"
+          type="password"
+          {...register('password', {
+            required: true,
+            minLength: 8,
+            pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/
+          })} />
         <p className="text-red-600 text-sm">{errors.password?.message}</p>
       </div>
-      
+
       <div className="flex flex-col">
         <label className="font-medium text-gray-700">Confirm Password</label>
         <input
-          type="password"
           className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
-          {...register("confirmPassword", {
-            required: "Password confirmation is required",
-            validate: (value) => value === watch("password") || "Passwords do not match",
+          id="confirmPassword"
+          type="password"
+          {...register('confirmPassword', {
+            validate: (value) => value === watch('password') || "Passwords do not match"
           })}
         />
         <p className="text-red-600 text-sm">{errors.confirmPassword?.message}</p>
       </div>
-      
+
+      {/* Role Selection */}
       <div className="flex flex-col">
         <label className="font-medium text-gray-700">Role</label>
         <select
           className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
           {...register("role_id", { required: "Role selection is required" })}
-          onChange={(e) => setSelectedRole(e.target.value)} // Role seçildiğinde selectedRole güncellenir
-          value={selectedRole} // selectedRole ile value kontrolü yapılır
+          onChange={(e) => setSelectedRole(e.target.value)}
+          value={selectedRole}
         >
           {roles.map((role) => (
             <option key={role.id} value={role.code}>
@@ -156,31 +163,63 @@ const SignupForm = () => {
         <p className="text-red-600 text-sm">{errors.role_id?.message}</p>
       </div>
 
+      {/* Store Fields (If "Store" is selected) */}
       {selectedRole === "store" && (
         <>
           <div className="flex flex-col">
             <label className="font-medium text-gray-700">Store Name</label>
-            <input className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500" {...register("store_name", { required: "Store name is required", minLength: 3 })} />
+            <input
+              className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
+              {...register("store_name", { required: "Store name is required", minLength: 3 })}
+            />
             <p className="text-red-600 text-sm">{errors.store_name?.message}</p>
           </div>
           <div className="flex flex-col">
             <label className="font-medium text-gray-700">Store Phone</label>
-            <input className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500" {...register("store_phone", { required: "Phone number is required" })} />
+            <input
+              className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
+              {...register("store_phone", {
+                required: "Phone number is required",
+                pattern: {
+                  value: /^(\+90|0)?5\d{2}(\d{7})$/,
+                  message: "Please enter a valid Türkiye phone number",
+                },
+              })}
+            />
             <p className="text-red-600 text-sm">{errors.store_phone?.message}</p>
           </div>
           <div className="flex flex-col">
             <label className="font-medium text-gray-700">Tax ID</label>
-            <input className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500" {...register("tax_no", { required: "Tax ID is required" })} />
+            <input
+              className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
+              {...register("tax_no", {
+                required: "Tax ID is required",
+                pattern: {
+                  value: /^T\d{4}V\d{6}$/,
+                  message: "Tax ID must follow the pattern TXXXXVXXXXXX",
+                },
+              })}
+            />
             <p className="text-red-600 text-sm">{errors.tax_no?.message}</p>
           </div>
           <div className="flex flex-col">
             <label className="font-medium text-gray-700">Bank Account</label>
-            <input className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500" {...register("bank_account", { required: "IBAN is required" })} />
+            <input
+              className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500"
+              {...register("bank_account", {
+                required: "Bank Account is required",
+                pattern: {
+                  value: /^(TR\d{2}\d{4}\d{16})$/,
+                  message: "Please enter a valid IBAN",
+                },
+              })}
+            />
             <p className="text-red-600 text-sm">{errors.bank_account?.message}</p>
           </div>
         </>
       )}
 
+      {/* Submit Button */}
       <button
         type="submit"
         disabled={loading}
