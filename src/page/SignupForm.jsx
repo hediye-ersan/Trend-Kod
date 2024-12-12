@@ -81,7 +81,7 @@ const SignupForm = () => {
       // Başarılı yanıt geldiğinde
       if (response.data?.message) {
         alert(response.data.message); // Başarılı mesajı göster
-        history.push("/", { email: data.email, password: data.password }); // LoginForm'a yönlendir
+        history.push("/login", { email: data.email, password: data.password }); // LoginForm'a yönlendir
       }
     } catch (error) {
       setError("api", {
