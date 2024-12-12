@@ -29,21 +29,19 @@ const SignupForm = () => {
 
   const role_id = watch("role_id", "customer"); // role_id değişkenini watch ile takip ediyoruz
 
-  // Fetch roles
+  // Axios ile roles verilerini alıyoruz
   useEffect(() => {
-    async function fetchRoles() {
-      try {
-        const response = await api.get("/roles");
+    api.get("/roles")
+      .then(response => {
         setRoles(response.data);
         // Varsayılan rolü "customer" olarak set et
         if (response.data.length > 0) {
           setSelectedRole("customer");
         }
-      } catch (error) {
+      })
+      .catch(error => {
         console.error("Roles could not be loaded:", error);
-      }
-    }
-    fetchRoles();
+      });
   }, []);
 
   // Watch role_id değişikliklerini, setValue ile formda güncelle
