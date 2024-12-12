@@ -11,7 +11,7 @@ function App() {
   return (
     <>
     <Switch>
-    <Route path="/Shop">
+    <Route path="/shop">
       <ShopPage/>
       </Route>
       <Route path="/signup">
