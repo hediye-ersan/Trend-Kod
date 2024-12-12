@@ -31,5 +31,6 @@ const images= [
     './images/Category5.png',
 ]
 }
+//TODO: Create a list of category cards
 
 export default CategoryCard;
