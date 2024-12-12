@@ -96,7 +96,7 @@ const SignupForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="signup-form space-y-4 p-6 bg-gray-50 rounded-lg shadow-lg">
       {errors.api && <p className="text-red-600 text-sm">{errors.api.message}</p>}
-
+      <h2 className="text-xl font-bold text-gray-800 mb-4">Sign In</h2>
       <div className="flex flex-col">
         <label className="font-medium text-gray-700">Name</label>
         <input className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500" id="name"
