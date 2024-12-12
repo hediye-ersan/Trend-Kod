@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
-// Axios instance
+// Axios ile verilen URL ile bağlantı kuruluyor
 const api = axios.create({
   baseURL: "https://workintech-fe-ecommerce.onrender.com",
 });
@@ -14,7 +14,7 @@ const SignupForm = () => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  // React Hook Form
+  // react-hook-form kullanarak form oluşturuyoruz
   const {
     register,
     handleSubmit,
@@ -27,7 +27,7 @@ const SignupForm = () => {
     },
   });
 
-  const role_id = watch("role_id", "customer");
+  const role_id = watch("role_id", "customer"); // role_id değişkenini watch ile takip ediyoruz
 
   // Fetch roles
   useEffect(() => {
