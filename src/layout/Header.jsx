@@ -95,7 +95,7 @@ const Navbar2
                                     Login /
                                 </button>
                                 <button
-                                    onClick={() => handleNavigation('/register')}
+                                    onClick={() => handleNavigation('/signup')}
 
                                 >
                                     Register
