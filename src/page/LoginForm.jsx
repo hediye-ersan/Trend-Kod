@@ -37,8 +37,18 @@ const LoginForm = () => {
       }
 
     } catch (err) {
-      setError(
-        err.response?.data?.message || "An error occurred. Please try again."
+      toast.error(
+        err.response?.data?.message || "An error occurred. Please try again." ,{
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          
+          }
       );
     } finally {
       setLoading(false);
