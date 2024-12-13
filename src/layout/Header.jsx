@@ -14,7 +14,8 @@ const Navbar2
         };
 
         return (
-            <>
+            //TODO: Header'a login olunca kişi bilgileri eklenecek.
+                        <>
                 <nav className="bg-transparent px-8  flex items-center justify-between py-8">
                     {/* Sol Taraf */}
                     <div className="text-xl font-bold">Bandage</div>
