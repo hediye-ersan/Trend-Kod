@@ -116,7 +116,7 @@ const SignupForm = () => {
       className="w-1/3 bg-cover bg-center rounded-l-lg"
       style={{ backgroundImage: "url('./images/Signupbg.png')" }}
     ></div>
-    <form onSubmit={handleSubmit(onSubmit)} className="w-2/3 bg-white flex flex-col p-8 justify-center rounded-r-lg">
+    <form onSubmit={handleSubmit(onSubmit)} className="w-2/3 bg-white flex flex-col p-12 justify-center rounded-r-lg">
       {errors.api && <p className="text-red-600 text-h6">{errors.api.message}</p>}
       <h2 className="text-h2 font-bold ">Sign In</h2>
       <div className="flex flex-col">
