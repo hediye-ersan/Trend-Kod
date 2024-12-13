@@ -85,7 +85,7 @@ const SignupForm = () => {
       if (response.data?.message) {
         toast.success(response.data.message, {
           position: "top-right",
-          autoClose: 4000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -97,7 +97,7 @@ const SignupForm = () => {
 
           setTimeout(() => {
             history.push("/login", { email: data.email, password: data.password });
-          }, 5000);
+          }, 3000);
         }
     } catch (error) {
       setError("api", {
