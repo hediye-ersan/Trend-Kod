@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../reset.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Axios ile verilen URL ile bağlantı kuruluyor
 const api = axios.create({
@@ -81,9 +83,22 @@ const SignupForm = () => {
 
       // Başarılı yanıt geldiğinde
       if (response.data?.message) {
-        alert(response.data.message); // Başarılı mesajı göster
-        history.push("/login", { email: data.email, password: data.password }); // LoginForm'a yönlendir
-      }
+        toast.success(response.data.message, {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          
+          }); // Başarılı mesajı göster
+
+          setTimeout(() => {
+            history.push("/login", { email: data.email, password: data.password });
+          }, 5000);
+        }
     } catch (error) {
       setError("api", {
         type: "manual",

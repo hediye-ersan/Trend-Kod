@@ -4,12 +4,14 @@ import { Route, Switch } from 'react-router-dom'
 import ShopPage from './page/ShopPage'
 import LoginForm from './page/LoginForm'
 import SignupForm from './page/SignupForm'
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   
 
   return (
     <>
+    <ToastContainer />
     <Switch>
     <Route path="/shop">
       <ShopPage/>
