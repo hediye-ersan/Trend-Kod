@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import ShopPage from './page/ShopPage'
 import LoginForm from './page/LoginForm'
 import SignupForm from './page/SignupForm'
+import ProductDetails from './page/ProductDetails'
 import { ToastContainer } from 'react-toastify';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -18,6 +19,9 @@ function App() {
       <Provider store={store}>
         <ToastContainer />
         <Switch>
+        <Route path="/productdetails">
+            <ProductDetails/>
+          </Route>
           <Route path="/shop">
             <ShopPage />
           </Route>
@@ -30,6 +34,8 @@ function App() {
           <Route exact path="/">
             <HomePage />
           </Route>
+          
+
         </Switch>
       </Provider>
     </>
