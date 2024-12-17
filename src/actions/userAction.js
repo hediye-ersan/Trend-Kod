@@ -102,3 +102,16 @@ export const checkAuthToken = () => {
     }
   };
 };
+
+// actions/userAction.js
+
+export const signupUser = (userData) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post('/api/signup', userData);
+      dispatch({ type: 'SIGNUP_SUCCESS', payload: response.data });
+    } catch (error) {
+      dispatch({ type: 'SIGNUP_FAILURE', payload: error.message });
+    }
+  };
+};
