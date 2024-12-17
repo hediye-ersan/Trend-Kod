@@ -6,7 +6,7 @@ export const fetchRoles = () => {
     return async (dispatch) => {
         dispatch(setFetchState('FETCHING'));
         try {
-            const response = await axios.get('/api/roles'); // Replace with your API endpoint
+            const response = await axios.get('https://workintech-fe-ecommerce.onrender.com/roles'); // Replace with your API endpoint
             dispatch(setRoles(response.data));
             dispatch(setFetchState('FETCHED'));
         } catch (error) {
