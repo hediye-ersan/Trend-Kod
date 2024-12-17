@@ -247,6 +247,14 @@ const SignupForm = () => {
       >
         {loading ? "Loading..." : "Sign Up"}
       </button>
+      <div className="text-center">
+          <p className="text-sm">
+            Already a member?{" "}
+            <a href="/login" className="text-blue-500 hover:underline">
+              Login here
+            </a>
+          </p>
+        </div>
     </form>
     </div>
   );
