@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
-const ProductCard = ({ title, subtitle, price, discountedPrice, image }) => {
+const ProductCard = ({ id, title, subtitle, price, discountedPrice, image }) => {
   return (
     <section>
       <div className='flex flex-col flex-wrap'>
-        <img src={image} alt="ProductCard" />
+      <Link to={`/productdetails/${id}`} className="group">
+          <img src={image} alt="ProductCard" className="group-hover:opacity-80" />
+        </Link>
         <div className="p-4 text-center font-bold">
           <h5 className="text-h5 ">{title}</h5>
           <h6 className="text-h6 text-secondText ">{subtitle}</h6>
           <div className="flex items-center justify-center space-x-2 mt-2">
-          <span className="text-secondText line-through text-h5">
+            <span className="text-secondText line-through text-h5">
               {price}
             </span>
             <span className="text-[#23856D] text-h5">
               {discountedPrice}
             </span>
-            
+          </div>
+          <div className="flex gap-2 justify-center">
+            {["bg-blue-500", "bg-orange-500", "bg-navy-900"].map((color, index) => (
+              <button
+                key={index}
+                className={`w-4 h-4 rounded-full ${color} border border-gray-200`}
+                aria-label={`Select color ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
       </div>
