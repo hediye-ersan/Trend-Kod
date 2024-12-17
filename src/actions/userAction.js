@@ -1,64 +1,104 @@
 // actions/userActions.js
 import axios from "axios";
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from "./userActionTypes";
+import {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT,
+  SET_USER,
+  CLEAR_USER
+} from "./userActionTypes";
 
-// Kullanıcı Bilgisi Set Etme
+// Action creator for setting user
 export const setUser = (user) => ({
-  type: "SET_USER",
+  type: SET_USER,
   payload: user,
 });
 
-// Kullanıcı Bilgisi Temizleme
+// Action creator for clearing user
 export const clearUser = () => ({
-  type: "CLEAR_USER",
+  type: CLEAR_USER,
 });
 
-// Login Başarı Durumunda
+// Thunk action creator for login
 export const loginUser = (email, password, rememberMe) => {
   return async (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
     
     try {
+      // Make POST request to login endpoint
       const response = await axios.post(
         "https://workintech-fe-ecommerce.onrender.com/login",
         { email, password }
       );
 
-      // API yanıtını kontrol et
-      console.log("API yanıtı:", response);
-
-      // Yanıttan kullanıcı bilgilerini çıkar
+      // Extract user data and token from response
+      const { token, ...userData } = response.data;
+      
+      // Create user object with necessary information
       const user = {
-        name: response.data.name,
-        email: response.data.email,
-        role_id: response.data.role_id,
-       
+        name: userData.name,
+        email: userData.email,
+        role_id: userData.role_id,
       };
-      const token = response.data.token;
 
-      // Kullanıcı ve token'ı doğru döndüğünden emin ol
-      console.log("Kullanıcı:", user);
-      console.log("Token:", token);
-
-      // "Remember Me" kutucuğu işaretliyse token'ı localStorage'a kaydet
+      // Save token to localStorage if remember me is checked
       if (rememberMe) {
         localStorage.setItem("authToken", token);
       }
 
-      dispatch(setUser(user)); // Kullanıcı bilgisini Redux'a kaydet
-      dispatch({ type: LOGIN_SUCCESS, payload: { user, token } });
+      // Update Redux store with user info and token
+      const successAction = { type: LOGIN_SUCCESS, payload: { user, token } };
+      dispatch(successAction);
+      return successAction; // Return the action object for component usage
     } catch (error) {
-      console.error("Login hatası:", error);
-      dispatch({ type: LOGIN_FAILURE, payload: error.message });
+      // Handle login error
+      const errorMessage = error.response?.data?.message || error.message;
+      const failureAction = { type: LOGIN_FAILURE, payload: errorMessage };
+      dispatch(failureAction);
+      throw error; // Re-throw error for component-level handling
     }
   };
 };
 
-// Logout İşlemi
+// Thunk action creator for logout
 export const logoutUser = () => {
   return (dispatch) => {
+    // Clear token from localStorage
     localStorage.removeItem("authToken");
-    dispatch(clearUser());
-    dispatch({ type: "LOGOUT" });
+    
+    // Clear user state in Redux
+    dispatch({ type: LOGOUT });
+  };
+};
+
+// Check for existing auth token on app start
+export const checkAuthToken = () => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("authToken");
+    
+    if (token) {
+      try {
+        // Add token to axios headers
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        
+        // Fetch user data using token
+        const response = await axios.get("https://workintech-fe-ecommerce.onrender.com/user");
+        
+        const user = {
+          name: response.data.name,
+          email: response.data.email,
+          role_id: response.data.role_id,
+        };
+        
+        // Update Redux store with user info and token
+        dispatch({ type: LOGIN_SUCCESS, payload: { user, token } });
+      } catch (error) {
+        // Handle invalid token
+        localStorage.removeItem("authToken");
+        delete axios.defaults.headers.common["Authorization"];
+        dispatch({ type: LOGOUT });
+      }
+    }
   };
 };
