@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, LOGIN_SUCCESS } from "../actions/userAction"; 
+=======
+import { useDispatch } from "react-redux";
+import { loginUser } from "../actions/userAction"; 
+import { LOGIN_SUCCESS } from "../actions/userActionTypes";
+>>>>>>> 606ad29783195184620642bed1372b535b60d000
 import { useHistory } from "react-router-dom";
 
 const LoginForm = () => {
@@ -20,7 +26,11 @@ const LoginForm = () => {
 
     try {
       const action = await dispatch(loginUser(email, password, rememberMe));
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> 606ad29783195184620642bed1372b535b60d000
       if (action?.type === LOGIN_SUCCESS) {
         toast.success("Login successful!", {
           position: "top-right",
