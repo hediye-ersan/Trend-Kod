@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 
 const Navbar2
     = () => {
         const [isMenuOpen, setIsMenuOpen] = useState(false); // Menü durumu
         const history = useHistory(); // Yönlendirme için kullanılır
+        const user = useSelector((state) => state.user.user);
 
         // Menüye tıklayınca geçişi sağlamak
         const handleNavigation = (path) => {
@@ -15,10 +17,15 @@ const Navbar2
 
         return (
             //TODO: Header'a login olunca kişi bilgileri eklenecek.
-                        <>
+            <>
                 <nav className="bg-transparent px-8  flex items-center justify-between py-8">
                     {/* Sol Taraf */}
                     <div className="text-xl font-bold">Bandage</div>
+                    {user ? (
+                        <p>Welcome, {user.name}!</p> // Kullanıcı adı header'da gösterilecek
+                    ) : (
+                        <p>Please log in</p>
+                    )}
 
                     {/* Sağ Taraf */}
                     <div className="flex items-center gap-4">
