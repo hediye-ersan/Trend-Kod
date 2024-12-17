@@ -1,6 +1,8 @@
+// reducers/userReducer.js
+
 const initialState = {
-    user: null,  // Kullanıcı bilgisi burada tutulacak
-    token: null, // Auth token burada tutulacak
+    user: null,  // Kullanıcı bilgisi
+    token: null, // Auth token
     loading: false,
     error: null,
   };
@@ -19,7 +21,11 @@ const initialState = {
       case "LOGIN_FAILURE":
         return { ...state, loading: false, error: action.payload };
       case "LOGOUT":
-        return initialState; // Logout olduğunda state’i sıfırla
+        return initialState; // Logout olduğunda state sıfırlanır
+      case "SET_USER":
+        return { ...state, user: action.payload };
+      case "CLEAR_USER":
+        return { ...state, user: null, token: null };
       default:
         return state;
     }
