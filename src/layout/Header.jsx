@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
-import { logout } from '../actions/userAction';
-import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+
+
 
 const Navbar2 = () => {
+
     const [isMenuOpen, setIsMenuOpen] = useState(false); // Menü durumu
     const history = useHistory(); // Yönlendirme için kullanılır
-    const dispatch = useDispatch();
-    const user = useSelector((state) => state.user);
+    const user = useSelector((state) => state.user.user);
+
 
     // Menüye tıklayınca geçişi sağlamak
     const handleNavigation = (path) => {
@@ -16,24 +17,17 @@ const Navbar2 = () => {
         history.push(path); // Belirtilen sayfaya yönlendir
     };
 
-    const handleLogout = () => {
-        dispatch(logout());
-        toast.success("Successfully logged out!");
-        setIsMenuOpen(false);
-        history.push('/login');
-    };
+ 
 
     return (
-        
+
         <>
             <nav className="bg-transparent px-8  flex items-center justify-between py-8">
                 {/* Sol Taraf */}
                 <div className="text-xl font-bold">Bandage</div>
-                {user.isAuthenticated ? (
-                    <>
-                        <p>Welcome, {user.name}!</p>
-                        <button onClick={handleLogout}>Logout</button>
-                    </>
+                {user ? (
+                        <p>Welcome, {user.name}!</p> // Kullanıcı adı header'da gösterilecek
+
                 ) : (
                     <p>Please log in</p>
                 )}
@@ -107,12 +101,7 @@ const Navbar2 = () => {
                     <div>
                         <div className='text-3xl text-blueText flex justify-center py-4'>
                             <img src='/icons/user.svg' alt='Kullanıcı' className='fill-current text-blueText' />
-                            {user.isAuthenticated ? (
-                                <button onClick={handleLogout}>
-                                    Logout
-                                </button>
-                            ) : (
-                                <>
+                            
                                     <button
                                         onClick={() => handleNavigation('/login')}
                                     >
@@ -123,8 +112,7 @@ const Navbar2 = () => {
                                     >
                                         Register
                                     </button>
-                                </>
-                            )}
+                              
                         </div>
                         <div className='flex flex-col justify-center items-center conta gap-4 py-4'>
 
