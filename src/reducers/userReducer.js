@@ -37,6 +37,16 @@ const initialState = {
         return { ...state, theme: action.payload };
       case "SET_LANGUAGE":
         return { ...state, language: action.payload };
+      case "SIGNUP_REQUEST":
+        return { ...state, loading: true, error: null };
+      case "SIGNUP_SUCCESS":
+        return {
+          ...state,
+          loading: false,
+          error: null
+        };
+      case "SIGNUP_FAILURE":
+        return { ...state, loading: false, error: action.payload };
       default:
         return state;
     }

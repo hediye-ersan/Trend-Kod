@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signupUser } from "../actions/userAction";
+import { fetchRolesIfNeeded } from "../actions/thunkAction";
+import axios from "axios";
 import "../reset.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,10 +15,10 @@ const api = axios.create({
 });
 
 const SignupForm = () => {
-  const [roles, setRoles] = useState([]);
-  const [selectedRole, setSelectedRole] = useState("customer");
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const history = useHistory();
+  const roles = useSelector((state) => state.user.roles);
 
   // react-hook-form kullanarak form oluşturuyoruz
   const {
@@ -30,29 +33,10 @@ const SignupForm = () => {
     },
   });
 
-  const role_id = watch("role_id", "customer"); // role_id değişkenini watch ile takip ediyoruz
-
-  // Axios ile roles verilerini alıyoruz
   useEffect(() => {
-    api.get("/roles")
-      .then(response => {
-        setRoles(response.data);
-        // Varsayılan rolü "customer" olarak set et
-        if (response.data.length > 0) {
-          setSelectedRole("customer");
-        }
-      })
-      .catch(error => {
-        console.error("Roles could not be loaded:", error);
-      });
-  }, []);
+    dispatch(fetchRolesIfNeeded());
+  }, [dispatch]);
 
-  // Watch role_id değişikliklerini, setValue ile formda güncelle
-  useEffect(() => {
-    setValue("role_id", selectedRole);
-  }, [selectedRole, setValue]);
-
- 
   const onSubmit = async (data) => {
     setLoading(true);
     try {
@@ -75,34 +59,40 @@ const SignupForm = () => {
             name: data.name,
             email: data.email,
             password: data.password,
-            role_id: data.role_id,
+            role_id: data.role_id || "customer",
           };
 
       // Verileri API'ye gönder
-      const response = await api.post("/signup", payload);
+      await dispatch(signupUser(payload));
 
-      // Başarılı yanıt geldiğinde
-      if (response.data?.message) {
-        toast.success(response.data.message, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          
-          }); // Başarılı mesajı göster
+      toast.success("Signup successful!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
 
-          setTimeout(() => {
-            history.push("/login", { email: data.email, password: data.password });
-          }, 3000);
-        }
+      setTimeout(() => {
+        history.push("/login", { 
+          email: data.email, 
+          password: data.password 
+        });
+      }, 3000);
+
     } catch (error) {
-      setError("api", {
-        type: "manual",
-        message: error.response?.data?.message || "An unexpected error occurred",
+      toast.error(error.response?.data?.message || "Signup failed. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
       });
     } finally {
       setLoading(false);
@@ -135,8 +125,7 @@ const SignupForm = () => {
           {...register('email', {
             required: true,
             pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
-          })}
-        />
+          })} />
         <p className="text-red-600 text-h6">{errors.email?.message}</p>
       </div>
 
@@ -160,8 +149,7 @@ const SignupForm = () => {
           type="password"
           {...register('confirmPassword', {
             validate: (value) => value === watch('password') || "Passwords do not match"
-          })}
-        />
+          })} />
         <p className="text-red-600 text-h6">{errors.confirmPassword?.message}</p>
       </div>
 
@@ -171,8 +159,6 @@ const SignupForm = () => {
         <select
           className="border border-[#BDBDBD] rounded-md p-2 text-secondText"
           {...register("role_id", { required: "Role selection is required" })}
-          onChange={(e) => setSelectedRole(e.target.value)}
-          value={selectedRole}
         >
           {roles.map((role) => (
             <option key={role.id} value={role.code}>
@@ -184,7 +170,7 @@ const SignupForm = () => {
       </div>
 
       {/* Store Fields (If "Store" is selected) */}
-      {selectedRole === "store" && (
+      {watch("role_id") === "store" && (
         <>
           <div className="flex flex-col">
             <label className="font-medium text-secondText">Store Name</label>

@@ -6,7 +6,10 @@ import {
   LOGIN_FAILURE,
   LOGOUT,
   SET_USER,
-  CLEAR_USER
+  CLEAR_USER,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAILURE
 } from "./userActionTypes";
 
 // Action creator for setting user
@@ -103,15 +106,25 @@ export const checkAuthToken = () => {
   };
 };
 
-// actions/userAction.js
-
+// Signup action creator
 export const signupUser = (userData) => {
   return async (dispatch) => {
+    dispatch({ type: 'SIGNUP_REQUEST' });
     try {
-      const response = await axios.post('/api/signup', userData);
-      dispatch({ type: 'SIGNUP_SUCCESS', payload: response.data });
+      const response = await axios.post('https://workintech-fe-ecommerce.onrender.com/signup', userData);
+      
+      dispatch({ 
+        type: 'SIGNUP_SUCCESS', 
+        payload: response.data 
+      });
+      
+      return { type: 'SIGNUP_SUCCESS', payload: response.data };
     } catch (error) {
-      dispatch({ type: 'SIGNUP_FAILURE', payload: error.message });
+      dispatch({ 
+        type: 'SIGNUP_FAILURE', 
+        payload: error.response?.data?.message || 'Signup failed' 
+      });
+      throw error;
     }
   };
 };

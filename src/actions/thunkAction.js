@@ -1,4 +1,4 @@
-import { setRoles, setFetchState } from './actions/action';
+import { setRoles, setFetchState } from './action';
 import axios from 'axios';
 
 export const fetchRoles = () => {
