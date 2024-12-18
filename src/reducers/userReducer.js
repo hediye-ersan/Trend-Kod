@@ -43,7 +43,9 @@ const initialState = {
         return {
           ...state,
           loading: false,
-          error: null
+          error: null,
+          user: action.payload.user,
+          token: action.payload.token
         };
       case "SIGNUP_FAILURE":
         return { ...state, loading: false, error: action.payload };

@@ -109,19 +109,28 @@ export const checkAuthToken = () => {
 // Signup action creator
 export const signupUser = (userData) => {
   return async (dispatch) => {
-    dispatch({ type: 'SIGNUP_REQUEST' });
+    dispatch({ type: SIGNUP_REQUEST });
     try {
       const response = await axios.post('https://workintech-fe-ecommerce.onrender.com/signup', userData);
       
+      // Extract token and user data
+      const { token, ...user } = response.data;
+      
+      // Store token in localStorage
+      localStorage.setItem('authToken', token);
+      
+      // Set authorization header for future requests
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      
       dispatch({ 
-        type: 'SIGNUP_SUCCESS', 
-        payload: response.data 
+        type: SIGNUP_SUCCESS, 
+        payload: { user, token }
       });
       
-      return { type: 'SIGNUP_SUCCESS', payload: response.data };
+      return { type: SIGNUP_SUCCESS, payload: { user, token } };
     } catch (error) {
       dispatch({ 
-        type: 'SIGNUP_FAILURE', 
+        type: SIGNUP_FAILURE, 
         payload: error.response?.data?.message || 'Signup failed' 
       });
       throw error;
