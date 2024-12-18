@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from '../actions/userAction';
 
 
 
@@ -8,6 +9,7 @@ const Navbar2 = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false); // Menü durumu
     const history = useHistory(); // Yönlendirme için kullanılır
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user);
 
 
@@ -17,7 +19,11 @@ const Navbar2 = () => {
         history.push(path); // Belirtilen sayfaya yönlendir
     };
 
- 
+    const handleLogout = () => {
+        dispatch(logoutUser()); // Logout aksiyonunu dispatch ediyoruz
+        history.push('/login'); // Kullanıcıyı login sayfasına yönlendiriyoruz
+    };
+
 
     return (
 
@@ -26,7 +32,7 @@ const Navbar2 = () => {
                 {/* Sol Taraf */}
                 <div className="text-xl font-bold">Bandage</div>
                 {user ? (
-                        <p>Welcome, {user.name}!</p> // Kullanıcı adı header'da gösterilecek
+                    <p>Welcome, {user.name}!</p> // Kullanıcı adı header'da gösterilecek
 
                 ) : (
                     <p>Please log in</p>
@@ -101,7 +107,12 @@ const Navbar2 = () => {
                     <div>
                         <div className='text-3xl text-blueText flex justify-center py-4'>
                             <img src='/icons/user.svg' alt='Kullanıcı' className='fill-current text-blueText' />
-                            
+                            {user ? (
+                                <button onClick={handleLogout}>
+                                    Logout
+                                </button>
+                            ) : (
+                                <>
                                     <button
                                         onClick={() => handleNavigation('/login')}
                                     >
@@ -112,7 +123,8 @@ const Navbar2 = () => {
                                     >
                                         Register
                                     </button>
-                              
+                                </>
+                            )}
                         </div>
                         <div className='flex flex-col justify-center items-center conta gap-4 py-4'>
 
