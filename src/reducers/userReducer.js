@@ -2,6 +2,11 @@
 
 const initialState = {
     user: null,  // Kullanıcı bilgisi
+    addressList: [],
+    creditCards: [],
+    roles: [],
+    theme: '',
+    language: '',
     token: null, // Auth token
     loading: false,
     error: null,
@@ -26,10 +31,15 @@ const initialState = {
         return { ...state, user: action.payload };
       case "CLEAR_USER":
         return { ...state, user: null, token: null };
+      case "SET_ROLES":
+        return { ...state, roles: action.payload };
+      case "SET_THEME":
+        return { ...state, theme: action.payload };
+      case "SET_LANGUAGE":
+        return { ...state, language: action.payload };
       default:
         return state;
     }
   };
   
   export default userReducer;
-  
