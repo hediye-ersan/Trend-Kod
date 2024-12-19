@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom'; 
+import { Link, useLocation } from 'react-router-dom';
+import { Grid, List } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 
 const ProductCard = ({ id, title, subtitle, price, discountedPrice, image }) => {
   return (
     <section>
       <div className='flex flex-col flex-wrap'>
-      <Link to={`/productdetails/${id}`} className="group">
+        <Link to={`/productdetails/${id}`} className="group">
           <img src={image} alt="ProductCard" className="group-hover:opacity-80" />
         </Link>
         <div className="p-4 text-center font-bold">
@@ -68,38 +70,55 @@ const ProductCardList = () => {
   return (
     <div>
       {isHomePage && (
-      <div className='text-center px-24 py-16 font-bold leading-loose'>
-        <h3 className='text-h3  '>BESTSELLER PRODUCTS</h3>
-        <h6 className='text-h6 text-secondText'>Problems trying to resolve the conflict between </h6>
-      </div>
-        )}
-      <div className="grid grid-cols-1  gap-4 justify-items-center sm:grid-cols-5 sm:grid-rows-2 ">
-        {allCards.slice(0, visibleCards).map((card) => (
-          <ProductCard
-            key={card.id}
-            title={card.title}
-            subtitle={card.subtitle}
-            price={card.price}
-            discountedPrice={card.discountedPrice}
-            image={card.image}
-          />
-        ))}
-      </div>
-
-
-      {isHomePage && visibleCards < allCards.length && (
-        <div className="text-center mt-6">
-          <button
-            onClick={loadMore}
-            className="py-5 px-12 bg-transparent rounded border-blueText border-2 text-blueText transition duration-300 font-bold text-sm"
-          >
-            LOAD MORE PRODUCTS
-          </button>
+        <div className='text-center px-24 py-16 font-bold leading-loose'>
+          <h3 className='text-h3  '>BESTSELLER PRODUCTS</h3>
+          <h6 className='text-h6 text-secondText'>Problems trying to resolve the conflict between </h6>
         </div>
       )}
-    </div>
-  );
+       <div className="flex justify-between items-center mb-4 flex-col py-12 gap-6">
+       <div className="flex items-center gap-4">
+         <span className='text-h6 text-secondText font-bold'>Views:</span>
+         <button className="px-4 py-2 border rounded flex items-center">
+           <Grid/> {/* Grid icon */}
+           Grid
+         </button>
+         <button className="px-4 py-2 border rounded flex items-center">
+           <List/> {/* List icon */}
+           List
+         </button>
+       </div>
+       <div className='flex gap-4'>
+         <button className="py-2 px-4 bg-blueText text-white rounded">Filter</button>
+         <button className="py-2 px-4 bg-[#DDDDDD] text-secondText rounded flex"> Popularity <ChevronDown /></button>
+       </div>
+     </div>
+        <div className="grid grid-cols-1  gap-4 justify-items-center sm:grid-cols-5 sm:grid-rows-2 ">
+          {allCards.slice(0, visibleCards).map((card) => (
+            <ProductCard
+              key={card.id}
+              title={card.title}
+              subtitle={card.subtitle}
+              price={card.price}
+              discountedPrice={card.discountedPrice}
+              image={card.image}
+            />
+          ))}
+        </div>
+
+
+        {isHomePage && visibleCards < allCards.length && (
+          <div className="text-center mt-6">
+            <button
+              onClick={loadMore}
+              className="py-5 px-12 bg-transparent rounded border-blueText border-2 text-blueText transition duration-300 font-bold text-sm"
+            >
+              LOAD MORE PRODUCTS
+            </button>
+          </div>
+        )}
+      </div>
+      );
 };
 
-export default ProductCardList;
+      export default ProductCardList;
 
