@@ -44,7 +44,7 @@ export default function FashionCategories() {
       {categories.map((category, index) => (
         <div
           key={index}
-          className="relative min-w-[331px] min-h-[300px] bg-contain bg-no-repeat bg-center cursor-pointer transition-all duration-300 hover:shadow-lg group mx-auto"
+          className="relative min-w-[330px] min-h-[300px] bg-contain bg-no-repeat bg-center cursor-pointer transition-all duration-300 hover:shadow-lg group mx-auto"
           style={{ backgroundImage: `url(${category.image})` }}
         >
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center">
