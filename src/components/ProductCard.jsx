@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom'; 
 
 
 const ProductCard = ({ id, title, subtitle, price, discountedPrice, image }) => {
@@ -63,12 +63,16 @@ const ProductCardList = () => {
     setVisibleCards(visibleCards + 6);
   };
 
+  const isHomePage = location.pathname === '/';
+
   return (
     <div>
+      {isHomePage && (
       <div className='text-center px-24 py-16 font-bold leading-loose'>
         <h3 className='text-h3  '>BESTSELLER PRODUCTS</h3>
         <h6 className='text-h6 text-secondText'>Problems trying to resolve the conflict between </h6>
       </div>
+        )}
       <div className="grid grid-cols-1  gap-4 justify-items-center sm:grid-cols-5 sm:grid-rows-2 ">
         {allCards.slice(0, visibleCards).map((card) => (
           <ProductCard
@@ -83,7 +87,7 @@ const ProductCardList = () => {
       </div>
 
 
-      {visibleCards < allCards.length && (
+      {isHomePage && visibleCards < allCards.length && (
         <div className="text-center mt-6">
           <button
             onClick={loadMore}
