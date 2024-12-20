@@ -7,7 +7,7 @@ import { logoutUser } from '../actions/userAction';
 
 const Navbar = () => {
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false); // Menü durumu
+    const [isMenuOpen, setIsMenuOpen] = useState(true); // Menü durumu
     const history = useHistory(); // Yönlendirme için kullanılır
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user);
@@ -74,10 +74,10 @@ const Navbar = () => {
                         </li>
                         <li>
                             <button
-                                onClick={() => handleNavigation('/About')}
+                                onClick={() => handleNavigation('/productdetails')}
                                 className="text-secondText"
                             >
-                                About
+                                Product
                             </button>
                         </li><li>
                             <button
