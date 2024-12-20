@@ -1,24 +1,23 @@
-import React, { useState } from "react";
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Heart, ShoppingCart, Eye } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import Image from 'next/image';
-import { Card, CardContent } from "@/components/ui/card";
-import { useRouter } from 'next/router';
 
-function ProductDetail() {
+export default function ProductCard({
+  images = [
+    '/placeholder.svg?height=400&width=400',
+    '/placeholder.svg?height=100&width=100',
+    '/placeholder.svg?height=100&width=100',
+  ],
+  title = 'Floating Phone',
+  rating = 4.5,
+  reviews = 10,
+  price = 1139.33,
+  availability = 'In Stock',
+  description = 'Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met.',
+  colors = ['#29B6F6', '#66BB6A', '#FF7043', '#26365F'],
+}) {
   const [currentImage, setCurrentImage] = useState(0);
-  const router = useRouter();
-  
-  const images = [
-    "/placeholder.svg?height=400&width=600",
-    "/placeholder.svg?height=400&width=600",
-  ];
-
-  const thumbnails = [
-    "/placeholder.svg?height=100&width=100",
-    "/placeholder.svg?height=100&width=100",
-  ];
 
   const nextImage = () => {
     setCurrentImage((prev) => (prev + 1) % images.length);
@@ -28,124 +27,119 @@ function ProductDetail() {
     setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  const renderStars = (rating) => {
+    return Array(5)
+      .fill(0)
+      .map((_, i) => (
+        <span
+          key={i}
+          className={`text-2xl ${
+            i < Math.floor(rating) ? 'text-yellow-400' : 'text-gray-300'
+          }`}
+        >
+          ★
+        </span>
+      ));
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="grid gap-8 md:grid-cols-2">
-        {/* Image Slider */}
-        <div className="relative">
-          <div className="relative aspect-square overflow-hidden rounded-lg">
-            <Image
-              src={images[currentImage]}
-              alt="Product image"
-              layout="fill"
-              className="object-cover"
-              priority
-            />
+    <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
+      {/* Image Gallery */}
+      <div className="relative">
+        <div className="aspect-square overflow-hidden">
+          <img
+            src={images[currentImage]}
+            alt={title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
+        {/* Navigation Arrows */}
+        <button
+          onClick={previousImage}
+          className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 hover:bg-white"
+          aria-label="Previous image"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          onClick={nextImage}
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 hover:bg-white"
+          aria-label="Next image"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+
+        {/* Thumbnails */}
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+          {images.map((_, index) => (
             <button
-              onClick={previousImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-lg"
-              aria-label="Previous image"
+              key={index}
+              onClick={() => setCurrentImage(index)}
+              className={`w-16 h-16 rounded-md overflow-hidden border-2 ${
+                currentImage === index ? 'border-blue-500' : 'border-transparent'
+              }`}
             >
-              <ChevronLeft className="h-6 w-6" />
+              <img
+                src={images[index]}
+                alt={`Thumbnail ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
             </button>
-            <button
-              onClick={nextImage}
-              className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-lg"
-              aria-label="Next image"
-            >
-              <ChevronRight className="h-6 w-6" />
-            </button>
-          </div>
-          <div className="mt-4 flex gap-4 overflow-auto">
-            {thumbnails.map((thumb, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentImage(index)}
-                className={`relative h-20 w-20 overflow-hidden rounded-lg ${
-                  currentImage === index ? "ring-2 ring-primary" : ""
-                }`}
-              >
-                <Image
-                  src={thumb}
-                  alt={`Product thumbnail ${index + 1}`}
-                  layout="fill"
-                  className="object-cover"
-                />
-              </button>
-            ))}
+          ))}
+        </div>
+      </div>
+
+      {/* Product Info */}
+      <div className="p-6 space-y-4">
+        <h2 className="text-2xl font-semibold">{title}</h2>
+        
+        {/* Rating */}
+        <div className="flex items-center gap-2">
+          <div className="flex">{renderStars(rating)}</div>
+          <span className="text-gray-600">{reviews} Reviews</span>
+        </div>
+
+        {/* Price and Availability */}
+        <div className="space-y-1">
+          <div className="text-3xl font-bold">${price.toFixed(2)}</div>
+          <div className="text-sm">
+            Availability:{' '}
+            <span className="text-green-500 font-medium">{availability}</span>
           </div>
         </div>
 
-        {/* Product Details */}
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold">Floating Phone</h1>
-            <div className="mt-2 flex items-center gap-2">
-              <div className="flex">
-                {[...Array(4)].map((_, i) => (
-                  <svg
-                    key={i}
-                    className="h-5 w-5 fill-primary"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-                <svg className="h-5 w-5 fill-muted stroke-muted-foreground" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              </div>
-              <span className="text-sm text-muted-foreground">10 Reviews</span>
-            </div>
-          </div>
+        {/* Description */}
+        <p className="text-gray-600">{description}</p>
 
-          <div className="space-y-2">
-            <p className="text-3xl font-bold">$1,139.33</p>
-            <p className="text-sm">
-              Availability: <span className="text-primary">In Stock</span>
-            </p>
-          </div>
+        {/* Color Options */}
+        <div className="flex gap-2">
+          {colors.map((color, index) => (
+            <button
+              key={index}
+              className="w-8 h-8 rounded-full border-2 border-gray-200"
+              style={{ backgroundColor: color }}
+              aria-label={`Select color ${index + 1}`}
+            />
+          ))}
+        </div>
 
-          <p className="text-muted-foreground">
-            Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT
-            official consequent door ENIM RELIT Mollie. Excitation venial consequent
-            sent nostrum met.
-          </p>
-
-          <div className="space-y-4">
-            <p className="font-medium">Colors</p>
-            <div className="flex gap-2">
-              {["bg-[#4A90E2]", "bg-[#2ECC71]", "bg-[#E67E22]", "bg-[#2C3E50]"].map(
-                (color, index) => (
-                  <button
-                    key={index}
-                    className={`h-8 w-8 rounded-full ${color} ring-2 ring-offset-2 ring-offset-background ${
-                      index === 0 ? "ring-primary" : "ring-transparent"
-                    }`}
-                    aria-label={`Select color ${index + 1}`}
-                  />
-                )
-              )}
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-4">
-            <Button size="lg" className="flex-1">
-              Select Options
-            </Button>
-            <Button size="lg" variant="outline">
-              <Heart className="h-5 w-5" />
-            </Button>
-            <Button size="lg" variant="outline">
-              <ShoppingCart className="h-5 w-5" />
-            </Button>
-            <Button size="lg" variant="outline">
-              <Eye className="h-5 w-5" />
-            </Button>
-          </div>
+        {/* Action Buttons */}
+        <div className="flex gap-2">
+          <button className="flex-1 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">
+            Select Options
+          </button>
+          <button className="p-2 border border-gray-200 rounded-md hover:bg-gray-50">
+            <Heart className="w-6 h-6" />
+          </button>
+          <button className="p-2 border border-gray-200 rounded-md hover:bg-gray-50">
+            <ShoppingCart className="w-6 h-6" />
+          </button>
+          <button className="p-2 border border-gray-200 rounded-md hover:bg-gray-50">
+            <Eye className="w-6 h-6" />
+          </button>
         </div>
       </div>
     </div>
   );
 }
-export default ProductDetail;
