@@ -2,6 +2,9 @@ import React from 'react'
 import ProductCard from '../components/ProductDetailCard';
 import Navbar from '../layout/Header';
 import { Link } from 'react-router-dom';
+import BestsellerProducts from '../components/BestsellerProducts';
+import Footer from '../layout/Footer';
+import IconList from '../components/IconCard';
 
 function ProductDetails() {
     return (
@@ -93,6 +96,9 @@ function ProductDetails() {
                     </div>
                 </div>
             </div>
+            <BestsellerProducts/>
+            <IconList/>
+            <Footer/>
         </div>
     )
 }
