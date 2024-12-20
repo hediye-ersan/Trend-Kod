@@ -43,7 +43,7 @@ export default function ProductCard({
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
+    <div className="max-w-5xl mx-auto grid grid-cols-2 gap-8 bg-white rounded-lg overflow-hidden shadow-lg">
       {/* Image Gallery */}
       <div className="relative">
         <div className="aspect-square overflow-hidden">
@@ -92,7 +92,7 @@ export default function ProductCard({
 
       {/* Product Info */}
       <div className="p-6 space-y-4">
-        <h2 className="text-2xl font-semibold">{title}</h2>
+        <h2 className="text-3xl font-semibold">{title}</h2>
         
         {/* Rating */}
         <div className="flex items-center gap-2">
@@ -102,7 +102,7 @@ export default function ProductCard({
 
         {/* Price and Availability */}
         <div className="space-y-1">
-          <div className="text-3xl font-bold">${price.toFixed(2)}</div>
+          <div className="text-4xl font-bold">${price.toFixed(2)}</div>
           <div className="text-sm">
             Availability:{' '}
             <span className="text-green-500 font-medium">{availability}</span>
@@ -125,7 +125,7 @@ export default function ProductCard({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <button className="flex-1 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">
             Select Options
           </button>
