@@ -5,9 +5,9 @@ import { ChevronLeft, ChevronRight, Heart, ShoppingCart, Eye } from 'lucide-reac
 
 export default function ProductCard({
   images = [
-    '/placeholder.svg?height=400&width=400',
-    '/placeholder.svg?height=100&width=100',
-    '/placeholder.svg?height=100&width=100',
+    '/images/productDetail-1.svg',
+    '/images/productDetail-2.svg',
+    
   ],
   title = 'Floating Phone',
   rating = 4.5,
