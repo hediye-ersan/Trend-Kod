@@ -5,7 +5,7 @@ import { logoutUser } from '../actions/userAction';
 
 
 
-const Navbar2 = () => {
+const Navbar = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false); // Menü durumu
     const history = useHistory(); // Yönlendirme için kullanılır
@@ -150,4 +150,4 @@ const Navbar2 = () => {
     );
 };
 
-export default Navbar2;
+export default Navbar;
