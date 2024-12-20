@@ -43,7 +43,7 @@ export default function ProductCard({
   };
 
   return (
-    <div className="max-w-5xl mx-auto grid grid-cols-2 gap-8 bg-white rounded-lg overflow-hidden shadow-lg">
+    <div className="max-w-5xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg md:grid md:grid-cols-2 md:gap-8">
       {/* Image Gallery */}
       <div className="relative">
         <div className="aspect-square overflow-hidden">
