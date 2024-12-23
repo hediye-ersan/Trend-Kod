@@ -17,3 +17,6 @@ export const setFilter = (filter) => ({ type: 'SET_FILTER', payload: filter });
 export const setCart = (cart) => ({ type: 'SET_CART', payload: cart })
 export const setPayment = (payment) => ({ type: 'SET_PAYMENT', payload: payment });
 export const setAddress = (address) => ({ type: 'SET_ADDRESS', payload: address });
+
+export const setLoading = (loading) => ({ type: 'SET_LOADING', payload: loading });
+export const setError = (error) => ({ type: 'SET_ERROR', payload: error });
