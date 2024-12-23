@@ -1,4 +1,4 @@
-import CategoryCard from "../components/CategoryCard";
+import FashionCategories from "../components/CategoryCard";
 import IconList from "../components/IconCard";
 import ProductCardList from "../components/ProductCard";
 import Footer from "../layout/Footer";
@@ -9,7 +9,7 @@ function ShopPage() {
     return (
         <>
         <Navbar />
-        <CategoryCard/>
+        <FashionCategories/>
         <ProductCardList/>
         <IconList/>
         <Footer/>
