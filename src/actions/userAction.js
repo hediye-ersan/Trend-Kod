@@ -82,11 +82,8 @@ export const checkAuthToken = () => {
     
     if (token) {
       try {
-        // Add token to axios headers
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        
-        // Fetch user data using token
-        const response = await axios.get("https://workintech-fe-ecommerce.onrender.com/user");
+        axios.defaults.headers.common["Authorization"] = token;
+        const response = await axios.get("https://workintech-fe-ecommerce.onrender.com/verify");
         
         const user = {
           name: response.data.name,
@@ -94,10 +91,10 @@ export const checkAuthToken = () => {
           role_id: response.data.role_id,
         };
         
-        // Update Redux store with user info and token
         dispatch({ type: LOGIN_SUCCESS, payload: { user, token } });
+        localStorage.setItem("authToken", token);
+        axios.defaults.headers.common["Authorization"] = token;
       } catch (error) {
-        // Handle invalid token
         localStorage.removeItem("authToken");
         delete axios.defaults.headers.common["Authorization"];
         dispatch({ type: LOGOUT });
