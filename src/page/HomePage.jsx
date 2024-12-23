@@ -1,9 +1,9 @@
 import IconList from '../components/IconCard';
-import ProductCard from '../components/ProductCard';
 import CardList from '../components/Card';
 import Footer from '../layout/Footer'
 import Navbar from '../layout/Header';
 import PostCardList from '../components/PostCard';
+import ProductCardList from '../components/ProductCardList';
 
 
 
@@ -34,9 +34,7 @@ function HomePage() {
             </section>
             <IconList />
             <CardList />
-            <ProductCard />
-
-
+            <ProductCardList/> //TODO: Add ProductCardList component
             <section className='py-20'>
                 <div className='p-16 flex flex-col gap-2 font-bold'>
                     <h5 className='text-h5  text-blueText '>Featured Products</h5>
