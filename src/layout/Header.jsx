@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from '../actions/userAction';
-
-
+import { fetchCategories } from '../actions/categoriesActions'; // Kategorileri çekmek için action
 
 const Navbar = () => {
-
     const [isMenuOpen, setIsMenuOpen] = useState(true); // Menü durumu
-    const history = useHistory(); // Yönlendirme için kullanılır
+    const [isSearchMenuOpen, setIsSearchMenuOpen] = useState(false); // Arama menüsünün durumu
+    const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user);
+    const categories = useSelector((state) => state.categories.categories); // Kategoriler Redux'tan alınıyor
 
+    useEffect(() => {
+        dispatch(fetchCategories()); // Navbar açıldığında kategorileri yükle
+    }, [dispatch]);
 
     // Menüye tıklayınca geçişi sağlamak
     const handleNavigation = (path) => {
@@ -20,20 +23,28 @@ const Navbar = () => {
     };
 
     const handleLogout = () => {
-        dispatch(logoutUser()); // Logout aksiyonunu dispatch ediyoruz
+        dispatch(logoutUser());
         history.push('/login'); // Kullanıcıyı login sayfasına yönlendiriyoruz
     };
 
+    // Arama ikonuna tıklandığında arama menüsünü açma
+    const handleSearchMenuToggle = () => {
+        setIsSearchMenuOpen(!isSearchMenuOpen); // Arama menüsünü açma/kapama
+    };
+
+    // Kategoriye tıklayınca yönlendirme
+    const handleCategorySelect = (category) => {
+        history.push(`/shop/${category.gender}/${category.title.toLowerCase()}/${category.id}`);
+        setIsSearchMenuOpen(false); // Menü kapanacak
+    };
 
     return (
-
         <>
-            <nav className="bg-transparent px-8  flex items-center justify-between py-8">
+            <nav className="bg-transparent px-8 flex items-center justify-between py-8">
                 {/* Sol Taraf */}
                 <div className="text-xl font-bold">Bandage</div>
                 {user ? (
                     <p>Welcome, {user.name}!</p> // Kullanıcı adı header'da gösterilecek
-
                 ) : (
                     <p>Please log in</p>
                 )}
@@ -51,10 +62,9 @@ const Navbar = () => {
                 </div>
             </nav>
 
-            {/* Açılır Menü */}
+            {/* Menü */}
             {isMenuOpen && (
-                <div className="bg-gray-50 w-full py-4 flex
-        flex-col ">
+                <div className="bg-gray-50 w-full py-4 flex flex-col">
                     <ul className='flex flex-col flex-wrap content-center gap-8 text-3xl text-center'>
                         <li>
                             <button
@@ -79,7 +89,8 @@ const Navbar = () => {
                             >
                                 Product
                             </button>
-                        </li><li>
+                        </li>
+                        <li>
                             <button
                                 onClick={() => handleNavigation('/Blog')}
                                 className="text-secondText"
@@ -104,48 +115,61 @@ const Navbar = () => {
                             </button>
                         </li>
                     </ul>
-                    <div>
-                        <div className='text-3xl text-blueText flex justify-center py-4'>
-                            <img src='/icons/user.svg' alt='Kullanıcı' className='fill-current text-blueText' />
-                            {user ? (
-                                <button onClick={handleLogout}>
-                                    Logout
-                                </button>
-                            ) : (
-                                <>
-                                    <button
-                                        onClick={() => handleNavigation('/login')}
-                                    >
-                                        Login /
-                                    </button>
-                                    <button
-                                        onClick={() => handleNavigation('/signup')}
-                                    >
-                                        Register
-                                    </button>
-                                </>
-                            )}
-                        </div>
-                        <div className='flex flex-col justify-center items-center conta gap-4 py-4'>
-
-                            <button
-                                onClick={() => handleNavigation('/search')}
-                            ><img src='/icons/search.svg' alt='search' />
-                            </button>
-                            <button
-                                onClick={() => handleNavigation('/shopcard')}
-                            ><img src='/icons/shopping-cart.svg' alt='shoppingcart' />
-                            </button>
-                            <button
-                                onClick={() => handleNavigation('/like')}
-                            ><img src='/icons/heart.svg' alt='like' />
-                            </button>
-
-                        </div>
+                    
+                    {/* Kullanıcı İkonu ve Logout */}
+                    <div className='text-3xl text-blueText flex justify-center py-4'>
+                        <img src='/icons/user.svg' alt='Kullanıcı' className='fill-current text-blueText' />
+                        {user ? (
+                            <button onClick={handleLogout}>Logout</button>
+                        ) : (
+                            <>
+                                <button onClick={() => handleNavigation('/login')}>Login /</button>
+                                <button onClick={() => handleNavigation('/signup')}>Register</button>
+                            </>
+                        )}
                     </div>
 
+                    {/* Arama ve Sepet İkonları */}
+                    <div className='flex flex-col justify-center items-center conta gap-4 py-4'>
+                        <button
+                            onClick={handleSearchMenuToggle}
+                        >
+                            <img src='/icons/search.svg' alt='search' />
+                        </button>
+                        {/* Arama Menüsü (Kategoriler) */}
+            {isSearchMenuOpen && (
+                <div className="absolute bg-white w-full py-4 flex flex-col text-center shadow-lg">
+                    <h3 className="text-2xl font-semibold mb-4">Select a Category</h3>
+                    <ul className="list-none p-0">
+                        {categories.map((category) => (
+                            <li key={category.id} className="hover:bg-gray-200">
+                                <button
+                                    onClick={() => handleCategorySelect(category)}
+                                    className="block px-4 py-2 text-xl"
+                                >
+                                    {category.title}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             )}
+                        <button
+                            onClick={() => handleNavigation('/shopcard')}
+                        >
+                            <img src='/icons/shopping-cart.svg' alt='shoppingcart' />
+                        </button>
+                        <button
+                            onClick={() => handleNavigation('/like')}
+                        >
+                            <img src='/icons/heart.svg' alt='like' />
+                        </button>
+                    </div>
+                    
+                </div>
+            )}
+
+            
         </>
     );
 };
