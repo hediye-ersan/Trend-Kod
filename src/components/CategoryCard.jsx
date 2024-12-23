@@ -33,7 +33,7 @@ export default function FashionCategories() {
             >
               <div className="flex flex-col items-center justify-center text-white">
                 <h3 className="text-3xl font-bold mb-2">{category.title}</h3>
-                <p className="text-xl">{category.items} Items</p>
+                <p className="text-xl">{category.rating} Items</p>
               </div>
             </div>
           </Link>
