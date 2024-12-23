@@ -19,18 +19,22 @@ export default function FashionCategories() {
   const topCategories = categories.slice(0, 5);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+    <div className="container mx-auto px-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-screen-lg mx-auto">
         {topCategories.map((category, index) => (
           <Link
             key={index}
-             to={`/shop/${category.gender}/${category.title.toLowerCase()}/${category.id}`}
-            className="relative min-w-[330px] min-h-[300px] bg-contain bg-no-repeat bg-center cursor-pointer transition-all duration-300 hover:shadow-lg group mx-auto"
-            style={{ backgroundImage: `url(${category.img})` }}
+            to={`/shop/${category.gender.toLowerCase()}/${category.title.toLowerCase()}/${category.id}`} // Use Link to navigate
+            className="block overflow-hidden aspect-[4/3] group"
           >
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center">
-              <h3 className="text-2xl font-bold mb-2">{category.title}</h3>
-              <p className="text-lg font-semibold">{category.rating} Rating</p>
+            <div 
+              className="w-full h-full flex items-center justify-center bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-105"
+              style={{ backgroundImage: `url(${category.img})` }}
+            >
+              <div className="flex flex-col items-center justify-center text-white">
+                <h3 className="text-3xl font-bold mb-2">{category.title}</h3>
+                <p className="text-xl">{category.items} Items</p>
+              </div>
             </div>
           </Link>
         ))}
