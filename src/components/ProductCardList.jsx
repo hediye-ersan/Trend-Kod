@@ -1,8 +1,11 @@
 import React from 'react';
 import ProductCard from './ProductCard';
+import FilterInterface from '../layout/FilterInterface';
 
 const ProductCardList = ({ products = [] }) => {
   return (
+    <>
+    <FilterInterface/>
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map((product, index) => (
@@ -18,6 +21,7 @@ const ProductCardList = ({ products = [] }) => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 
