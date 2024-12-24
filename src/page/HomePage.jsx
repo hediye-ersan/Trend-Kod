@@ -1,15 +1,23 @@
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import IconList from '../components/IconCard';
 import CardList from '../components/Card';
 import Footer from '../layout/Footer'
 import Navbar from '../layout/Header';
 import PostCardList from '../components/PostCard';
 import ProductCardList from '../components/ProductCardList';
-
-
-
-
+import { fetchProducts } from '../actions/productsActions';
 
 function HomePage() {
+    const dispatch = useDispatch();
+     const { products, loading, error } = useSelector(state => state.products);
+   
+     useEffect(() => {
+       dispatch(fetchProducts());
+     }, [dispatch]);
+   
+     if (loading) return <div>Loading...</div>;
+     if (error) return <div>{error}</div>;
 
     return (
         <div>
@@ -34,7 +42,8 @@ function HomePage() {
             </section>
             <IconList />
             <CardList />
-            <ProductCardList/> //TODO: Add ProductCardList component
+            <ProductCardList products={products}/>
+
             <section className='py-20'>
                 <div className='p-16 flex flex-col gap-2 font-bold'>
                     <h5 className='text-h5  text-blueText '>Featured Products</h5>
@@ -63,7 +72,7 @@ function HomePage() {
                     <img src='/images/icon3.png' alt='Hack Growth' />
                 </div>
             </section>
-        <PostCardList/>
+            <PostCardList />
             <Footer />
         </div>
     );
