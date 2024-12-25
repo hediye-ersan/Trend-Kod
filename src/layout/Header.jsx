@@ -6,7 +6,7 @@ import { fetchCategories } from '../actions/categoriesActions'; // Kategorileri 
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(true); // Menü durumu
-    const [isSearchMenuOpen, setIsSearchMenuOpen] = useState(false); // Arama menüsünün durumu
+    
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user);
@@ -27,16 +27,7 @@ const Navbar = () => {
         history.push('/login'); // Kullanıcıyı login sayfasına yönlendiriyoruz
     };
 
-    // Arama ikonuna tıklandığında arama menüsünü açma
-    const handleSearchMenuToggle = () => {
-        setIsSearchMenuOpen(!isSearchMenuOpen); // Arama menüsünü açma/kapama
-    };
-
-    // Kategoriye tıklayınca yönlendirme
-    const handleCategorySelect = (category) => {
-        history.push(`/shop/${category.gender}/${category.title.toLowerCase()}/${category.id}`);
-        setIsSearchMenuOpen(false); // Menü kapanacak
-    };
+   
 
     return (
         <>
@@ -132,28 +123,12 @@ const Navbar = () => {
                     {/* Arama ve Sepet İkonları */}
                     <div className='flex flex-col justify-center items-center conta gap-4 py-4'>
                         <button
-                            onClick={handleSearchMenuToggle}
+                           onClick={() => handleNavigation('/search')}
                         >
                             <img src='/icons/search.svg' alt='search' />
                         </button>
                         {/* Arama Menüsü (Kategoriler) */}
-            {isSearchMenuOpen && (
-                <div className="absolute bg-white w-full py-4 flex flex-col text-center shadow-lg">
-                    <h3 className="text-2xl font-semibold mb-4">Select a Category</h3>
-                    <ul className="list-none p-0">
-                        {categories.map((category) => (
-                            <li key={category.id} className="hover:bg-gray-200">
-                                <button
-                                    onClick={() => handleCategorySelect(category)}
-                                    className="block px-4 py-2 text-xl"
-                                >
-                                    {category.title}
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+           
                         <button
                             onClick={() => handleNavigation('/shopcard')}
                         >
