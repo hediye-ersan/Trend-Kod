@@ -8,13 +8,16 @@ import Footer from "../layout/Footer";
 import Navbar from "../layout/Header";
 import { useParams } from 'react-router-dom';
 import FilterInterface from '../layout/FilterInterface';
+import Pagination from '../layout/Pagination';
 
 function ShopPage() {
   const dispatch = useDispatch();
-  const { products, loading, error } = useSelector(state => state.products);
+  const { products, loading, error, total } = useSelector(state => state.products);
   const { categoryId } = useParams();
   const [sort, setSort] = useState('');
   const [filter, setFilter] = useState('');
+  const [page, setPage] = useState(1);
+  const [limit] = useState(10);
 
   useEffect(() => {
     const query = new URLSearchParams();
@@ -22,8 +25,8 @@ function ShopPage() {
     if (sort) query.append('sort', sort);
     if (filter) query.append('filter', filter);
 
-    dispatch(fetchProducts(query.toString()));
-  }, [dispatch, categoryId, sort, filter]);
+    dispatch(fetchProducts(query.toString(), page, limit));
+  }, [dispatch, categoryId, sort, filter, page, limit]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -34,6 +37,7 @@ function ShopPage() {
       <FashionCategories />
       <FilterInterface setSort={setSort} setFilter={setFilter} />
       <ProductCardList products={products} />
+      <Pagination total={total} limit={limit} page={page} setPage={setPage} />
       <IconList />
       <Footer />
     </>
