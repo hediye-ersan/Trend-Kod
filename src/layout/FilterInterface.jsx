@@ -1,16 +1,20 @@
-'use client'
+import React from 'react';
 
- function FilterInterface() {
+const FilterInterface = ({ setSort, setFilter }) => {
+  const handleSortChange = (e) => {
+    setSort(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+  };
+
   return (
     <div className="w-full max-w-3xl mx-auto p-4">
-      {/* Header */}
       <div className="mb-6">
         <h2 className="text-base text-gray-500">Showing all 12 results</h2>
       </div>
-      
-      {/* Filter Bar */}
       <div className="flex flex-wrap gap-4 items-center justify-between">
-        {/* Views Section */}
         <div className="flex items-center gap-3">
           <span className="text-sm">Views:</span>
           <div className="flex gap-1">
@@ -26,26 +30,22 @@
             </button>
           </div>
         </div>
-
-        {/* Sort and Filter Section */}
         <div className="flex gap-3">
-          {/* Select Dropdown */}
-          <div className="relative">
-            <select className="w-[160px] border border-gray-300 rounded px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option value="most-popular">Most Popular</option>
-              <option value="least-popular">Least Popular</option>
-              <option value="newest">Newest</option>
-              <option value="oldest">Oldest</option>
+          <div>
+            <select onChange={handleSortChange} className="w-[160px] border border-gray-300 rounded px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="">Select Sort</option>
+              <option value="price:asc">Price: Low to High</option>
+              <option value="price:desc">Price: High to Low</option>
+              <option value="rating:asc">Rating: Low to High</option>
+              <option value="rating:desc">Rating: High to Low</option>
             </select>
           </div>
-
-          {/* Filter Button */}
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
-            Filter
-          </button>
+          <input type="text" onChange={handleFilterChange} className="border border-gray-300 rounded px-4 py-2" placeholder="Filter products" />
+          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Filter</button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
+
 export default FilterInterface;

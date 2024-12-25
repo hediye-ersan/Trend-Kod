@@ -18,11 +18,11 @@ export const fetchProductsFailure = (error) => ({
   payload: error
 });
 
-export const fetchProducts = () => {
+export const fetchProducts = (query = '') => {
   return async (dispatch) => {
     dispatch(fetchProductsRequest());
     try {
-      const response = await axios.get('https://workintech-fe-ecommerce.onrender.com/products');
+      const response = await axios.get(`https://workintech-fe-ecommerce.onrender.com/products?${query}`);
       const { products, total } = response.data;
       dispatch(fetchProductsSuccess(products, total));
     } catch (error) {
