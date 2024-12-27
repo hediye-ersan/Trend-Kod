@@ -22,7 +22,8 @@ export const fetchProducts = (query = '', page = 1, limit = 10) => {
   return async (dispatch) => {
     dispatch(fetchProductsRequest());
     try {
-      const response = await axios.get(`https://workintech-fe-ecommerce.onrender.com/products?${query}&page=${page}&limit=${limit}`);
+      const offset = (page - 1) * limit; // Offset hesaplama
+      const response = await axios.get(`https://workintech-fe-ecommerce.onrender.com/products?${query}&limit=${limit}&offset=${offset}`);
       const { products, total } = response.data;
       dispatch(fetchProductsSuccess(products, total));
     } catch (error) {
