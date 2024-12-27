@@ -17,9 +17,8 @@ export const fetchCategories = () => async (dispatch) => {
   dispatch(fetchCategoriesRequest());
   try {
     const response = await axios.get('https://workintech-fe-ecommerce.onrender.com/categories');
-    const sortedCategories = response.data
-      .sort((a, b) => b.rating - a.rating)
-      .slice(0, 5);
+    const sortedCategories = response.data.sort((a, b) => b.rating - a.rating);
+
     dispatch(fetchCategoriesSuccess(sortedCategories));
     dispatch(setCategories(sortedCategories)); // Ensure categories are set
   } catch (error) {

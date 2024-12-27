@@ -6,11 +6,14 @@ import { fetchCategories } from '../actions/categoriesActions'; // Kategorileri 
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(true); // Menü durumu
+    const [isShopMenuOpen, setIsShopMenuOpen] = useState(false); // Shop menüsü durumu
+    
+
     
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user);
-    const categories = useSelector((state) => state.categories.categories); // Kategoriler Redux'tan alınıyor
+    const categories = useSelector((state) => state.categories.categories);
 
     useEffect(() => {
         dispatch(fetchCategories()); // Navbar açıldığında kategorileri yükle
@@ -26,6 +29,9 @@ const Navbar = () => {
         dispatch(logoutUser());
         history.push('/login'); // Kullanıcıyı login sayfasına yönlendiriyoruz
     };
+
+    const womenCategories = categories.filter(category => category.gender === 'k');
+    const menCategories = categories.filter(category => category.gender === 'e');
 
    
 
@@ -66,12 +72,49 @@ const Navbar = () => {
                             </button>
                         </li>
                         <li>
-                            <button
-                                onClick={() => handleNavigation('/shop')}
-                                className="text-secondText"
+                        <button
+                                onClick={() => setIsShopMenuOpen(!isShopMenuOpen)}
+                                className="text-secondText relative"
                             >
                                 Shop
                             </button>
+                            {isShopMenuOpen && (
+                                <div className="absolute bg-white shadow-lg mt-2 p-4 flex gap-8">
+                                    {/* Kadın Kategorileri */}
+                                    <div>
+                                        <h3 className="font-bold text-lg">Kadın</h3>
+                                        <ul className="list-none">
+                                            {womenCategories.map(category => (
+                                                <li key={category.id}>
+                                                    <button
+                                                        onClick={() => handleNavigation(`/shop?category=${category.code}`)}
+                                                        className="hover:text-blue-500"
+                                                    >
+                                                        {category.title}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    {/* Erkek Kategorileri */}
+                                    <div>
+                                        <h3 className="font-bold text-lg">Erkek</h3>
+                                        <ul className="list-none">
+                                            {menCategories.map(category => (
+                                                <li key={category.id}>
+                                                    <button
+                                                        onClick={() => handleNavigation(`/shop?category=${category.code}`)}
+                                                        className="hover:text-blue-500"
+                                                    >
+                                                        {category.title}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            )}
                         </li>
                         <li>
                             <button
