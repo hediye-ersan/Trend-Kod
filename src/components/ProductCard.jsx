@@ -1,7 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const ProductCard = ({ id, name, description , price, discountedPrice, image , availability , stock, store_id, category_id, rating, sell_count }) => {
+const ProductCard = ({id,
+  name,
+  description,
+  price,
+  discountedPrice,
+  image,
+}) => {
   return (
     <section>
       <div className='flex flex-col flex-wrap'>
