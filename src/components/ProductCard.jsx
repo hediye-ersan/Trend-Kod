@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const ProductCard = ({ id, title, subtitle, price, discountedPrice, image }) => {
+const ProductCard = ({ id, name, description , price, discountedPrice, image , availability , stock, store_id, category_id, rating, sell_count }) => {
   return (
     <section>
       <div className='flex flex-col flex-wrap'>
         <Link to={`/productdetails/${id}`} className="group">
           <img src={image} alt="ProductCard" className="group-hover:opacity-80" />
-        </Link>
+        
         <div className="p-4 text-center font-bold">
-          <h5 className="text-h5 ">{title}</h5>
-          <h6 className="text-h6 text-secondText ">{subtitle}</h6>
+          <h5 className="text-h5 ">{name}</h5>
+          <h6 className="text-h6 text-secondText ">{description}</h6>
           <div className="flex items-center justify-center space-x-2 mt-2">
             <span className="text-secondText line-through text-h5">
               {price}
@@ -29,6 +29,7 @@ const ProductCard = ({ id, title, subtitle, price, discountedPrice, image }) => 
             ))}
           </div>
         </div>
+        </Link>
       </div>
     </section>
   );
