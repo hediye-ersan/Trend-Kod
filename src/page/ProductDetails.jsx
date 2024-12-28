@@ -55,7 +55,7 @@ function ProductDetails() {
                     {/* Image */}
                     <div className="md:w-1/2">
                         <img
-                            src="/images/detailCard.svg"
+                            src={productDetails.images[0]?.url}
                             alt="Product"
                             className="w-full rounded-lg shadow"
                         />
