@@ -4,17 +4,13 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Heart, ShoppingCart, Eye } from 'lucide-react';
 
 export default function ProductCard({
-  images = [
-    '/images/productDetail-1.svg',
-    '/images/productDetail-2.svg',
-    
-  ],
-  title = 'Floating Phone',
-  rating = 4.5,
-  reviews = 10,
-  price = 1139.33,
-  availability = 'In Stock',
-  description = 'Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met.',
+  images = [],
+  name,
+  rating,
+  reviews,
+  price,
+  availability,
+  description,
   colors = ['#29B6F6', '#66BB6A', '#FF7043', '#26365F'],
 }) {
   const [currentImage, setCurrentImage] = useState(0);
@@ -49,7 +45,7 @@ export default function ProductCard({
         <div className="aspect-square overflow-hidden">
           <img
             src={images[currentImage]}
-            alt={title}
+            alt={name}
             className="w-full h-full object-cover"
           />
         </div>
@@ -92,7 +88,7 @@ export default function ProductCard({
 
       {/* Product Info */}
       <div className="p-6 space-y-4">
-        <h2 className="text-3xl font-semibold">{title}</h2>
+        <h2 className="text-3xl font-semibold">{name}</h2>
         
         {/* Rating */}
         <div className="flex items-center gap-2">
