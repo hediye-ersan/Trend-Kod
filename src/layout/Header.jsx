@@ -7,9 +7,9 @@ import { fetchCategories } from '../actions/categoriesActions'; // Kategorileri 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(true); // Menü durumu
     const [isShopMenuOpen, setIsShopMenuOpen] = useState(false); // Shop menüsü durumu
-    
 
-    
+
+
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user);
@@ -33,7 +33,7 @@ const Navbar = () => {
     const womenCategories = categories.filter(category => category.gender === 'k');
     const menCategories = categories.filter(category => category.gender === 'e');
 
-   
+
 
     return (
         <>
@@ -72,7 +72,7 @@ const Navbar = () => {
                             </button>
                         </li>
                         <li>
-                        <button
+                            <button
                                 onClick={() => setIsShopMenuOpen(!isShopMenuOpen)}
                                 className="text-secondText relative"
                             >
@@ -87,7 +87,7 @@ const Navbar = () => {
                                             {womenCategories.map(category => (
                                                 <li key={category.id}>
                                                     <button
-                                                        onClick={() => handleNavigation(`/shop?category=${category.code}`)}
+                                                        onClick={() => handleNavigation(`/products?category=${category.id}`)}
                                                         className="hover:text-blue-500"
                                                     >
                                                         {category.title}
@@ -104,7 +104,7 @@ const Navbar = () => {
                                             {menCategories.map(category => (
                                                 <li key={category.id}>
                                                     <button
-                                                        onClick={() => handleNavigation(`/shop?category=${category.code}`)}
+                                                        onClick={() => handleNavigation(`/products?category=${category.id}`)}
                                                         className="hover:text-blue-500"
                                                     >
                                                         {category.title}
@@ -149,7 +149,7 @@ const Navbar = () => {
                             </button>
                         </li>
                     </ul>
-                    
+
                     {/* Kullanıcı İkonu ve Logout */}
                     <div className='text-3xl text-blueText flex justify-center py-4'>
                         <img src='/icons/user.svg' alt='Kullanıcı' className='fill-current text-blueText' />
@@ -166,12 +166,12 @@ const Navbar = () => {
                     {/* Arama ve Sepet İkonları */}
                     <div className='flex flex-col justify-center items-center conta gap-4 py-4'>
                         <button
-                           onClick={() => handleNavigation('/search')}
+                            onClick={() => handleNavigation('/search')}
                         >
                             <img src='/icons/search.svg' alt='search' />
                         </button>
                         {/* Arama Menüsü (Kategoriler) */}
-           
+
                         <button
                             onClick={() => handleNavigation('/shopcard')}
                         >
@@ -183,11 +183,11 @@ const Navbar = () => {
                             <img src='/icons/heart.svg' alt='like' />
                         </button>
                     </div>
-                    
+
                 </div>
             )}
 
-            
+
         </>
     );
 };
