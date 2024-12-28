@@ -1,12 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ProductCard from '../components/ProductDetailCard';
 import Navbar from '../layout/Header';
 import { Link } from 'react-router-dom';
 import BestsellerProducts from '../components/BestsellerProducts';
 import Footer from '../layout/Footer';
 import IconList from '../components/IconCard';
+import { fetchProductDetails } from '../actions/productsActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 function ProductDetails() {
+
+
+    const { productId } = useParams();
+    const dispatch = useDispatch();
+    const { productDetails, loading } = useSelector((state) => state.products);
+
+    useEffect(() => {
+        dispatch(fetchProductDetails(productId));
+    }, [dispatch, productId]);
+
+
+
+    if (loading) return <div>Loading...</div>;
+    if (!productDetails) return <div>Product not found.</div>;
+
+
     return (
         <div>
             <Navbar />
@@ -18,7 +37,8 @@ function ProductDetails() {
                     <span className="text-secondText ">Shop</span>
                 </div>
             </div>
-            <ProductCard />
+
+            <ProductCard {...productDetails} />
             <div className="max-w-5xl mx-auto p-4">
                 {/* Tabs */}
                 <div className="flex gap-4 text-sm font-medium mb-6 border-b border-gray-200">
@@ -96,9 +116,9 @@ function ProductDetails() {
                     </div>
                 </div>
             </div>
-            <BestsellerProducts/>
-            <IconList/>
-            <Footer/>
+            <BestsellerProducts />
+            <IconList />
+            <Footer />
         </div>
     )
 }
