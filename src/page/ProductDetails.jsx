@@ -34,7 +34,7 @@ function ProductDetails() {
                 <div className="flex items-center justify-center gap-2 text-sm text-h6 font-bold">
                     <Link to="/" className=" hover:underline ">Home</Link>
                     <span >/</span>
-                    <span className="text-secondText ">Shop</span>
+                    <Link to="/shop" className="text-secondText ">Shop</Link>
                 </div>
             </div>
 

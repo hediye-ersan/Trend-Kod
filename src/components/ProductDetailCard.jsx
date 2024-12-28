@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Heart, ShoppingCart, Eye } from 'lucide-react';
 
 export default function ProductCard({
-  images = [],
+  images,
   name,
   rating,
-  reviews,
   price,
+  stock,
   availability,
   description,
   colors = ['#29B6F6', '#66BB6A', '#FF7043', '#26365F'],
@@ -29,9 +29,7 @@ export default function ProductCard({
       .map((_, i) => (
         <span
           key={i}
-          className={`text-2xl ${
-            i < Math.floor(rating) ? 'text-yellow-400' : 'text-gray-300'
-          }`}
+          className={`text-2xl ${i < Math.floor(rating) ? 'text-yellow-400' : 'text-gray-300'}`}
         >
           ★
         </span>
@@ -44,12 +42,12 @@ export default function ProductCard({
       <div className="relative">
         <div className="aspect-square overflow-hidden">
           <img
-            src={images[currentImage]}
+            src={images[currentImage].url}
             alt={name}
             className="w-full h-full object-cover"
           />
         </div>
-        
+
         {/* Navigation Arrows */}
         <button
           onClick={previousImage}
@@ -72,12 +70,10 @@ export default function ProductCard({
             <button
               key={index}
               onClick={() => setCurrentImage(index)}
-              className={`w-16 h-16 rounded-md overflow-hidden border-2 ${
-                currentImage === index ? 'border-blue-500' : 'border-transparent'
-              }`}
+              className={`w-16 h-16 rounded-md overflow-hidden border-2 ${currentImage === index ? 'border-blue-500' : 'border-transparent'}`}
             >
               <img
-                src={images[index]}
+                src={images[index].url}
                 alt={`Thumbnail ${index + 1}`}
                 className="w-full h-full object-cover"
               />
@@ -89,18 +85,18 @@ export default function ProductCard({
       {/* Product Info */}
       <div className="p-6 space-y-4">
         <h2 className="text-3xl font-semibold">{name}</h2>
-        
+
         {/* Rating */}
         <div className="flex items-center gap-2">
           <div className="flex">{renderStars(rating)}</div>
-          <span className="text-gray-600">{reviews} Reviews</span>
+          <span className="text-gray-600">{rating} Reviews</span>
         </div>
 
         {/* Price and Availability */}
         <div className="space-y-1">
           <div className="text-4xl font-bold">${price.toFixed(2)}</div>
-          <div className="text-sm">
-            Availability:{' '}
+          <div className="text-h6">
+            Availability: {stock} pcs
             <span className="text-green-500 font-medium">{availability}</span>
           </div>
         </div>
