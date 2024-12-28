@@ -7,7 +7,6 @@ import SignupForm from './page/SignupForm'
 import ProductDetails from './page/ProductDetails'
 import { ToastContainer } from 'react-toastify';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './Store/store';
 
@@ -19,8 +18,8 @@ function App() {
       <Provider store={store}>
         <ToastContainer />
         <Switch>
-        <Route path="/productdetails">
-            <ProductDetails/>
+          <Route path="/productdetails/:productId">
+            <ProductDetails />
           </Route>
           <Route path="/shop">
             <ShopPage />
