@@ -3,6 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.product-card {
+  cursor: pointer; /* Pointer imleci */
+}
+
+.product-card:hover {
+  transform: scale(1.05); /* Hover efekti */
+  transition: transform 0.2s; /* Geçiş efekti */
+}
 /**{
 border: solid 1px rgb(240, 128, 171);
 }*/
