@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart, increaseProductQuantity } from '../actions/shopCardAction';
+import { Link } from 'react-router-dom';
 
 const ShoppingCartDropdown = () => {
   const cartItems = useSelector((state) => state.shopCard.cartItems);
@@ -33,16 +34,8 @@ const ShoppingCartDropdown = () => {
         <p className="text-lg font-semibold">Toplam: {totalPrice.toFixed(2)} TL</p>
       </div>
       <div className="flex justify-between items-center p-4">
-        <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">Sepete Git</button>
+        <Link to="/shopping-cart" className="bg-blue-500 text-white px-4 py-2 rounded-lg">Sepete Git</Link>
         <button className="bg-orange-500 text-white px-4 py-2 rounded-lg">Siparişi Tamamla</button>
-      </div>
-      <div>
-        <h2>Sepetiniz</h2>
-        <ul>
-          {cartItems.map((item) => (
-            <li key={item.id}>{item.name} - Miktar: {item.quantity}</li>
-          ))}
-        </ul>
       </div>
     </div>
   );
