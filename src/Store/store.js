@@ -6,6 +6,7 @@ import userReducer from '../reducers/userReducer';
 import {productReducer} from '../reducers/productReducer';
 import shoppingCartReducer from '../reducers/shoppinCartReducer';
 import categoriesReducer from '../reducers/categoriesReducer';
+import shopCardReducer from '../reducers/shopCardReducer';
 
 const logger = createLogger();
 
@@ -13,9 +14,8 @@ const rootReducer = combineReducers({
     user: userReducer,
     shoppingCart: shoppingCartReducer,
     categories: categoriesReducer,
-    products: productReducer
-
-
+    products: productReducer,
+    shopCard: shopCardReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
