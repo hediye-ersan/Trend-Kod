@@ -1,9 +1,11 @@
 'use client';
-
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Heart, ShoppingCart, Eye } from 'lucide-react';
+import { addToCart } from '../actions/shopCardAction'; // cartActions
 
 export default function ProductCard({
+  id,
   images,
   name,
   rating,
@@ -13,6 +15,19 @@ export default function ProductCard({
   description,
   colors = ['#29B6F6', '#66BB6A', '#FF7043', '#26365F'],
 }) {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    const product = {
+      id,
+      name,
+      price,
+      images,
+      stock,
+    };
+    dispatch(addToCart(product));
+  };
+
   const [currentImage, setCurrentImage] = useState(0);
 
   const nextImage = () => {
@@ -124,7 +139,10 @@ export default function ProductCard({
           <button className="p-2 border border-gray-200 rounded-md hover:bg-gray-50">
             <Heart className="w-6 h-6" />
           </button>
-          <button className="p-2 border border-gray-200 rounded-md hover:bg-gray-50">
+          <button
+            onClick={handleAddToCart}
+            className="p-2 border border-gray-200 rounded-md hover:bg-gray-50"
+          >
             <ShoppingCart className="w-6 h-6" />
           </button>
           <button className="p-2 border border-gray-200 rounded-md hover:bg-gray-50">
