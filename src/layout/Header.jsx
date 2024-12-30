@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from '../actions/userAction';
 import { fetchCategories } from '../actions/categoriesActions'; // Kategorileri çekmek için action
-import { ShoppingCart } from 'lucide-react';
 import ShoppingCartDropdown from './ShoppingCardDropdown';
 
 const Navbar = () => {
@@ -175,7 +174,7 @@ const Navbar = () => {
                         {/* Arama Menüsü (Kategoriler) */}
 
                         <button onClick={() => setIsCartOpen(!isCartOpen)}>
-                            <ShoppingCart className="w-6 h-6" />
+                            <img src='/icons/shopping-cart.svg' alt='shoppingcart'/>
                             {cartItems.reduce((a, c) => a + c.quantity, 0) > 0 && (
                                 <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">{cartItems.reduce((a, c) => a + c.quantity, 0)}</span>
                             )}
