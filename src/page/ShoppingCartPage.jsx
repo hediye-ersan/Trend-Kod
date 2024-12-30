@@ -5,6 +5,7 @@ import {
     increaseProductQuantity,
     decreaseProductQuantity,
     removeFromCart,
+    addToCart
 } from "../actions/shopCardAction";
 
 const ShoppingCartPage = () => {
@@ -15,7 +16,21 @@ const ShoppingCartPage = () => {
     const user = useSelector((state) => state.user.user);
 
     useEffect(() => {
+        const storedCartItems = localStorage.getItem('cartItems');
+        if (storedCartItems) {
+            const parsedItems = JSON.parse(storedCartItems);
+            // Redux store'a yükle
+            parsedItems.forEach(item => dispatch(addToCart(item)));
+        }
+    }, [dispatch]);
+    
+    useEffect(() => {
+        // setSelectedItems'ı burada çağırarak döngüyü önlüyoruz
         setSelectedItems(cartItems.map((item) => item.id));
+    }, [cartItems]);
+    
+    useEffect(() => {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems]);
 
     const groupedItems = cartItems.reduce((groups, item) => {
@@ -37,8 +52,6 @@ const ShoppingCartPage = () => {
             setSelectedItems([...selectedItems, itemId]);
         }
     };
-
-    
 
     const handleOrder = () => {
         const orderedItems = cartItems.filter((item) => selectedItems.includes(item.id));
