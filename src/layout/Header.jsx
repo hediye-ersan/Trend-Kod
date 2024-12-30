@@ -3,17 +3,19 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from '../actions/userAction';
 import { fetchCategories } from '../actions/categoriesActions'; // Kategorileri çekmek için action
+import { ShoppingCart } from 'lucide-react';
+import ShoppingCartDropdown from './ShoppingCardDropdown';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(true); // Menü durumu
     const [isShopMenuOpen, setIsShopMenuOpen] = useState(false); // Shop menüsü durumu
-
-
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user);
     const categories = useSelector((state) => state.categories.categories);
+    const cartItems = useSelector(state => state.shopCard.cartItems);
 
     useEffect(() => {
         dispatch(fetchCategories()); // Navbar açıldığında kategorileri yükle
@@ -33,7 +35,7 @@ const Navbar = () => {
     const womenCategories = categories.filter(category => category.gender === 'k');
     const menCategories = categories.filter(category => category.gender === 'e');
 
-
+    console.log('Cart Items:', cartItems);
 
     return (
         <>
@@ -87,7 +89,7 @@ const Navbar = () => {
                                             {womenCategories.map(category => (
                                                 <li key={category.id}>
                                                     <button
-                                                        onClick={() => handleNavigation(`/products?category=${category.id}`)}
+                                                        onClick={() => handleNavigation(`/shop?category=${category.id}`)}
                                                         className="hover:text-blue-500"
                                                     >
                                                         {category.title}
@@ -104,7 +106,7 @@ const Navbar = () => {
                                             {menCategories.map(category => (
                                                 <li key={category.id}>
                                                     <button
-                                                        onClick={() => handleNavigation(`/products?category=${category.id}`)}
+                                                        onClick={() => handleNavigation(`/shop?category=${category.id}`)}
                                                         className="hover:text-blue-500"
                                                     >
                                                         {category.title}
@@ -172,10 +174,12 @@ const Navbar = () => {
                         </button>
                         {/* Arama Menüsü (Kategoriler) */}
 
-                        <button
-                            onClick={() => handleNavigation('/shopcard')}
-                        >
-                            <img src='/icons/shopping-cart.svg' alt='shoppingcart' />
+                        <button onClick={() => setIsCartOpen(!isCartOpen)}>
+                            <ShoppingCart className="w-6 h-6" />
+                            {cartItems.reduce((a, c) => a + c.quantity, 0) > 0 && (
+                                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">{cartItems.reduce((a, c) => a + c.quantity, 0)}</span>
+                            )}
+                            {isCartOpen && <ShoppingCartDropdown />}
                         </button>
                         <button
                             onClick={() => handleNavigation('/like')}
