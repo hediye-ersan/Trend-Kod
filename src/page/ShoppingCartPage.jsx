@@ -16,6 +16,7 @@ const ShoppingCartPage = () => {
     const [selectedItems, setSelectedItems] = useState([]);
     const history = useHistory();
     const user = useSelector((state) => state.user.user);
+    const addresses = useSelector((state) => state.user.addressList);
 
     useEffect(() => {
         const storedCartItems = localStorage.getItem('cartItems');
@@ -63,15 +64,15 @@ const ShoppingCartPage = () => {
         }
     };
 
+    const handleAddAddress = () => {
+        history.push('/add-address');
+    };
+
     useEffect(() => {
         if (user) {
             dispatch(fetchUserAddresses());
         }
     }, [user, dispatch]);
-
-    const handleAddAddress = () => {
-        history.push('/add-address');
-    };
 
     return (
         <div className="flex flex-col md:flex-row gap-8 p-4">
@@ -146,12 +147,18 @@ const ShoppingCartPage = () => {
                 </div>
                 <div className="mt-8">
                     <h1 className="text-xl font-bold mb-4">Adreslerim</h1>
-                    {user?.addresses?.length > 0 ? (
+                    {addresses.length > 0 ? (
                         <div>
                             <ul className="list-disc pl-5">
-                                {user.addresses.map((address, index) => (
+                                {addresses.map((address, index) => (
                                     <li key={index}>
-                                        {address.city}, {address.district}, {address.neighborhood}
+                                        <input
+                                            type="radio"
+                                            name="selectedAddress"
+                                            value={address.id}
+                                            onChange={() => setSelectedAddress(address.id)}
+                                        />
+                                        {`${address.city}, ${address.district}, ${address.neighborhood} (${address.type})`}
                                     </li>
                                 ))}
                             </ul>
