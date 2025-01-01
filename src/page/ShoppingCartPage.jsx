@@ -8,7 +8,7 @@ import {
     addToCart
 } from "../actions/shopCardAction";
 
-import { fetchUserAddresses } from "../actions/userAction";
+import { fetchUserAddresses, addUserAddress, updateUserAddress, deleteUserAddress } from "../actions/userAction";
 
 const ShoppingCartPage = () => {
     const dispatch = useDispatch();
@@ -17,6 +17,19 @@ const ShoppingCartPage = () => {
     const history = useHistory();
     const user = useSelector((state) => state.user.user);
     const addresses = useSelector((state) => state.user.addressList);
+    const [selectedAddress, setSelectedAddress] = useState(null);
+    const [showAddressForm, setShowAddressForm] = useState(false);
+    const [formData, setFormData] = useState({
+        title: "",
+        name: "",
+        surname: "",
+        phone: "",
+        city: "",
+        district: "",
+        neighborhood: "",
+        address: "",
+    });
+
 
     useEffect(() => {
         const storedCartItems = localStorage.getItem('cartItems');
@@ -64,15 +77,43 @@ const ShoppingCartPage = () => {
         }
     };
 
-    const handleAddAddress = () => {
-        history.push('/add-address');
+    // Kullanıcı adreslerini yükleme
+    useEffect(() => {
+        dispatch(fetchUserAddresses());
+    }, [dispatch]);
+
+    // Form input değişikliği yönetimi
+    const handleFormChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
     };
 
-    useEffect(() => {
-        if (user) {
-            dispatch(fetchUserAddresses());
+    // Yeni adres ekleme işlemi
+    const handleAddressSubmit = async () => {
+        try {
+            await dispatch(addUserAddress(formData));
+            alert("Adres başarıyla eklendi!");
+            setShowAddressForm(false);
+            setFormData({ title: "", name: "", phone: "", city: "", district: "", neighborhood: "" });
+        } catch (error) {
+            console.error("Adres eklenirken hata:", error);
         }
-    }, [user, dispatch]);
+    };
+
+    // Adres güncelleme işlemi
+    const handleUpdateAddress = async (updatedAddress) => {
+        await dispatch(updateUserAddress(updatedAddress.id, updatedAddress));
+        await dispatch(fetchUserAddresses()); // Adres listesini güncelle
+    };
+    // Adres silme işlemi
+    const handleDeleteAddress = async (addressId) => {
+        if (window.confirm("Bu adresi silmek istediğinizden emin misiniz?")) {
+            await dispatch(deleteUserAddress(addressId));
+            await dispatch(fetchUserAddresses()); // Adres listesini güncelle
+        }
+    };
 
     return (
         <div className="flex flex-col md:flex-row gap-8 p-4">
@@ -146,34 +187,167 @@ const ShoppingCartPage = () => {
                     </button>
                 </div>
                 <div className="mt-8">
-                    <h1 className="text-xl font-bold mb-4">Adreslerim</h1>
-                    {addresses.length > 0 ? (
-                        <div>
-                            <ul className="list-disc pl-5">
-                                {addresses.map((address, index) => (
-                                    <li key={index}>
-                                        <input
-                                            type="radio"
-                                            name="selectedAddress"
-                                            value={address.id}
-                                            onChange={() => setSelectedAddress(address.id)}
-                                        />
-                                        {`${address.city}, ${address.district}, ${address.neighborhood} (${address.type})`}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                    <h2 className="text-xl font-semibold mb-2">Teslimat Adresi</h2>
+                    {addresses && addresses.length > 0 ? (
+                        <ul className="list-disc pl-5">
+                            {addresses.map((address) => (
+                                <li key={address.id} className="mb-2">
+                                    <input
+                                        type="radio"
+                                        name="selectedAddress"
+                                        value={address.id}
+                                        onChange={() => setSelectedAddress(address.id)}
+                                        className="mr-2"
+                                    />
+                                    {`${address.title}, ${address.city}, ${address.district}, ${address.neighborhood}`}
+                                    <button
+                                        onClick={() => handleDeleteAddress(address.id)}
+                                        className="ml-4 text-red-500 hover:underline"
+                                    >
+                                        Sil
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setFormData({
+                                                title: address.title,
+                                                name: address.name,
+                                                phone: address.phone,
+                                                city: address.city,
+                                                district: address.district,
+                                                neighborhood: address.neighborhood,
+                                            });
+                                            setShowAddressForm(true);
+                                        }}
+                                        className="ml-4 text-blue-500 hover:underline"
+                                    >
+                                        Güncelle
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
                     ) : (
-                        user?.addresses === undefined
-                            ? "Adresler yüklenirken bir hata oluştu."
-                            : "Kayıtlı adresiniz bulunmamaktadır."
+                        <p>Kayıtlı adresiniz bulunmamaktadır.</p>
                     )}
+
                     <button
-                        onClick={handleAddAddress}
+                        onClick={() => setShowAddressForm((prev) => !prev)}
                         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                     >
                         + Yeni Adres Ekle
                     </button>
+
+                    {showAddressForm && (
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                selectedAddress ? handleUpdateAddress(selectedAddress) : handleAddressSubmit();
+                            }}
+                            className="mt-4 border p-4 rounded-lg bg-white shadow-md"
+                        >
+                            <h2 className="text-lg font-semibold text-gray-700 mb-4">Adres Bilgileri</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600">Adres Başlığı:</label>
+                                    <input
+                                        type="text"
+                                        name="title"
+                                        value={formData.title}
+                                        onChange={handleFormChange}
+                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
+                                        placeholder="Ev Adresi"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600">Ad:</label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleFormChange}
+                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
+                                        placeholder="Alişan"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600">Soyad:</label>
+                                    <input
+                                        type="text"
+                                        name="surname"
+                                        value={formData.surname}
+                                        onChange={handleFormChange}
+                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
+                                        placeholder="Karababa"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600">Telefon:</label>
+                                    <input
+                                        type="text"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleFormChange}
+                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
+                                        placeholder="0555 555 55 55"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600">Şehir:</label>
+                                    <select
+                                        name="city"
+                                        value={formData.city}
+                                        onChange={handleFormChange}
+                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
+                                    >
+                                        <option value="Istanbul">Istanbul</option>
+                                        <option value="Ankara">Ankara</option>
+                                        <option value="Izmir">Izmir</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600">İlçe:</label>
+                                    <input
+                                        type="text"
+                                        name="district"
+                                        value={formData.district}
+                                        onChange={handleFormChange}
+                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
+                                        placeholder="Esenler"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600">Mahalle:</label>
+                                    <input
+                                        type="text"
+                                        name="neighborhood"
+                                        value={formData.neighborhood}
+                                        onChange={handleFormChange}
+                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
+                                        placeholder="Yeni Mahalle"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600">Adres Detay:</label>
+                                    <textarea
+                                        name="address"
+                                        value={formData.address}
+                                        onChange={handleFormChange}
+                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
+                                        placeholder="Apartman No, Daire No, Kat No"
+                                        rows="3"
+                                    ></textarea>
+                                </div>
+                            </div>
+                            <div className="mt-4 flex justify-end">
+                                <button
+                                    type="submit"
+                                    className="px-6 py-2 bg-orange-500 text-white rounded-md shadow hover:bg-orange-600"
+                                >
+                                    {selectedAddress ? "Güncelle" : "Kaydet"}
+                                </button>
+                            </div>
+                        </form>
+                    )}
+
                 </div>
             </div>
         </div>
