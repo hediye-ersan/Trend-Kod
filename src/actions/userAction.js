@@ -13,6 +13,8 @@ import {
   ADD_ADDRESS, DELETE_ADDRESS, UPDATE_ADDRESS
 } from "./userActionTypes";
 
+
+
 // Action creator for setting user
 export const setUser = (user) => ({
   type: SET_USER,
@@ -116,7 +118,7 @@ export const signupUser = (userData) => {
       localStorage.setItem('authToken', token);
 
       // Set authorization header for future requests
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      axios.defaults.headers.common['Authorization'] = `${token}`;
 
       dispatch({
         type: SIGNUP_SUCCESS,
@@ -139,32 +141,30 @@ export const signupUser = (userData) => {
 
 // Fetch user addresses
 export const fetchUserAddresses = () => {
-  return async (dispatch, getState) => {
-      const token = getState().user.token; // Get token from state
-      console.log("Token:", token); // Log the token for debugging
+  return async (dispatch) => {
+      const token = localStorage.getItem('authToken');
+      console.log("Fetching addresses with token:", token); // Log the token
       try {
-        console.log("Token:", token); // Log the token for debugging
-          const response = await axios.get(
-              "https://workintech-fe-ecommerce.onrender.com/user/address",
-              { headers: { Authorization: `Bearer ${token}` } }
-          );
-          const addresses = response.data;
-          dispatch(setUser({ ...getState().user.user, addresses }));
+          const response = await axios.get('https://workintech-fe-ecommerce.onrender.com/user/address', {
+              headers: { 'Authorization': `${token}` }
+          });
+          dispatch({ type: 'FETCH_ADDRESSES_SUCCESS', payload: response.data });
       } catch (error) {
-          console.error("Adresleri alırken hata oluştu:", error);
+          console.error('Error fetching addresses:', error);
+          dispatch({ type: 'FETCH_ADDRESSES_FAILURE', payload: error.message });
       }
   };
 };
 
 // Add a new address
 export const addUserAddress = (address) => {
-    return async (dispatch, getState) => {
-        const token = getState().user.token; // Get token from state
+    return async (dispatch) => {
+        const token = localStorage.getItem('authToken'); // Get token from state
         try {
             const response = await axios.post(
                 "https://workintech-fe-ecommerce.onrender.com/user/address",
                 address,
-                { headers: { Authorization: `Bearer ${token}` } }
+                { headers: { Authorization: `${token}` } }
             );
             dispatch({ type: ADD_ADDRESS, payload: response.data });
         } catch (error) {
@@ -175,33 +175,35 @@ export const addUserAddress = (address) => {
 
 // Delete an address
 export const deleteUserAddress = (addressId) => {
-    return async (dispatch, getState) => {
-        const token = getState().user.token; // Get token from state
-        try {
-            await axios.delete(
-                `https://workintech-fe-ecommerce.onrender.com/user/address/${addressId}`,
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
-            dispatch({ type: DELETE_ADDRESS, payload: addressId });
-        } catch (error) {
-            console.error("Adres silinirken hata oluştu:", error);
-        }
-    };
+  return async (dispatch) => {
+      const token = localStorage.getItem('authToken');
+      try {
+          await axios.delete(
+              `https://workintech-fe-ecommerce.onrender.com/user/address/${addressId}`,
+              { headers: { Authorization: `${token}` } }
+          );
+          dispatch({ type: DELETE_ADDRESS, payload: addressId });
+      } catch (error) {
+          console.error("Adres silinirken hata oluştu:", error);
+      }
+  };
 };
 
 // Update an address
 export const updateUserAddress = (addressId, updatedAddress) => {
-    return async (dispatch, getState) => {
-        const token = getState().user.token; // Get token from state
-        try {
-            const response = await axios.put(
-                `https://workintech-fe-ecommerce.onrender.com/user/address/${addressId}`,
-                updatedAddress,
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
-            dispatch({ type: UPDATE_ADDRESS, payload: response.data });
-        } catch (error) {
-            console.error("Adres güncellenirken hata oluştu:", error);
-        }
-    };
+  return async (dispatch) => {
+      const token = localStorage.getItem("authToken"); // Get token from localStorage
+      try {
+          const response = await axios.put(
+              `https://workintech-fe-ecommerce.onrender.com/user/address/${addressId}`,
+              updatedAddress,
+              { headers: { Authorization: `${token}` } }
+          );
+
+          // Güncellenmiş adresi store'a gönder
+          dispatch({ type: UPDATE_ADDRESS, payload: response.data });
+      } catch (error) {
+          console.error("Adres güncellenirken hata oluştu:", error);
+      }
+  };
 };
