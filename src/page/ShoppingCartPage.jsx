@@ -57,18 +57,26 @@ const ShoppingCartPage = () => {
     };
 
     // Kullanıcı kartlarıyla ilgili işlemler
-    const handleAddCard = (newCardData) => {
-        dispatch(addUserCard(newCardData));
+
+    const handleAddCard = async () => {
+        try {
+            await dispatch(addUserCard(cardFormData));
+            setShowCardForm(false);
+            setFormData({ card_no: "", expire_month: "", expire_year: "", name_on_card: "" });
+        } catch (error) {
+            alert("Kart eklenirken hata: " + error.message);
+        }
     };
 
-    const handleUpdateCard = (updatedCardData) => {
-        dispatch(updateUserCard(updatedCardData));
+    const handleUpdateCard = async (updatedCardData) => {
+        await dispatch(updateUserCard(updatedCardData));
+        await dispatch(fetchUserCards());
     };
 
-    const handleDeleteCard = (cardId) => {
+    const handleDeleteCard = async (cardId) => {
         dispatch(deleteUserCard(cardId));
+        await dispatch(fetchUserCards());
     };
-
 
     useEffect(() => {
         const storedCartItems = localStorage.getItem('cartItems');
@@ -99,16 +107,17 @@ const ShoppingCartPage = () => {
     }, 0);
 
     const handleCheckboxChange = (itemId) => {
-        if (selectedItems.includes(itemId)) {
-            setSelectedItems(selectedItems.filter((id) => id !== itemId));
-        } else {
-            setSelectedItems([...selectedItems, itemId]);
-        }
+        setSelectedItems((prevSelected) =>
+            prevSelected.includes(itemId)
+                ? prevSelected.filter((id) => id !== itemId)
+                : [...prevSelected, itemId]
+        );
     };
 
     const handleOrder = () => {
         const orderedItems = cartItems.filter((item) => selectedItems.includes(item.id));
         if (!user) {
+            alert("Lütfen sipariş vermek için giriş yapın.");
             history.push('/login');
         } else {
             console.log("Sipariş Oluşturulan Ürünler:", orderedItems);
@@ -392,9 +401,12 @@ const ShoppingCartPage = () => {
             <div className="mt-8">
                 <h2 className="text-xl font-semibold mb-2">Kart Bilgileri</h2>
                 {payment && payment.length > 0 ? (
+
                     <ul className="list-disc pl-5">
+
                         {payment.map((card) => (
                             <li key={card.id} className="mb-2">
+                                console.log(payment)
                                 <input
                                     type="radio"
                                     name="selectedCard"
