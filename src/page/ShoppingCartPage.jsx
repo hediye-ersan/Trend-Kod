@@ -7,7 +7,12 @@ import {
     removeFromCart,
     addToCart
 } from "../actions/shopCardAction";
-
+import {
+    fetchUserCards,
+    addUserCard,
+    updateUserCard,
+    deleteUserCard,
+} from '../actions/paymentActions';
 import { fetchUserAddresses, addUserAddress, updateUserAddress, deleteUserAddress } from "../actions/userAction";
 
 const ShoppingCartPage = () => {
@@ -29,6 +34,40 @@ const ShoppingCartPage = () => {
         neighborhood: "",
         address: "",
     });
+    const payment = useSelector((state) => state.payment.creditCards);
+    const [selectedCard, setSelectedCard] = useState(null);
+    const [showCardForm, setShowCardForm] = useState(false);
+    const [cardFormData, setCardFormData] = useState({
+        card_no: "",
+        expire_month: "",
+        expire_year: "",
+        name_on_card: "",
+    });
+
+    // Kullanıcı kartlarını yükle
+    useEffect(() => {
+        dispatch(fetchUserCards());
+    }, [dispatch]);
+
+    const handleCardFormChange = (e) => {
+        setCardFormData({
+            ...cardFormData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    // Kullanıcı kartlarıyla ilgili işlemler
+    const handleAddCard = (newCardData) => {
+        dispatch(addUserCard(newCardData));
+    };
+
+    const handleUpdateCard = (updatedCardData) => {
+        dispatch(updateUserCard(updatedCardData));
+    };
+
+    const handleDeleteCard = (cardId) => {
+        dispatch(deleteUserCard(cardId));
+    };
 
 
     useEffect(() => {
@@ -350,6 +389,121 @@ const ShoppingCartPage = () => {
 
                 </div>
             </div>
+            <div className="mt-8">
+                <h2 className="text-xl font-semibold mb-2">Kart Bilgileri</h2>
+                {payment && payment.length > 0 ? (
+                    <ul className="list-disc pl-5">
+                        {payment.map((card) => (
+                            <li key={card.id} className="mb-2">
+                                <input
+                                    type="radio"
+                                    name="selectedCard"
+                                    value={card.id}
+                                    onChange={() => setSelectedCard(card.id)}
+                                    className="mr-2"
+                                />
+                                {`${card.card_no.replace(/(\d{4})(?=\d)/g, "$1 ")}`}
+                                <button
+                                    onClick={() => handleDeleteCard(card.id)}
+                                    className="ml-4 text-red-500 hover:underline"
+                                >
+                                    Sil
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setCardFormData({
+                                            card_no: card.card_no,
+                                            expire_month: card.expire_month,
+                                            expire_year: card.expire_year,
+                                            name_on_card: card.name_on_card,
+                                        });
+                                        setShowCardForm(true);
+                                    }}
+                                    className="ml-4 text-blue-500 hover:underline"
+                                >
+                                    Güncelle
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>Kayıtlı kartınız bulunmamaktadır.</p>
+                )}
+
+                <button
+                    onClick={() => setShowCardForm((prev) => !prev)}
+                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                    + Yeni Kart Ekle
+                </button>
+
+                {showCardForm && (
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            selectedCard ? handleUpdateCard() : handleAddCard();
+                        }}
+                        className="mt-4 border p-4 rounded-lg bg-white shadow-md"
+                    >
+                        <h2 className="text-lg font-semibold text-gray-700 mb-4">Kart Bilgileri</h2>
+                        <div className="grid grid-cols-1 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-600">Kart Numarası:</label>
+                                <input
+                                    type="text"
+                                    name="card_no"
+                                    value={cardFormData.card_no}
+                                    onChange={handleCardFormChange}
+                                    className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                                    placeholder="1234 1234 1234 1234"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-600">Son Kullanma Ay:</label>
+                                <input
+                                    type="number"
+                                    name="expire_month"
+                                    value={cardFormData.expire_month}
+                                    onChange={handleCardFormChange}
+                                    className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                                    placeholder="12"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-600">Son Kullanma Yıl:</label>
+                                <input
+                                    type="number"
+                                    name="expire_year"
+                                    value={cardFormData.expire_year}
+                                    onChange={handleCardFormChange}
+                                    className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                                    placeholder="2025"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-600">Kart Üzerindeki İsim:</label>
+                                <input
+                                    type="text"
+                                    name="name_on_card"
+                                    value={cardFormData.name_on_card}
+                                    onChange={handleCardFormChange}
+                                    className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                                    placeholder="Ali Baş"
+                                />
+                            </div>
+                        </div>
+                        <div className="mt-4 flex justify-end">
+                            <button
+                                type="submit"
+                                className="px-6 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600"
+                            >
+                                {selectedCard ? "Güncelle" : "Kaydet"}
+                            </button>
+                        </div>
+                    </form>
+                )}
+            </div>
+
         </div>
     );
 };
