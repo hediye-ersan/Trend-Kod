@@ -8,7 +8,7 @@ import {
     addToCart
 } from "../actions/shopCardAction";
 import {
-    fetchUserCards,
+    fetchCreditCards,
     addUserCard,
     updateUserCard,
     deleteUserCard,
@@ -46,7 +46,7 @@ const ShoppingCartPage = () => {
 
     // Kullanıcı kartlarını yükle
     useEffect(() => {
-        dispatch(fetchUserCards());
+        dispatch(fetchCreditCards());
     }, [dispatch]);
 
     const handleCardFormChange = (e) => {
@@ -63,6 +63,7 @@ const ShoppingCartPage = () => {
             await dispatch(addUserCard(cardFormData));
             setShowCardForm(false);
             setFormData({ card_no: "", expire_month: "", expire_year: "", name_on_card: "" });
+            await dispatch(fetchCreditCards());
         } catch (error) {
             alert("Kart eklenirken hata: " + error.message);
         }
@@ -70,12 +71,12 @@ const ShoppingCartPage = () => {
 
     const handleUpdateCard = async (updatedCardData) => {
         await dispatch(updateUserCard(updatedCardData));
-        await dispatch(fetchUserCards());
+        await dispatch(fetchCreditCards());
     };
 
     const handleDeleteCard = async (cardId) => {
-        dispatch(deleteUserCard(cardId));
-        await dispatch(fetchUserCards());
+        await dispatch(deleteUserCard(cardId));
+        await dispatch(fetchCreditCards());
     };
 
     useEffect(() => {
@@ -164,359 +165,354 @@ const ShoppingCartPage = () => {
     };
 
     return (
-        <div className="flex flex-col md:flex-row gap-8 p-4">
-            {/* Sol Sütun: Alışveriş Sepeti */}
-            <div className="flex-1">
-                <h1 className="text-2xl font-bold mb-6">Alışveriş Sepeti</h1>
-                <div className="space-y-6">
-                    {Object.entries(groupedItems).map(([seller, items]) => (
-                        <div key={seller} className="border p-4 rounded-lg">
-                            <h2 className="text-lg font-semibold mb-4">
-                                {seller}{" "}
-                                <span className="text-green-600 font-bold">
-                                    {items[0].rating && `(${items[0].rating})`}
-                                </span>
-                            </h2>
-                            {items.map((item) => (
-                                <div
-                                    key={item.id}
-                                    className="flex gap-4 items-start border-b pb-4 mb-4 last:border-b-0 last:pb-0"
-                                >
-                                    <input
-                                        type="checkbox"
-                                        className="mt-3"
-                                        checked={selectedItems.includes(item.id)}
-                                        onChange={() => handleCheckboxChange(item.id)}
-                                    />
-                                    <img
-                                        src={item.images[0]?.url}
-                                        alt={item.name}
-                                        className="w-24 h-24 object-cover rounded-md"
-                                    />
-                                    <div className="flex-1">
-                                        <h3 className="text-md font-medium">{item.name}</h3>
-                                        <p className="text-sm text-gray-500 mt-1">{item.shipping}</p>
-                                        <p className="text-lg font-bold mt-2">{item.price} TL</p>
-                                        <div className="mt-3 flex gap-2">
-                                            <button onClick={() => dispatch(decreaseProductQuantity(item.id))} className="text-red-500 hover:text-red-600">Azalt</button>
-                                            <span className="px-4 py-1 border rounded">
-                                                {item.quantity}
-                                            </span>
-                                            <button onClick={() => dispatch(increaseProductQuantity(item.id))} className="text-green-500 hover:text-green-600">Artır</button>
-                                            <button onClick={() => dispatch(removeFromCart(item.id))} className="text-red-500 hover:text-red-600">Kaldır</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
+        <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-8 text-gray-800">Alışveriş Sepeti</h1>
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Left Column: Shopping Cart */}
+          <div className="lg:w-2/3">
+            <div className="space-y-6">
+              {Object.entries(groupedItems).map(([seller, items]) => (
+                <div key={seller} className="bg-white shadow-md rounded-lg p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-gray-700">
+                    {seller}{" "}
+                    <span className="text-green-600 font-bold">
+                      {items[0].rating && `(${items[0].rating})`}
+                    </span>
+                  </h2>
+                  {items.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex gap-4 items-start border-b border-gray-200 pb-4 mb-4 last:border-b-0 last:pb-0"
+                    >
+                      <input
+                        type="checkbox"
+                        className="mt-3 h-5 w-5 text-blue-600"
+                        checked={selectedItems.includes(item.id)}
+                        onChange={() => handleCheckboxChange(item.id)}
+                      />
+                      <img
+                        src={item.images[0]?.url}
+                        alt={item.name}
+                        className="w-24 h-24 object-cover rounded-md"
+                      />
+                      <div className="flex-1">
+                        <h3 className="text-lg font-medium text-gray-800">{item.name}</h3>
+                        <p className="text-sm text-gray-500 mt-1">{item.shipping}</p>
+                        <p className="text-xl font-bold mt-2 text-gray-900">{item.price} TL</p>
+                        <div className="mt-3 flex items-center gap-2">
+                          <button 
+                            onClick={() => dispatch(decreaseProductQuantity(item.id))} 
+                            className="text-red-500 hover:text-red-600 transition-colors duration-200"
+                          >
+                            -
+                          </button>
+                          <span className="px-4 py-1 border rounded text-gray-700">
+                            {item.quantity}
+                          </span>
+                          <button 
+                            onClick={() => dispatch(increaseProductQuantity(item.id))} 
+                            className="text-green-500 hover:text-green-600 transition-colors duration-200"
+                          >
+                            +
+                          </button>
+                          <button 
+                            onClick={() => dispatch(removeFromCart(item.id))} 
+                            className="ml-4 text-red-500 hover:text-red-600 transition-colors duration-200"
+                          >
+                            Kaldır
+                          </button>
                         </div>
-                    ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
+              ))}
             </div>
-
-            {/* Sağ Sütun: Alışveriş Özeti */}
-            <div className="w-full md:w-1/3">
-                <div className="border p-4 rounded-lg shadow-lg">
-                    <h2 className="text-xl font-bold mb-4">Alışveriş Özeti</h2>
-                    <p>Ürünlerin Toplamı: {totalSelectedPrice.toFixed(2)} TL</p>
-                    <p>Kargo Ücreti: 30 TL</p>
-                    <p>İndirim: {totalSelectedPrice >= 150 ? '-30 TL (150 TL ve Üzerinde Kargo Ücretsiz)' : '0 TL'}</p>
-                    <p className="font-bold">
-                        Toplam: {(totalSelectedPrice >= 150 ? totalSelectedPrice : totalSelectedPrice + 30).toFixed(2)} TL
-                    </p>
-                    <button
-                        onClick={handleOrder}
-                        disabled={selectedItems.length === 0}
-                        className={`mt-4 px-4 py-2 w-full rounded ${selectedItems.length > 0
-                            ? "bg-blue-500 text-white hover:bg-blue-600"
-                            : "bg-gray-300 text-gray-600 cursor-not-allowed"
-                            }`}
-                    >
-                        Sepeti Onayla
-                    </button>
-                </div>
-                <div className="mt-8">
-                    <h2 className="text-xl font-semibold mb-2">Teslimat Adresi</h2>
-                    {addresses && addresses.length > 0 ? (
-                        <ul className="list-disc pl-5">
-                            {addresses.map((address) => (
-                                <li key={address.id} className="mb-2">
-                                    <input
-                                        type="radio"
-                                        name="selectedAddress"
-                                        value={address.id}
-                                        onChange={() => setSelectedAddress(address.id)}
-                                        className="mr-2"
-                                    />
-                                    {`${address.title}, ${address.city}, ${address.district}, ${address.neighborhood}`}
-                                    <button
-                                        onClick={() => handleDeleteAddress(address.id)}
-                                        className="ml-4 text-red-500 hover:underline"
-                                    >
-                                        Sil
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            setFormData({
-                                                title: address.title,
-                                                name: address.name,
-                                                phone: address.phone,
-                                                city: address.city,
-                                                district: address.district,
-                                                neighborhood: address.neighborhood,
-                                            });
-                                            setShowAddressForm(true);
-                                        }}
-                                        className="ml-4 text-blue-500 hover:underline"
-                                    >
-                                        Güncelle
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>Kayıtlı adresiniz bulunmamaktadır.</p>
-                    )}
-
-                    <button
-                        onClick={() => setShowAddressForm((prev) => !prev)}
-                        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                    >
-                        + Yeni Adres Ekle
-                    </button>
-
-                    {showAddressForm && (
-                        <form
-                            onSubmit={(e) => {
-                                e.preventDefault();
-                                selectedAddress ? handleUpdateAddress(selectedAddress) : handleAddressSubmit();
-                            }}
-                            className="mt-4 border p-4 rounded-lg bg-white shadow-md"
+          </div>
+  
+          {/* Right Column: Order Summary and Forms */}
+          <div className="lg:w-1/3 space-y-8">
+            {/* Order Summary */}
+            <div className="bg-white shadow-md rounded-lg p-6">
+              <h2 className="text-2xl font-bold mb-4 text-gray-800">Alışveriş Özeti</h2>
+              <div className="space-y-2 text-gray-700">
+                <p>Ürünlerin Toplamı: <span className="font-semibold">{totalSelectedPrice.toFixed(2)} TL</span></p>
+                <p>Kargo Ücreti: <span className="font-semibold">30 TL</span></p>
+                <p>İndirim: <span className="font-semibold text-green-600">{totalSelectedPrice >= 150 ? '-30 TL (150 TL ve Üzerinde Kargo Ücretsiz)' : '0 TL'}</span></p>
+                <p className="text-xl font-bold mt-4 text-gray-900">
+                  Toplam: {(totalSelectedPrice >= 150 ? totalSelectedPrice : totalSelectedPrice + 30).toFixed(2)} TL
+                </p>
+              </div>
+              <button
+                onClick={handleOrder}
+                disabled={selectedItems.length === 0}
+                className={`mt-6 px-6 py-3 w-full rounded-md text-lg font-semibold transition-colors duration-200 ${
+                  selectedItems.length > 0
+                    ? "bg-blue-600 text-white hover:bg-blue-700"
+                    : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                }`}
+              >
+                Sepeti Onayla
+              </button>
+            </div>
+  
+            {/* Delivery Address */}
+            <div className="bg-white shadow-md rounded-lg p-6">
+              <h2 className="text-2xl font-bold mb-4 text-gray-800">Teslimat Adresi</h2>
+              {addresses && addresses.length > 0 ? (
+                <ul className="space-y-4">
+                  {addresses.map((address) => (
+                    <li key={address.id} className="flex items-center justify-between">
+                      <div className="flex items-start">
+                        <input
+                          type="radio"
+                          name="selectedAddress"
+                          value={address.id}
+                          onChange={() => setSelectedAddress(address.id)}
+                          className="mt-1 mr-3"
+                        />
+                        <span className="text-gray-700">{`${address.title}, ${address.city}, ${address.district}, ${address.neighborhood}`}</span>
+                      </div>
+                      <div>
+                        <button
+                          onClick={() => handleDeleteAddress(address.id)}
+                          className="text-red-500 hover:text-red-600 mr-2 transition-colors duration-200"
                         >
-                            <h2 className="text-lg font-semibold text-gray-700 mb-4">Adres Bilgileri</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-600">Adres Başlığı:</label>
-                                    <input
-                                        type="text"
-                                        name="title"
-                                        value={formData.title}
-                                        onChange={handleFormChange}
-                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
-                                        placeholder="Ev Adresi"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-600">Ad:</label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleFormChange}
-                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
-                                        placeholder="Alişan"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-600">Soyad:</label>
-                                    <input
-                                        type="text"
-                                        name="surname"
-                                        value={formData.surname}
-                                        onChange={handleFormChange}
-                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
-                                        placeholder="Karababa"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-600">Telefon:</label>
-                                    <input
-                                        type="text"
-                                        name="phone"
-                                        value={formData.phone}
-                                        onChange={handleFormChange}
-                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
-                                        placeholder="0555 555 55 55"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-600">Şehir:</label>
-                                    <select
-                                        name="city"
-                                        value={formData.city}
-                                        onChange={handleFormChange}
-                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
-                                    >
-                                        <option value="Istanbul">Istanbul</option>
-                                        <option value="Ankara">Ankara</option>
-                                        <option value="Izmir">Izmir</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-600">İlçe:</label>
-                                    <input
-                                        type="text"
-                                        name="district"
-                                        value={formData.district}
-                                        onChange={handleFormChange}
-                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
-                                        placeholder="Esenler"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-600">Mahalle:</label>
-                                    <input
-                                        type="text"
-                                        name="neighborhood"
-                                        value={formData.neighborhood}
-                                        onChange={handleFormChange}
-                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
-                                        placeholder="Yeni Mahalle"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-600">Adres Detay:</label>
-                                    <textarea
-                                        name="address"
-                                        value={formData.address}
-                                        onChange={handleFormChange}
-                                        className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-orange-500"
-                                        placeholder="Apartman No, Daire No, Kat No"
-                                        rows="3"
-                                    ></textarea>
-                                </div>
-                            </div>
-                            <div className="mt-4 flex justify-end">
-                                <button
-                                    type="submit"
-                                    className="px-6 py-2 bg-orange-500 text-white rounded-md shadow hover:bg-orange-600"
-                                >
-                                    {selectedAddress ? "Güncelle" : "Kaydet"}
-                                </button>
-                            </div>
-                        </form>
-                    )}
-
-                </div>
-            </div>
-            <div className="mt-8">
-                <h2 className="text-xl font-semibold mb-2">Kart Bilgileri</h2>
-                {payment && payment.length > 0 ? (
-
-                    <ul className="list-disc pl-5">
-
-                        {payment.map((card) => (
-                            <li key={card.id} className="mb-2">
-                                console.log(payment)
-                                <input
-                                    type="radio"
-                                    name="selectedCard"
-                                    value={card.id}
-                                    onChange={() => setSelectedCard(card.id)}
-                                    className="mr-2"
-                                />
-                                {`${card.card_no.replace(/(\d{4})(?=\d)/g, "$1 ")}`}
-                                <button
-                                    onClick={() => handleDeleteCard(card.id)}
-                                    className="ml-4 text-red-500 hover:underline"
-                                >
-                                    Sil
-                                </button>
-                                <button
-                                    onClick={() => {
-                                        setCardFormData({
-                                            card_no: card.card_no,
-                                            expire_month: card.expire_month,
-                                            expire_year: card.expire_year,
-                                            name_on_card: card.name_on_card,
-                                        });
-                                        setShowCardForm(true);
-                                    }}
-                                    className="ml-4 text-blue-500 hover:underline"
-                                >
-                                    Güncelle
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>Kayıtlı kartınız bulunmamaktadır.</p>
-                )}
-
-                <button
-                    onClick={() => setShowCardForm((prev) => !prev)}
-                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                          Sil
+                        </button>
+                        <button
+                          onClick={() => {
+                            setFormData({
+                              title: address.title,
+                              name: address.name,
+                              phone: address.phone,
+                              city: address.city,
+                              district: address.district,
+                              neighborhood: address.neighborhood,
+                            });
+                            setShowAddressForm(true);
+                          }}
+                          className="text-blue-500 hover:text-blue-600 transition-colors duration-200"
+                        >
+                          Güncelle
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-600">Kayıtlı adresiniz bulunmamaktadır.</p>
+              )}
+  
+              <button
+                onClick={() => setShowAddressForm((prev) => !prev)}
+                className="mt-6 px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-200"
+              >
+                + Yeni Adres Ekle
+              </button>
+  
+              {showAddressForm && (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    selectedAddress ? handleUpdateAddress(selectedAddress) : handleAddressSubmit();
+                  }}
+                  className="mt-6 space-y-4"
                 >
-                    + Yeni Kart Ekle
-                </button>
-
-                {showCardForm && (
-                    <form
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            selectedCard ? handleUpdateCard() : handleAddCard();
-                        }}
-                        className="mt-4 border p-4 rounded-lg bg-white shadow-md"
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4">Adres Bilgileri</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input
+                      type="text"
+                      name="title"
+                      value={formData.title}
+                      onChange={handleFormChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                      placeholder="Adres Başlığı"
+                    />
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleFormChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                      placeholder="Ad"
+                    />
+                    <input
+                      type="text"
+                      name="surname"
+                      value={formData.surname}
+                      onChange={handleFormChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                      placeholder="Soyad"
+                    />
+                    <input
+                      type="text"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleFormChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                      placeholder="Telefon"
+                    />
+                    <select
+                      name="city"
+                      value={formData.city}
+                      onChange={handleFormChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
                     >
-                        <h2 className="text-lg font-semibold text-gray-700 mb-4">Kart Bilgileri</h2>
-                        <div className="grid grid-cols-1 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-600">Kart Numarası:</label>
-                                <input
-                                    type="text"
-                                    name="card_no"
-                                    value={cardFormData.card_no}
-                                    onChange={handleCardFormChange}
-                                    className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
-                                    placeholder="1234 1234 1234 1234"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-600">Son Kullanma Ay:</label>
-                                <input
-                                    type="number"
-                                    name="expire_month"
-                                    value={cardFormData.expire_month}
-                                    onChange={handleCardFormChange}
-                                    className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
-                                    placeholder="12"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-600">Son Kullanma Yıl:</label>
-                                <input
-                                    type="number"
-                                    name="expire_year"
-                                    value={cardFormData.expire_year}
-                                    onChange={handleCardFormChange}
-                                    className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
-                                    placeholder="2025"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-600">Kart Üzerindeki İsim:</label>
-                                <input
-                                    type="text"
-                                    name="name_on_card"
-                                    value={cardFormData.name_on_card}
-                                    onChange={handleCardFormChange}
-                                    className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
-                                    placeholder="Ali Baş"
-                                />
-                            </div>
-                        </div>
-                        <div className="mt-4 flex justify-end">
-                            <button
-                                type="submit"
-                                className="px-6 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600"
-                            >
-                                {selectedCard ? "Güncelle" : "Kaydet"}
-                            </button>
-                        </div>
-                    </form>
-                )}
+                      <option value="">Şehir Seçin</option>
+                      <option value="Istanbul">Istanbul</option>
+                      <option value="Ankara">Ankara</option>
+                      <option value="Izmir">Izmir</option>
+                    </select>
+                    <input
+                      type="text"
+                      name="district"
+                      value={formData.district}
+                      onChange={handleFormChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                      placeholder="İlçe"
+                    />
+                    <input
+                      type="text"
+                      name="neighborhood"
+                      value={formData.neighborhood}
+                      onChange={handleFormChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                      placeholder="Mahalle"
+                    />
+                    <textarea
+                      name="address"
+                      value={formData.address}
+                      onChange={handleFormChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                      placeholder="Adres Detayı"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                  <div className="flex justify-end">
+                    <button
+                      type="submit"
+                      className="px-6 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition-colors duration-200"
+                    >
+                      {selectedAddress ? "Güncelle" : "Kaydet"}
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
-
+  
+            {/* Payment Information */}
+            <div className="bg-white shadow-md rounded-lg p-6">
+              <h2 className="text-2xl font-bold mb-4 text-gray-800">Kart Bilgileri</h2>
+              {payment && payment.length > 0 ? (
+                <ul className="space-y-4">
+                  {payment.map((card) => (
+                    <li key={card.id} className="flex items-center justify-between">
+                      <div className="flex items-start">
+                        <input
+                          type="radio"
+                          name="selectedCard"
+                          value={card.id}
+                          onChange={() => setSelectedCard(card.id)}
+                          className="mt-1 mr-3"
+                        />
+                        <span className="text-gray-700">{`${card.card_no.replace(/(\d{4})(?=\d)/g, "$1 ")}`}</span>
+                      </div>
+                      <div>
+                        <button
+                          onClick={() => handleDeleteCard(card.id)}
+                          className="text-red-500 hover:text-red-600 mr-2 transition-colors duration-200"
+                        >
+                          Sil
+                        </button>
+                        <button
+                          onClick={() => {
+                            setCardFormData({
+                              card_no: card.card_no,
+                              expire_month: card.expire_month,
+                              expire_year: card.expire_year,
+                              name_on_card: card.name_on_card,
+                            });
+                            setShowCardForm(true);
+                          }}
+                          className="text-blue-500 hover:text-blue-600 transition-colors duration-200"
+                        >
+                          Güncelle
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-600">Kayıtlı kartınız bulunmamaktadır.</p>
+              )}
+  
+              <button
+                onClick={() => setShowCardForm((prev) => !prev)}
+                className="mt-6 px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-200"
+              >
+                + Yeni Kart Ekle
+              </button>
+  
+              {showCardForm && (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    selectedCard ? handleUpdateCard() : handleAddCard();
+                  }}
+                  className="mt-6 space-y-4"
+                >
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4">Kart Bilgileri</h3>
+                  <div className="space-y-4">
+                    <input
+                      type="text"
+                      name="card_no"
+                      value={cardFormData.card_no}
+                      onChange={handleCardFormChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                      placeholder="1234 1234 1234 1234"
+                    />
+                    <div className="grid grid-cols-2 gap-4">
+                      <input
+                        type="number"
+                        name="expire_month"
+                        value={cardFormData.expire_month}
+                        onChange={handleCardFormChange}
+                        className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                        placeholder="Son Kullanma Ay (MM)"
+                      />
+                      <input
+                        type="number"
+                        name="expire_year"
+                        value={cardFormData.expire_year}
+                        onChange={handleCardFormChange}
+                        className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                        placeholder="Son Kullanma Yıl (YYYY)"
+                      />
+                    </div>
+                    <input
+                      type="text"
+                      name="name_on_card"
+                      value={cardFormData.name_on_card}
+                      onChange={handleCardFormChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                      placeholder="Kart Üzerindeki İsim"
+                    />
+                  </div>
+                  <div className="flex justify-end">
+                    <button
+                      type="submit"
+                      className="px-6 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition-colors duration-200"
+                    >
+                      {selectedCard ? "Güncelle" : "Kaydet"}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
         </div>
+      </div>
     );
 };
 
