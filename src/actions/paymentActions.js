@@ -8,7 +8,7 @@ export const DELETE_USER_CARD = 'DELETE_USER_CARD';
 const token = localStorage.getItem('authToken');
 
 // Kullanıcı kartlarını listeleme
-export const fetchUserCards = () => async (dispatch) => {
+export const fetchCreditCards = () => async (dispatch) => {
 
     try {
         const response = await axios.get('https://workintech-fe-ecommerce.onrender.com/user/card', { headers: { Authorization: `${token}` } });

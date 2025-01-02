@@ -16,21 +16,21 @@ import {
       case FETCH_USER_CARDS:
         return {
           ...state,
-          userCards: action.payload,
+          creditCards: action.payload,
         };
   
       // Yeni kart ekleme
       case ADD_USER_CARD:
         return {
           ...state,
-          userCards: [...state.userCards, action.payload],
+          creditCards: [...state.creditCards, action.payload],
         };
   
       // Mevcut kartı güncelleme
       case UPDATE_USER_CARD:
         return {
           ...state,
-          userCards: state.userCards.map((card) =>
+          creditCards: state.creditCards.map((card) =>
             card.id === action.payload.id ? action.payload : card
           ),
         };
@@ -39,7 +39,7 @@ import {
       case DELETE_USER_CARD:
         return {
           ...state,
-          userCards: state.userCards.filter(
+          creditCards: state.creditCards.filter(
             (card) => card.id !== action.payload
           ),
         };
