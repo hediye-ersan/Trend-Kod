@@ -3,7 +3,6 @@
 const initialState = {
   user: null,  // Kullanıcı bilgisi
   addressList: [],
-  creditCards: [],
   roles: [],
   theme: '',
   language: '',
