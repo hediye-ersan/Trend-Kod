@@ -38,7 +38,7 @@ const CardList = () => {
   ];
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:grid-rows-2 h-screen">
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:grid-rows-2 h-screen p-8">
       {/* Sol geniş kart */}
       <div className="md:row-span-2 md:col-span-2">
         <Card
