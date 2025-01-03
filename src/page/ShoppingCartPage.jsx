@@ -14,6 +14,7 @@ import {
     deleteUserCard,
 } from '../actions/paymentActions';
 import { fetchUserAddresses, addUserAddress, updateUserAddress, deleteUserAddress } from "../actions/userAction";
+import { createOrder } from '../actions/orderActions';
 
 const ShoppingCartPage = () => {
     const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const ShoppingCartPage = () => {
         expire_year: "",
         name_on_card: "",
     });
+    const [cardCCV, setCardCCV] = useState("");
 
     // Kullanıcı kartlarını yükle
     useEffect(() => {
@@ -115,14 +117,53 @@ const ShoppingCartPage = () => {
         );
     };
 
-    const handleOrder = () => {
-        const orderedItems = cartItems.filter((item) => selectedItems.includes(item.id));
+    const prepareOrderData = () => {
+        if (!selectedAddress || !selectedCard || !cardCCV) {
+            alert("Lütfen teslimat adresi, kart bilgileri ve CCV kodunu giriniz.");
+            return null;
+        }
+
+        const selectedCardData = payment.find(card => card.id === selectedCard);
+        const selectedProducts = cartItems
+            .filter(item => selectedItems.includes(item.id))
+            .map(item => ({
+                product_id: item.id,
+                count: item.quantity,
+                detail: item.variant || "default"
+            }));
+
+        return {
+            address_id: selectedAddress,
+            order_date: new Date().toISOString(),
+            card_no: selectedCardData.card_no,
+            card_name: selectedCardData.name_on_card,
+            card_expire_month: selectedCardData.expire_month,
+            card_expire_year: selectedCardData.expire_year,
+            card_ccv: cardCCV,
+            price: totalSelectedPrice,
+            products: selectedProducts
+        };
+    };
+
+    const handleOrder = async () => {
         if (!user) {
             alert("Lütfen sipariş vermek için giriş yapın.");
             history.push('/login');
-        } else {
-            console.log("Sipariş Oluşturulan Ürünler:", orderedItems);
-            alert("Sipariş oluşturuldu!");
+            return;
+        }
+
+        const orderData = prepareOrderData();
+        if (!orderData) return;
+
+        try {
+            await dispatch(createOrder(orderData));
+            alert("Siparişiniz başarıyla oluşturuldu!");
+            // Sepeti temizle
+            selectedItems.forEach(itemId => dispatch(removeFromCart(itemId)));
+            setSelectedItems([]);
+            setCardCCV("");
+        } catch (error) {
+            alert("Sipariş oluşturulurken bir hata oluştu: " + error.message);
         }
     };
 
@@ -162,6 +203,24 @@ const ShoppingCartPage = () => {
             await dispatch(deleteUserAddress(addressId));
             await dispatch(fetchUserAddresses()); // Adres listesini güncelle
         }
+    };
+
+    const renderCCVInput = () => {
+        if (selectedCard) {
+            return (
+                <div className="mt-4">
+                    <input
+                        type="password"
+                        maxLength="3"
+                        value={cardCCV}
+                        onChange={(e) => setCardCCV(e.target.value)}
+                        className="w-24 p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                        placeholder="CCV"
+                    />
+                </div>
+            );
+        }
+        return null;
     };
 
     return (
@@ -416,7 +475,7 @@ const ShoppingCartPage = () => {
                           onChange={() => setSelectedCard(card.id)}
                           className="mt-1 mr-3"
                         />
-                        <span className="text-gray-700">{`${card.card_no.replace(/(\d{4})(?=\d)/g, "$1 ")}`}</span>
+                        <span className="text-gray-700">{`${card.card_no}`}</span>
                       </div>
                       <div>
                         <button
@@ -509,6 +568,7 @@ const ShoppingCartPage = () => {
                   </div>
                 </form>
               )}
+              {renderCCVInput()}
             </div>
           </div>
         </div>
