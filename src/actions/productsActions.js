@@ -19,7 +19,7 @@ export const fetchProductsFailure = (error) => ({
   payload: error
 });
 
-export const fetchProducts = (query = '', page = 1, limit = 10) => {
+export const fetchProducts = (query = '', page = 1, limit = 12) => {
   return async (dispatch) => {
     dispatch(fetchProductsRequest());
     try {
