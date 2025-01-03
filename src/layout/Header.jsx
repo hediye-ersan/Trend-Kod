@@ -127,7 +127,7 @@ const Navbar = () => {
                         </li>
                         <li>
                             <button
-                                onClick={() => handleNavigation('/OrdersPage')}
+                                onClick={() => handleNavigation('/orders')}
                                 className="text-secondText"
                             >
                                 Orders
