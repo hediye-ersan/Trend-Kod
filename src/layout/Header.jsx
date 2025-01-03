@@ -119,7 +119,7 @@ const Navbar = () => {
                         </li>
                         <li>
                             <button
-                                onClick={() => handleNavigation('/productdetails')}
+                                onClick={() => handleNavigation('/products')}
                                 className="text-secondText"
                             >
                                 Product
@@ -127,10 +127,10 @@ const Navbar = () => {
                         </li>
                         <li>
                             <button
-                                onClick={() => handleNavigation('/Blog')}
+                                onClick={() => handleNavigation('/OrdersPage')}
                                 className="text-secondText"
                             >
-                                Blog
+                                Orders
                             </button>
                         </li>
                         <li>
