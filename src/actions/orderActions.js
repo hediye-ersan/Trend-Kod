@@ -20,10 +20,10 @@ export const createOrder = (orderData) => async (dispatch) => {
     }
 };
 
-export const fetchOrders = () => async (dispatch) => {
+export const fetchOrders = (userEmail) => async (dispatch) => {
     dispatch({ type: FETCH_ORDERS_START });
     try {
-        const response = await axiosInstance.get('/order');
+        const response = await axiosInstance.get(`/order?email=${userEmail}`);
         dispatch({ type: FETCH_ORDERS_SUCCESS, payload: response.data });
     } catch (error) {
         dispatch({ type: FETCH_ORDERS_FAIL, payload: error.message });
