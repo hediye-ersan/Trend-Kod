@@ -40,12 +40,23 @@ const Navbar = () => {
         <>
             <nav className="bg-transparent px-8 flex items-center justify-between py-8">
                 {/* Sol Taraf */}
-                <div className="text-xl font-bold">Bandage</div>
-                {user ? (
-                    <p>Welcome, {user.name}!</p> // Kullanıcı adı header'da gösterilecek
-                ) : (
-                    <p>Please log in</p>
-                )}
+                <div className="text-h3 font-bold">Bandage</div>
+                <div className="flex items-center justify-center ">
+                    {user ? (
+                        <p className="text-h3 font-bold  transition-all duration-300 hover:text-gray-200">
+                            Welcome, <span className="font-extrabold text-blueText">{user.name}</span>! 🎉
+                        </p>
+                    ) : (
+                        <p className="text-2xl font-bold text-white transition-all duration-300 hover:text-gray-200">
+                            Please{" "}
+                            <span className="font-extrabold text-yellow-300 underline cursor-pointer hover:text-yellow-400">
+                                log in
+                            </span>{" "}
+                            to continue. 🚀
+                        </p>
+                    )}
+                </div>
+
 
                 {/* Sağ Taraf */}
                 <div className="flex items-center gap-4">
@@ -62,12 +73,12 @@ const Navbar = () => {
 
             {/* Menü */}
             {isMenuOpen && (
-                <div className="bg-gray-50 w-full py-4 flex flex-col">
+                <div className="bg-gray-50 w-full py-8 flex flex-col font-bold ">
                     <ul className='flex flex-col flex-wrap content-center gap-8 text-3xl text-center'>
                         <li>
                             <button
                                 onClick={() => handleNavigation('/')}
-                                className="font-bold"
+                                
                             >
                                 Home
                             </button>
@@ -174,7 +185,7 @@ const Navbar = () => {
                         {/* Arama Menüsü (Kategoriler) */}
 
                         <button onClick={() => setIsCartOpen(!isCartOpen)}>
-                            <img src='/icons/shopping-cart.svg' alt='shoppingcart'/>
+                            <img src='/icons/shopping-cart.svg' alt='shoppingcart' />
                             {cartItems.reduce((a, c) => a + c.quantity, 0) > 0 && (
                                 <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">{cartItems.reduce((a, c) => a + c.quantity, 0)}</span>
                             )}
