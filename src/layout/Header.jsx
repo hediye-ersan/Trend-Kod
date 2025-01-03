@@ -143,10 +143,10 @@ const Navbar = () => {
                         </li>
                         <li>
                             <button
-                                onClick={() => handleNavigation('/Pages')}
+                                onClick={() => handleNavigation('/team')}
                                 className="text-secondText"
                             >
-                                Pages
+                                Teams
                             </button>
                         </li>
                     </ul>
