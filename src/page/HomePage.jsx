@@ -10,14 +10,14 @@ import { fetchProducts } from '../actions/productsActions';
 
 function HomePage() {
     const dispatch = useDispatch();
-     const { products, loading, error } = useSelector(state => state.products);
-   
-     useEffect(() => {
-       dispatch(fetchProducts());
-     }, [dispatch]);
-   
-     if (loading) return <div>Loading...</div>;
-     if (error) return <div>{error}</div>;
+    const { products, loading, error } = useSelector(state => state.products);
+
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div>
@@ -42,22 +42,25 @@ function HomePage() {
             </section>
             <IconList />
             <CardList />
-            <ProductCardList products={products}/>
+            <ProductCardList products={products} />
 
-            <section className='py-20'>
-                <div className='p-16 flex flex-col gap-2 font-bold'>
-                    <h5 className='text-h5  text-blueText '>Featured Products</h5>
+            <section className=' md:flex gap-4 items-center'>
+                <div className='flex flex-col gap-2 p-16 font-bold md:w-1/2 md:p-32'>
+                    <h5 className='text-h5 text-blueText '>Featured Products</h5>
                     <h2 className='text-h2'>We love what we do</h2>
-                    <p className='text-h6 text-secondText'>Problems trying to resolve the conflict between the two major realms of Classical physics:Newtonian mechanics
+                    <p className='text-h6 text-secondText'>
+                        Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics
                     </p>
-                    <p className='text-h6 text-secondText'> Problems trying to resolve the conflict between the two major realms of Classical physics:
-                        Newtonian mechanics </p>
+                    <p className='text-h6 text-secondText'>
+                        Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics
+                    </p>
                 </div>
-                <div className='flex justify-between px-3 h-auto'>
-                    <img src='/images/featured1.png' />
-                    <img src='/images/featured2.png' />
+                <div className='flex md:w-1/2 px-3 justify-center h-auto'>
+                    <img src='/images/featured1.png'  />
+                    <img src='/images/featured2.png'  />
                 </div>
             </section>
+
 
             <section className='py-20'>
                 <div className='text-center px-16 font-bold leading-loose'>
