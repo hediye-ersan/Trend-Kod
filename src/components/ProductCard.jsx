@@ -11,7 +11,7 @@ const ProductCard = ({id,
   return (
     <section>
       <div className='flex flex-col flex-wrap'>
-        <Link to={`/productdetails/${id}`} className="group">
+        <Link to={`/products/${id}`} className="group">
           <img src={image} alt="ProductCard" className="group-hover:opacity-80" />
         
         <div className="p-4 text-center font-bold">

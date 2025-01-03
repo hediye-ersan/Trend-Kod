@@ -18,7 +18,7 @@ function App() {
       <Provider store={store}>
         <ToastContainer />
         <Switch>
-          <Route path="/productdetails/:productId">
+          <Route path="/products/:productId">
             <ProductDetails />
           </Route>
           <Route path="/shop">
