@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const ProductCard = ({ id, name, description, price, discountedPrice, image }) => {
   return (
-    <section className="p-4">
+    <section className="p-4 pt-0">
       <div className="flex flex-col flex-wrap bg-white shadow-lg rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 ease-in-out">
         <Link to={`/products/${id}`} className="group">
           {/* Ürün Görseli */}
@@ -13,14 +13,14 @@ const ProductCard = ({ id, name, description, price, discountedPrice, image }) =
               alt="ProductCard"
               className="w-full h-56 object-cover group-hover:opacity-90 transition-opacity duration-300"
             />
-            <div className="absolute top-2 left-2 bg-[#23A6F0] text-white px-2 py-1 text-sm rounded-lg shadow">
+            <div className="absolute top-2 left-2 bg-blueText text-white px-2 py-1 text-sm rounded-lg shadow">
               New
             </div>
           </div>
 
           {/* Ürün Bilgileri */}
           <div className="p-4 text-center">
-            <h5 className="text-lg font-bold text-gray-900 group-hover:text-[#23A6F0] transition-colors duration-300">
+            <h5 className="text-lg font-bold text-gray-900 group-hover:text-blueText transition-colors duration-300">
               {name}
             </h5>
             <p className="text-sm text-gray-600 mt-1">{description}</p>
@@ -30,7 +30,7 @@ const ProductCard = ({ id, name, description, price, discountedPrice, image }) =
               <span className="text-gray-400 line-through text-base">
                 ${price}
               </span>
-              <span className="text-lg font-bold text-[#23A6F0]">
+              <span className="text-lg font-bold text-blueText">
                 ${discountedPrice}
               </span>
             </div>
