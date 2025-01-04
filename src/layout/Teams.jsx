@@ -1,0 +1,63 @@
+export default function TeamPage() {
+    const teamMembers = [
+      {
+        name: "Devon Lane",
+        role: "Founder",
+        description: "the quick fox jumps over the lazy dog",
+        image: "https://via.placeholder.com/150x150?text=Devon",
+      },
+      {
+        name: "Savannah Nguyen",
+        role: "Founder",
+        description: "the quick fox jumps over the lazy dog",
+        image: "https://via.placeholder.com/150x150?text=Savannah",
+      },
+      {
+        name: "Albert Flores",
+        role: "Founder",
+        description: "the quick fox jumps over the lazy dog",
+        image: "https://via.placeholder.com/150x150?text=Albert",
+      },
+      {
+        name: "Jerome Bell",
+        role: "Founder",
+        description: "the quick fox jumps over the lazy dog",
+        image: "https://via.placeholder.com/150x150?text=Jerome",
+      },
+    ];
+  
+    return (
+      <div className="flex flex-col items-center py-12 bg-gray-50">
+        <div className="text-center mb-12">
+          <h1 className="text-3xl font-bold text-gray-800">Meet Our Team</h1>
+          <p className="text-gray-600 mt-4">
+            Problems trying to resolve the conflict between the two major realms
+            of Classical physics: Newtonian mechanics
+          </p>
+        </div>
+        <div className="flex flex-col space-y-12">
+          {teamMembers.map((member, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg shadow-md"
+            >
+              <div
+                className="w-32 h-32 rounded-full overflow-hidden"
+                style={{ backgroundColor: "#f5f5f5" }}
+              >
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <p className="text-blue-600 font-semibold">{member.role}</p>
+              <h2 className="text-lg font-bold text-gray-800">{member.name}</h2>
+              <p className="text-gray-600 text-center">{member.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  

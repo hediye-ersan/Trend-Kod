@@ -7,13 +7,16 @@ const OrderPage = () => {
   const { orders = [], isLoading = false, error = null } = useSelector(
     (state) => state.order
   );
+  const user = useSelector((state) => state.user.user);
 
   // Açılır/kapanır kontrolü için state
   const [expandedOrder, setExpandedOrder] = useState(null);
 
   useEffect(() => {
-    dispatch(fetchOrders());
-  }, [dispatch]);
+    if (user) {
+      dispatch(fetchOrders(user.email));
+    }
+  }, [dispatch, user]);
 
   if (isLoading) {
     return <div>Loading...</div>;

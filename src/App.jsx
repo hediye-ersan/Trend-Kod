@@ -6,7 +6,10 @@ import LoginForm from './page/LoginForm'
 import SignupForm from './page/SignupForm'
 import ProductDetails from './page/ProductDetails'
 import ShoppingCartPage from './page/ShoppingCartPage'
+import Contact from './layout/Contact'
 import { ToastContainer } from 'react-toastify';
+import OrderPage from './page/OrderPage'
+import Teams from './layout/Teams'
 import React from 'react';
 import { Provider } from 'react-redux';
 import store from './Store/store';
@@ -20,6 +23,15 @@ function App() {
         <Switch>
           <Route path="/products/:productId">
             <ProductDetails />
+          </Route>
+          <Route path="/contact">
+            <Contact />
+          </Route>
+          <Route path="/orders">
+            <OrderPage />
+          </Route>
+          <Route path="/team">
+            <Teams />
           </Route>
           <Route path="/shop">
             <ShopPage />

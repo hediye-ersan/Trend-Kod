@@ -2,56 +2,54 @@ import React from 'react';
 
 const PostCard = ({ imageSrc, tag, title, description, date, comments }) => {
   return (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-      
+    <div className="bg-white shadow-lg rounded-2xl overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl md:flex ">
+      {/* Görsel ve Etiket */}
       <div className="relative">
         <img
           src={imageSrc}
           alt={title}
-          
+          className="w-full h-full object-cover "
         />
-        <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold py-1 px-3 rounded-full">
+        <span className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold py-1 px-3 rounded-full shadow-md">
           {tag}
         </span>
       </div>
 
-     
-      <div className="p-4 ">
-        <div className="text-xs text-secondText mb-1 flex gap-6 ">
-            <a href='#' className='hover:underline hover:text-blueText'>Google</a>
-            <a href='#' className='hover:underline hover:text-blueText'>Trending</a>
-            <a href='#' className='hover:underline hover:text-blueText'>New</a>
-              
+      {/* İçerik */}
+      <div className="p-6">
+        <div className="text-xs text-gray-500 mb-2 flex gap-4">
+          <a href="#" className="hover:underline hover:text-blue-600">Google</a>
+          <a href="#" className="hover:underline hover:text-blue-600">Trending</a>
+          <a href="#" className="hover:underline hover:text-blue-600">New</a>
         </div>
-        <h3 className="text-lg font-bold text-gray-800">{title}</h3>
-        <p className="text-sm text-gray-600 mt-2">{description}</p>
+        <h3 className="text-lg font-bold text-gray-800 mb-2">{title}</h3>
+        <p className="text-sm text-gray-600 mb-4">{description}</p>
 
-        
-        <div className="flex items-center justify-between text-xs text-gray-500 mt-4">
+        {/* Tarih ve Yorumlar */}
+        <div className="flex items-center justify-between text-xs text-gray-500">
           <div className="flex items-center">
-            <span className="material-icons text-blue-500 mr-1"><img src='./icons/clock.svg'/></span>
+            <img src="./icons/clock.svg" alt="Clock Icon" className="w-4 h-4 mr-1" />
             {date}
           </div>
           <div className="flex items-center">
-            <span className="material-icons text-blue-500 mr-1"><img src='./icons/Vector.svg'/></span>
+            <img src="./icons/Vector.svg" alt="Comments Icon" className="w-4 h-4 mr-1" />
             {comments} comments
           </div>
         </div>
 
-        
+        {/* Learn More Butonu */}
         <div className="mt-4">
           <a
             href="./"
-            className="text-secondText text-h6 hover:underline hover:text-blueText flex items-center font-bold"
+            className="text-blue-600 text-sm font-bold hover:underline flex items-center"
           >
-            Learn More 
+            Learn More
           </a>
         </div>
       </div>
     </div>
   );
 };
-
 
 const PostCardList = () => {
   const posts = [
@@ -74,12 +72,10 @@ const PostCardList = () => {
   ];
 
   return (
-    <div className="px-12 py-12">
-        <h6 className='text-blueText text-h6 font-bold text-center mb-4'>Practice Advice</h6>
-      <h2 className="text-h2 font-bold text-center mb-24">
-        Featured Posts
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+    <div className="px-12 py-12 md:p-24">
+      <h6 className="text-blue-600 text-sm font-bold text-center mb-4">Practice Advice</h6>
+      <h2 className="text-3xl font-bold text-center">Featured Posts</h2>
+      <div className="grid grid-cols-1 pt-16 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:flex ">
         {posts.map((post, index) => (
           <PostCard key={index} {...post} />
         ))}

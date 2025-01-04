@@ -69,7 +69,11 @@ export const loginUser = (email, password, rememberMe) => {
 
 // Thunk action creator for logout
 export const logoutUser = () => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { user } = getState().user;
+    if (user) {
+      localStorage.removeItem(`cartItems_${user.email}`);
+    }
     localStorage.removeItem("authToken");
     delete axios.defaults.headers.common["Authorization"];
     dispatch({ type: LOGOUT });
