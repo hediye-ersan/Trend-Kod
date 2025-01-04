@@ -16,26 +16,27 @@ const Pagination = ({ total, limit, page, setPage }) => {
   };
 
   return (
-    <div className="flex justify-center items-center mt-4">
+    <div className="flex justify-center items-center mt-6 space-x-4">
       <button
         onClick={handlePrevPage}
         disabled={page === 1}
-        className="px-4 py-2 mx-1 bg-gray-300 rounded disabled:opacity-50"
+        className="px-6 py-3 bg-blueText text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-custom-gradient"
       >
         Previous
       </button>
-      <span className="px-4 py-2 mx-1">
+      <span className="text-lg text-gray-700 font-medium">
         Page {page} of {totalPages}
       </span>
       <button
         onClick={handleNextPage}
         disabled={page === totalPages}
-        className="px-4 py-2 mx-1 bg-gray-300 rounded disabled:opacity-50"
+        className="px-6 py-3 bg-blueText text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-custom-gradient"
       >
         Next
       </button>
     </div>
   );
+
 };
 
 export default Pagination;

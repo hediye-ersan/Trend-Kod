@@ -7,7 +7,7 @@ import ShoppingCartDropdown from './ShoppingCardDropdown';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(true); // Menü durumu
+    const [isMenuOpen, setIsMenuOpen] = useState(false); // Menü durumu
     const [isShopMenuOpen, setIsShopMenuOpen] = useState(false); // Shop menüsü durumu
     const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -39,7 +39,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="bg-transparent px-8 flex items-center justify-between py-8 bg-custom-gradient mb-16">
+            <nav className="bg-transparent px-2 md:px-8 flex items-center justify-between py-8 bg-custom-gradient mb-16">
                 {/* Sol Taraf */}
                 <div className="md:text-h3 text-h6 font-bold">Bandage</div>
                 <div className="flex items-center justify-center ">
@@ -74,12 +74,12 @@ const Navbar = () => {
 
             {/* Menü */}
             {isMenuOpen && (
-                <div className="bg-gray-50 w-full py-8 flex flex-col font-bold ">
+                <div className="bg-background w-full py-8 flex flex-col font-bold ">
                     <ul className='flex flex-col flex-wrap content-center gap-8 text-h3 text-center '>
                         <li>
                             <button
                                 onClick={() => handleNavigation('/')}
-                                
+
                             >
                                 Home
                             </button>
@@ -92,16 +92,16 @@ const Navbar = () => {
                                 Shop
                             </button>
                             {isShopMenuOpen && (
-                                <div className="absolute bg-white shadow-lg mt-2 p-4 flex gap-8">
+                                <div className="w-full bg-white shadow-xl  flex gap px-12 text-secondText ">
                                     {/* Kadın Kategorileri */}
-                                    <div>
-                                        <h3 className="font-bold text-lg">Kadın</h3>
+                                    <div className='p-4'>
+                                        <h3 className="font-bold text-h">👗Kadın</h3>
                                         <ul className="list-none">
                                             {womenCategories.map(category => (
                                                 <li key={category.id}>
                                                     <button
                                                         onClick={() => handleNavigation(`/shop?category=${category.id}`)}
-                                                        className="hover:text-blue-500"
+                                                        className="hover:text-blue-500 text-h5 leading-loose"
                                                     >
                                                         {category.title}
                                                     </button>
@@ -111,14 +111,14 @@ const Navbar = () => {
                                     </div>
 
                                     {/* Erkek Kategorileri */}
-                                    <div>
-                                        <h3 className="font-bold text-lg">Erkek</h3>
+                                    <div className='p-4'>
+                                        <h3 className="font-bold text-h3">👕Erkek</h3>
                                         <ul className="list-none">
                                             {menCategories.map(category => (
                                                 <li key={category.id}>
                                                     <button
                                                         onClick={() => handleNavigation(`/shop?category=${category.id}`)}
-                                                        className="hover:text-blue-500"
+                                                        className="hover:text-blue-500 text-h5 leading-loose"
                                                     >
                                                         {category.title}
                                                     </button>

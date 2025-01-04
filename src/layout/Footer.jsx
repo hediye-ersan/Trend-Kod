@@ -67,23 +67,23 @@ function Footer() {
             </div>
 
             {/* Orta Bölüm - Abone Ol */}
-            <div className="bg-custom-gradient  py-12 px-8 md:px-24">
-                <h5 className="text-xl font-bold mb-4">Get In Touch</h5>
-                <div className="flex items-center max-w-lg">
+            <div className="bg-custom-gradient py-12 px-6 sm:px-12 md:px-24">
+                <h5 className="text-xl sm:text-2xl font-bold text-center mb-4">Get In Touch</h5>
+                <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-center max-w-lg mx-auto">
                     <input
                         type="email"
                         placeholder="Your email"
-                        className="flex-1 py-2 px-4 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-700"
+                        className="w-full sm:w-auto py-2 px-4 mb-4 sm:mb-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-700 md:rounded-r-none"
                     />
                     <button
                         type="submit"
-                        className="px-6 py-2 bg-blueText text-white font-bold rounded-r hover:bg-primaryText transition-colors"
+                        className="w-full sm:w-auto px-6 py-2 bg-blueText text-white font-bold rounded-lg hover:bg-primaryText transition-colors md:rounded-l-none"
                         onClick={handleClick}
                     >
                         Subscribe
                     </button>
                 </div>
-                <p className="text-sm mt-2">Stay updated with our latest news and offers.</p>
+                <p className="text-sm text-center mt-2">Stay updated with our latest news and offers.</p>
             </div>
 
             {/* Alt Bölüm */}

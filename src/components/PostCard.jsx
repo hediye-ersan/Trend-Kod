@@ -41,10 +41,9 @@ const PostCard = ({ imageSrc, tag, title, description, date, comments }) => {
         <div className="mt-4">
           <a
             href="./"
-            className="text-blue-600 text-sm font-bold hover:underline flex items-center"
+            className="text-blueText text-sm font-bold hover:underline flex items-center"
           >
-            Learn More
-          </a>
+            Learn More</a>
         </div>
       </div>
     </div>
@@ -73,8 +72,8 @@ const PostCardList = () => {
 
   return (
     <div className="px-12 py-12 md:p-24">
-      <h6 className="text-blue-600 text-sm font-bold text-center mb-4">Practice Advice</h6>
-      <h2 className="text-3xl font-bold text-center">Featured Posts</h2>
+      <h6 className="text-blueText text-sm font-bold text-center mb-4">Practice Advice</h6>
+      <h2 className="text-h2 font-bold text-center">Featured Posts</h2>
       <div className="grid grid-cols-1 pt-16 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:flex ">
         {posts.map((post, index) => (
           <PostCard key={index} {...post} />
