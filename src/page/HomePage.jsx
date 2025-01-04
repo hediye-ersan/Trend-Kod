@@ -7,6 +7,7 @@ import Navbar from '../layout/Header';
 import PostCardList from '../components/PostCard';
 import ProductCardList from '../components/ProductCardList';
 import { fetchProducts } from '../actions/productsActions';
+import { TopBanner } from '../layout/Banner';
 
 function HomePage() {
     const dispatch = useDispatch();
@@ -21,10 +22,11 @@ function HomePage() {
 
     return (
         <div>
+            <TopBanner />
             <Navbar />
             <section className='bg-custom-gradient text-center  rounded-[20px] mx-2 px-12 pt-24 sm:pt-0 sm:flex md:mx-16'>
             <div className="p-16  sm:flex sm:flex-col sm:justify-center text-center md:text-left">
-                    <h5 className='text-[#2A7CC7] text-h5 font-bold sm:text-h6'>SUMMER 2020</h5>
+                    <h5 className='text-blue text-h5 font-bold sm:text-h6'>SUMMER 2020</h5>
                     <h2 className='text-primaryText md:text-h2 font-bold py-8  text-h4'>NEW
                         COLLECTION</h2>
                     <h4 className='text-h4 text-secondText'>We know how large objects
