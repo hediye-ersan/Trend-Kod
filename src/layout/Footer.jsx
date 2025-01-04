@@ -1,6 +1,4 @@
-import Button from '../components/Button'
-
-
+import Button from '../components/Button';
 
 function Footer() {
     const handleClick = () => {
@@ -8,77 +6,94 @@ function Footer() {
     };
 
     return (
-        <main className='text-left flex flex-col justify-center'>
-            <div className='px-12 py-16 bg-[#FAFAFA] gap-4 flex-col flex'>
-                <h3 className='text-h3 font-bold'>Bendage</h3>
-                <div className='flex gap-6'>
-                    <a href='#'><img src="/icons/facebook.png" alt="Facebook" /></a>
-                    <a href='#'><img src="/icons/insta.png" alt="İnstagram" /></a>
-                    <a href='#'><img src="/icons/twitter.png" alt="Twitter" /></a>
+        <footer className="bg-gray-50 text-gray-800">
+            {/* Üst Bölüm */}
+            <div className="px-8 md:px-24 py-16 flex flex-col md:flex-row justify-between items-start gap-8">
+                {/* Logo ve Sosyal Medya */}
+                <div className="flex flex-col gap-6">
+                    <h3 className="text-3xl font-extrabold text-gray-900">Bandage</h3>
+                    <div className="flex gap-4">
+                        <a href="#" className="hover:scale-110 transition-transform">
+                            <img src="/icons/facebook.png" alt="Facebook" className="w-6 h-6" />
+                        </a>
+                        <a href="#" className="hover:scale-110 transition-transform">
+                            <img src="/icons/insta.png" alt="Instagram" className="w-6 h-6" />
+                        </a>
+                        <a href="#" className="hover:scale-110 transition-transform">
+                            <img src="/icons/twitter.png" alt="Twitter" className="w-6 h-6" />
+                        </a>
+                    </div>
                 </div>
-                
+
+                {/* Menü Bölümleri */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 w-full">
+                    <div>
+                        <h5 className="text-lg font-semibold mb-4">Company Info</h5>
+                        <ul className="text-gray-600 space-y-2">
+                            <li className="hover:text-gray-900 cursor-pointer">About Us</li>
+                            <li className="hover:text-gray-900 cursor-pointer">Careers</li>
+                            <li className="hover:text-gray-900 cursor-pointer">We are hiring</li>
+                            <li className="hover:text-gray-900 cursor-pointer">Blog</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 className="text-lg font-semibold mb-4">Legal</h5>
+                        <ul className="text-gray-600 space-y-2">
+                            <li className="hover:text-gray-900 cursor-pointer">Privacy Policy</li>
+                            <li className="hover:text-gray-900 cursor-pointer">Terms of Service</li>
+                            <li className="hover:text-gray-900 cursor-pointer">Cookie Policy</li>
+                            <li className="hover:text-gray-900 cursor-pointer">Disclaimer</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 className="text-lg font-semibold mb-4">Features</h5>
+                        <ul className="text-gray-600 space-y-2">
+                            <li className="hover:text-gray-900 cursor-pointer">Business Marketing</li>
+                            <li className="hover:text-gray-900 cursor-pointer">User Analytics</li>
+                            <li className="hover:text-gray-900 cursor-pointer">Live Chat</li>
+                            <li className="hover:text-gray-900 cursor-pointer">Unlimited Support</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 className="text-lg font-semibold mb-4">Resources</h5>
+                        <ul className="text-gray-600 space-y-2">
+                            <li className="hover:text-gray-900 cursor-pointer">iOS & Android</li>
+                            <li className="hover:text-gray-900 cursor-pointer">Watch a Demo</li>
+                            <li className="hover:text-gray-900 cursor-pointer">Customers</li>
+                            <li className="hover:text-gray-900 cursor-pointer">API Documentation</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <article className='flex flex-col gap-8 leading-loose px-12 font-bold'>
-                <div>
-                    <h5 className='text-h5 '>Company Info</h5>
-                    <div className='text-h6 text-secondText '>
-                        <p>About Us</p>
-                        <p>Carrier</p>
-                        <p>We are hiring</p>
-                        <p>Blog</p>
-                    </div>
-                </div>
-                <div>
-                    <h5 className='text-h5 '>Legal</h5>
-                    <div className='text-h6 text-secondText'>
-                        <p>About Us</p>
-                        <p>Carrier</p>
-                        <p>We are hiring</p>
-                        <p>Blog</p>
-                    </div>
-                </div>
-                <div>
-                    <h5 className='text-h5'>Features</h5>
-                    <div className='text-h6 text-secondText'>
-                        <p>Business Marketing</p>
-                        <p>User Analytic</p>
-                        <p>Live Chat</p>
-                        <p>Unlimited Support</p>
-                    </div>
-                </div>
-                <div>
-                    <h5 className='text-h5 font-bold'>Resources</h5>
-                    <div className='text-h6 text-secondText'>
-                        <p>IOS & Android</p>
-                        <p>Watch a Demo</p>
-                        <p>Customers</p>
-                        <p>API</p>
-                    </div>
-                </div>
-            </article>
-            <section className='px-12 pt-12 pb-24'>
-                <h5 className='text-h5 font-bold'>Get In Touch</h5>
-                <div className="flex items-center justify-start">
+
+            {/* Orta Bölüm - Abone Ol */}
+            <div className="bg-custom-gradient  py-12 px-8 md:px-24">
+                <h5 className="text-xl font-bold mb-4">Get In Touch</h5>
+                <div className="flex items-center max-w-lg">
                     <input
                         type="email"
                         placeholder="Your email"
-                        className=" py-1.5 focus:outline-none focus:ring-2 focus:ring-blueText text-secondText pl-4"
+                        className="flex-1 py-2 px-4 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-700"
                     />
                     <button
                         type="submit"
-                        className="px-6 py-2 bg-blueText text-white rounded-r hover:bg-blue-200"
+                        className="px-6 py-2 bg-blueText text-white font-bold rounded-r hover:bg-primaryText transition-colors"
+                        onClick={handleClick}
                     >
                         Subscribe
                     </button>
                 </div>
-                <p className='text-xs text-secondText font-bold'>Lore imp sum dolor Amit</p>
-            </section>
-            <div>
-                <h6 className='text-h6 text-secondText bg-[#FAFAFA] h6 px-28 py-10 font-bold text-center'>Made With Love By
-                    Finland All Right Reserved </h6>
+                <p className="text-sm mt-2">Stay updated with our latest news and offers.</p>
             </div>
 
-        </main>
-    )
+            {/* Alt Bölüm */}
+            <div className=" py-6">
+                <p className="text-center text-sm text-gray-600">
+                    Made with ❤️ by Finland. All rights reserved.
+                </p>
+            </div>
+        </footer>
+    );
 }
+
 export default Footer;

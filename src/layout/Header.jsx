@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from '../actions/userAction';
 import { fetchCategories } from '../actions/categoriesActions'; // Kategorileri çekmek için action
 import ShoppingCartDropdown from './ShoppingCardDropdown';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(true); // Menü durumu
@@ -38,20 +39,20 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="bg-transparent px-8 flex items-center justify-between py-8">
+            <nav className="bg-transparent px-8 flex items-center justify-between py-8 bg-custom-gradient mb-16">
                 {/* Sol Taraf */}
-                <div className="text-h3 font-bold">Bandage</div>
+                <div className="md:text-h3 text-h6 font-bold">Bandage</div>
                 <div className="flex items-center justify-center ">
                     {user ? (
-                        <p className="text-h3 font-bold  transition-all duration-300 hover:text-gray-200">
-                            Welcome, <span className="font-extrabold text-blueText">{user.name}</span>! 🎉
+                        <p className="md:text-h3 text-h6  font-bold  transition-all duration-300">
+                            Welcome, <span className="font-extrabold text-blueText hover:text-primaryText">{user.name}</span>! 🎉
                         </p>
                     ) : (
-                        <p className="text-2xl font-bold text-white transition-all duration-300 hover:text-gray-200">
+                        <p className="text-2xl font-bold  transition-all duration-300 ">
                             Please{" "}
-                            <span className="font-extrabold text-yellow-300 underline cursor-pointer hover:text-yellow-400">
+                            <Link to={"/login"} className="font-extrabold text-blueText underline cursor-pointer hover:text-primaryText">
                                 log in
-                            </span>{" "}
+                            </Link>{" "}
                             to continue. 🚀
                         </p>
                     )}
@@ -74,7 +75,7 @@ const Navbar = () => {
             {/* Menü */}
             {isMenuOpen && (
                 <div className="bg-gray-50 w-full py-8 flex flex-col font-bold ">
-                    <ul className='flex flex-col flex-wrap content-center gap-8 text-3xl text-center'>
+                    <ul className='flex flex-col flex-wrap content-center gap-8 text-h3 text-center '>
                         <li>
                             <button
                                 onClick={() => handleNavigation('/')}
@@ -86,7 +87,7 @@ const Navbar = () => {
                         <li>
                             <button
                                 onClick={() => setIsShopMenuOpen(!isShopMenuOpen)}
-                                className="text-secondText relative"
+                                className="text-secondText hover:text-primaryText relative"
                             >
                                 Shop
                             </button>
@@ -131,7 +132,7 @@ const Navbar = () => {
                         <li>
                             <button
                                 onClick={() => handleNavigation('/products')}
-                                className="text-secondText"
+                                className="text-secondText hover:text-primaryText"
                             >
                                 Product
                             </button>
@@ -139,7 +140,7 @@ const Navbar = () => {
                         <li>
                             <button
                                 onClick={() => handleNavigation('/orders')}
-                                className="text-secondText"
+                                className="text-secondText hover:text-primaryText"
                             >
                                 Orders
                             </button>
@@ -147,7 +148,7 @@ const Navbar = () => {
                         <li>
                             <button
                                 onClick={() => handleNavigation('/contact')}
-                                className="text-secondText"
+                                className="text-secondText hover:text-primaryText"
                             >
                                 Contact
                             </button>
@@ -155,7 +156,7 @@ const Navbar = () => {
                         <li>
                             <button
                                 onClick={() => handleNavigation('/team')}
-                                className="text-secondText"
+                                className="text-secondText hover:text-primaryText"
                             >
                                 Teams
                             </button>
@@ -163,7 +164,7 @@ const Navbar = () => {
                     </ul>
 
                     {/* Kullanıcı İkonu ve Logout */}
-                    <div className='text-3xl text-blueText flex justify-center py-4'>
+                    <div className='text-h3 text-blueText flex justify-center py-4 hover:text-primaryText'>
                         <img src='/icons/user.svg' alt='Kullanıcı' className='fill-current text-blueText' />
                         {user ? (
                             <button onClick={handleLogout}>Logout</button>

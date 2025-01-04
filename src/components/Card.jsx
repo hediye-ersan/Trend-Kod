@@ -2,7 +2,7 @@ import React from 'react';
 
 const Card = ({ imageSrc, title, buttonText }) => {
   return (
-    <div className="relative overflow-hidden h-full">
+    <div className="relative overflow-hidden w-full h-full">
       <img
         src={imageSrc}
         alt={title}
@@ -38,9 +38,9 @@ const CardList = () => {
   ];
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:grid-rows-2 h-screen p-8">
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-6 p-8 md:px-24">
       {/* Sol geniş kart */}
-      <div className="md:row-span-2 md:col-span-2">
+      <div className="md:row-span-2 md:col-span-2 aspect-w-16 aspect-h-9">
         <Card
           imageSrc={cards[0].imageSrc}
           title={cards[0].title}
@@ -49,14 +49,14 @@ const CardList = () => {
       </div>
 
       {/* Sağdaki küçük kartlar */}
-      <div className="md:col-span-1">
+      <div className="aspect-w-16 aspect-h-9">
         <Card
           imageSrc={cards[1].imageSrc}
           title={cards[1].title}
           buttonText={cards[1].buttonText}
         />
       </div>
-      <div className="md:col-span-1">
+      <div className="aspect-w-16 aspect-h-9">
         <Card
           imageSrc={cards[2].imageSrc}
           title={cards[2].title}
