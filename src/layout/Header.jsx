@@ -39,13 +39,13 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="bg-transparent px-2 md:px-8 flex items-center justify-between py-8 bg-custom-gradient mb-16">
+            <nav className="bg-transparent w-full px-4 md:px-8 flex items-center justify-between py-8 bg-custom-gradient mb-16">
                 {/* Sol Taraf */}
                 <div className="md:text-h3 text-h6 font-bold">Bandage</div>
                 <div className="flex items-center justify-center ">
                     {user ? (
-                        <p className="md:text-h3 text-h6  font-bold  transition-all duration-300">
-                            Welcome, <span className="font-extrabold text-blueText hover:text-primaryText">{user.name}</span>! 🎉
+                        <p className="md:text-h3 sm:text-h6 font-bold  transition-all duration-300">
+                            Welcome, <span className="font-extrabold text-blueText hover:text-primaryText ">{user.name}</span>! 🎉
                         </p>
                     ) : (
                         <p className="text-2xl font-bold  transition-all duration-300 ">

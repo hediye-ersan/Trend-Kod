@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 const ProductCard = ({ id, name, description, price, discountedPrice, image }) => {
   return (
-    <section className="p-4 pt-0">
-      <div className="flex flex-col flex-wrap bg-white shadow-lg rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 ease-in-out">
+    <section className="p-4 pt-0 bg-gray-50">
+      <div className="flex flex-col flex-wrap  shadow-lg rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 ease-in-out">
         <Link to={`/products/${id}`} className="group">
           {/* Ürün Görseli */}
           <div className="relative">

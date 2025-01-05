@@ -17,7 +17,7 @@ function ShopPage() {
   const [sort, setSort] = useState('');
   const [filter, setFilter] = useState('');
   const [page, setPage] = useState(1);
-  const [limit] = useState(10);
+  const [limit] = useState(12);
 
   useEffect(() => {
     const query = new URLSearchParams();
