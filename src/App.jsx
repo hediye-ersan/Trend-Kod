@@ -13,6 +13,7 @@ import Teams from './layout/Teams'
 import React from 'react';
 import { Provider } from 'react-redux';
 import store from './Store/store';
+import ProductListPage from './page/ProductListPage'
 
 function App() {
 
@@ -23,6 +24,9 @@ function App() {
         <Switch>
           <Route path="/products/:productId">
             <ProductDetails />
+          </Route>
+          <Route path="/products">
+            <ProductListPage />
           </Route>
           <Route path="/contact">
             <Contact />
