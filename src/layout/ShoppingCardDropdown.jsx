@@ -33,9 +33,9 @@ const ShoppingCartDropdown = () => {
       <div className="p-4 border-t">
         <p className="text-lg font-semibold">Toplam: {totalPrice.toFixed(2)} TL</p>
       </div>
-      <div className="flex justify-between items-center p-4">
-        <Link to="/shopping-cart" className="bg-blue-500 text-white px-4 py-2 rounded-lg">Sepete Git</Link>
-        <button className="bg-orange-500 text-white px-4 py-2 rounded-lg">Siparişi Tamamla</button>
+      <div className="flex justify-center items-center p-4">
+        <Link to="/shopping-cart" className="bg-blueText hover:bg-custom-gradient text-white px-4 py-2 rounded-lg">Sepete Git</Link>
+       
       </div>
     </div>
   );
