@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../actions/productsActions';
 import ProductDetailCard from '../components/ProductDetailCard';
 import Pagination from "../layout/Pagination";
+import Navbar from '../layout/Header';
 
 
 const ProductListPage = () => {
@@ -31,6 +32,8 @@ const ProductListPage = () => {
     }
 
     return (
+        <>
+        <Navbar />
         <div className=" mx-auto p-4 space-y-6">
             <img src="../images/Category4.png" alt="Product Image" className="w-full h-auto object-cover rounded-lg"   />
             <div className="text-center px-6 sm:px-24 py-8">
@@ -56,6 +59,7 @@ const ProductListPage = () => {
             ))}
             <Pagination total={total} limit={limit} page={page} setPage={setPage} />
         </div>
+        </>
     );
 };
 
