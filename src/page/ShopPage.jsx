@@ -9,6 +9,7 @@ import Navbar from "../layout/Header";
 import { useParams } from 'react-router-dom';
 import FilterInterface from '../layout/FilterInterface';
 import Pagination from '../layout/Pagination';
+import { TopBanner } from '../layout/Banner';
 
 function ShopPage() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function ShopPage() {
 
   return (
     <>
+      <TopBanner />
       <Navbar />
       <FashionCategories />
       <FilterInterface setSort={setSort} setFilter={setFilter} />
