@@ -33,7 +33,8 @@ const ProductListPage = () => {
 
     return (
         <>
-        <Navbar />
+        <Navbar
+         />
         <div className=" mx-auto p-4 space-y-6">
             <img src="../images/Category4.png" alt="Product Image" className="w-full h-auto object-cover rounded-lg"   />
             <div className="text-center px-6 sm:px-24 py-8">
