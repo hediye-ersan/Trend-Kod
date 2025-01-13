@@ -155,7 +155,7 @@ const Navbar = () => {
                         </li>
                         <li>
                             <button
-                                onClick={() => handleNavigation('/team')}
+                                onClick={() => handleNavigation('/teams')}
                                 className="text-secondText hover:text-primaryText"
                             >
                                 Teams

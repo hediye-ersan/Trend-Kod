@@ -1,4 +1,4 @@
-export default function TeamPage() {
+export default function Team() {
     const teamMembers = [
       {
         name: "Erhan Fırat",
@@ -22,19 +22,19 @@ export default function TeamPage() {
     ];
   
     return (
-      <div className="flex flex-col items-center py-12 bg-gray-50">
+      <div className="flex flex-col items-center py-12 ">
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-gray-800">Meet Our Team</h1>
+          <h2 className="text-h2 font-bold text-gray-800">Meet Our Team</h2>
           <p className="text-gray-600 mt-4">
             Problems trying to resolve the conflict between the two major realms
             of Classical physics: Newtonian mechanics
           </p>
         </div>
-        <div className="flex flex-col space-y-12">
+        <div className="flex flex-col md:flex-row gap-12 ">
           {teamMembers.map((member, index) => (
             <div
               key={index}
-              className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg shadow-md"
+              className="flex flex-col items-center space-y-4  p-6 rounded-lg shadow-md border-blueText border-2 bg-gray-50 "
             >
               <div
                 className="w-32 h-32 rounded-full overflow-hidden"
@@ -46,9 +46,9 @@ export default function TeamPage() {
                   className="object-cover w-full h-full"
                 />
               </div>
-              <p className="text-blue-600 font-semibold">{member.role}</p>
-              <h2 className="text-lg font-bold text-gray-800">{member.name}</h2>
-              <p className="text-gray-600 text-center">{member.description}</p>
+              <p className="text-blueText font-semibold">{member.role}</p>
+              <h2 className="text-h5 font-bold ">{member.name}</h2>
+              <p className="text-secondText text-center">{member.description}</p>
             </div>
           ))}
         </div>

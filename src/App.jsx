@@ -14,6 +14,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store from './Store/store';
 import ProductListPage from './page/ProductListPage'
+import TeamPage from './page/TeamPage'
 
 function App() {
 
@@ -34,8 +35,8 @@ function App() {
           <Route path="/orders">
             <OrderPage />
           </Route>
-          <Route path="/team">
-            <Teams />
+          <Route path="/teams">
+            <TeamPage />
           </Route>
           <Route path="/shop">
             <ShopPage />
