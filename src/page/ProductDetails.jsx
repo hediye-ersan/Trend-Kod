@@ -8,6 +8,7 @@ import IconList from '../components/IconCard';
 import { fetchProductDetails } from '../actions/productsActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { TopBanner } from '../layout/Banner';
 
 function ProductDetails() {
 
@@ -28,6 +29,7 @@ function ProductDetails() {
 
   return (
     <div>
+      <TopBanner />
       <Navbar />
       <div className="text-center mb-10">
         <h3 className="text-h3 font-bold mb-4">Shop</h3>

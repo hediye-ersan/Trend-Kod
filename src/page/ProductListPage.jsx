@@ -4,6 +4,7 @@ import { fetchProducts } from '../actions/productsActions';
 import ProductDetailCard from '../components/ProductDetailCard';
 import Pagination from "../layout/Pagination";
 import Navbar from '../layout/Header';
+import { TopBanner } from '../layout/Banner';
 
 
 const ProductListPage = () => {
@@ -33,10 +34,11 @@ const ProductListPage = () => {
 
     return (
         <>
+        <TopBanner/>
         <Navbar
          />
-        <div className=" mx-auto p-4 space-y-6">
-            <img src="../images/Category4.png" alt="Product Image" className="w-full h-auto object-cover rounded-lg"   />
+        <div className=" mx-auto p-2 space-y-6">
+            <img src="../images/productList.png" alt="Product Image" className="w-full h-auto object-cover rounded-3xl "   />
             <div className="text-center px-6 sm:px-24 py-8">
                 <h4 className="text-base sm:text-lg md:text-xl text-secondText">Featured Products</h4>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">Featured Products</h2>
