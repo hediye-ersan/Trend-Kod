@@ -6,12 +6,12 @@ function Footer() {
     };
 
     return (
-        <footer className="bg-gray-50 text-gray-800">
+        <footer className="bg-gray-50 ">
             {/* Üst Bölüm */}
             <div className="px-8 md:px-24 py-16 flex flex-col md:flex-row justify-between items-start gap-8">
                 {/* Logo ve Sosyal Medya */}
                 <div className="flex flex-col gap-6">
-                    <h3 className="text-3xl font-extrabold text-gray-900">Bandage</h3>
+                    <h3 className="text-3xl font-extrabold ">Bandage</h3>
                     <div className="flex gap-4">
                         <a href="#" className="hover:scale-110 transition-transform">
                             <img src="/icons/facebook.png" alt="Facebook" className="w-6 h-6" />
