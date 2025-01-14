@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { loginUser } from "../actions/userAction"; 
 import { LOGIN_SUCCESS } from "../actions/userActionTypes";
 import { useHistory } from "react-router-dom";
@@ -108,7 +108,7 @@ const LoginForm = () => {
         <button
           type="submit"
           disabled={loading}
-          className={`w-full py-2 px-4 bg-blueText text-white rounded-md hover:bg-blue-500 font-bold ${
+          className={`w-full py-2 px-4 bg-blueText text-white rounded-md hover:bg-custom-gradient font-bold ${
             loading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
@@ -120,7 +120,7 @@ const LoginForm = () => {
             <button
               type="button"
               onClick={handleSignupClick}
-              className="text-blue-500 hover:text-blue-700"
+              className="text-blueText hover:text-custom-gradient"
             >
               Sign up
             </button>
