@@ -34,7 +34,7 @@ export default function Team() {
           {teamMembers.map((member, index) => (
             <div
               key={index}
-              className="flex flex-col items-center space-y-4  p-6 rounded-lg shadow-md border-blueText border-2 bg-gray-50 "
+              className="flex flex-col items-center space-y-4  p-6 rounded-lg shadow-lg  border-2 bg-gray-50 "
             >
               <div
                 className="w-32 h-32 rounded-full overflow-hidden"
