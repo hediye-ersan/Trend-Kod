@@ -33,33 +33,33 @@ const OrderPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8 text-gray-800">Geçmiş Siparişler</h1>
+      <h1 className="text-h2 font-bold mb-8 text-blueText">Geçmiş Siparişler</h1>
       {orders.length === 0 ? (
-        <p className="text-gray-600">Henüz siparişiniz bulunmamaktadır.</p>
+        <p>Henüz siparişiniz bulunmamaktadır.</p>
       ) : (
         <div className="space-y-6">
           {orders.map((order) => (
             <div
               key={order.id}
-              className="bg-white shadow-md rounded-lg p-6 border border-gray-200"
+              className=" shadow-md rounded-lg p-6 border border-gray-200"
             >
               {/* Sipariş Özeti */}
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-secondText text-sm">
                     Sipariş Tarihi:{" "}
                     {new Date(order.order_date).toLocaleDateString()} -{" "}
                     {new Date(order.order_date).toLocaleTimeString()}
                   </p>
-                  <p className="text-gray-600 text-sm">Sipariş Özeti: {`${order.products.length} Ürün`}</p>
-                  <p className="text-gray-600 text-sm">Alıcı: {order.customer_name}</p>
-                  <p className="text-gray-800 text-lg font-bold">
+                  <p className="text-secondText text-sm">Sipariş Özeti: {`${order.products.length} Ürün`}</p>
+                  <p className="text-secondText text-sm">Alıcı: {order.customer_name}</p>
+                  <p className=" text-lg font-bold">
                     Tutar: {order.price.toFixed(2)} TL
                   </p>
                 </div>
                 <button
                   onClick={() => toggleOrderDetails(order.id)}
-                  className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 transition "
+                  className="bg-blueText text-white px-4 py-2 rounded-md hover:bg-custom-gradient transition "
                 >
                   {expandedOrder === order.id ? "Kapat" : "Sipariş Detayı"}
                 </button>
@@ -70,7 +70,7 @@ const OrderPage = () => {
                 <div className="mt-4 border-t border-gray-200 pt-4">
                   <p
                     className={`text-sm font-medium ${
-                      order.isDelivered ? "text-green-600" : "text-yellow-600"
+                      order.isDelivered ? "text-green-600" : "text-blueText"
                     }`}
                   >
                     {order.isDelivered ? "Teslim Edildi" : "Teslimat Bekleniyor"}
@@ -94,9 +94,9 @@ const OrderPage = () => {
                           className="w-16 h-16 object-cover rounded-md"
                         />
                         <div>
-                          <p className="text-gray-800 font-medium">{product.name}</p>
-                          <p className="text-gray-600 text-sm">Adet: {product.count}</p>
-                          <p className="text-gray-600 text-sm">
+                          <p className=" font-medium">{product.name}</p>
+                          <p className="text-secondText text-sm">Adet: {product.count}</p>
+                          <p className="text-secondText text-sm">
                             Fiyat: {product.price.toFixed(2)} TL
                           </p>
                         </div>

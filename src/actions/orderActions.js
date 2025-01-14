@@ -24,6 +24,7 @@ export const fetchOrders = (userEmail) => async (dispatch) => {
     dispatch({ type: FETCH_ORDERS_START });
     try {
         const response = await axiosInstance.get(`/order?email=${userEmail}`);
+        localStorage.setItem('orders', JSON.stringify(response.data));
         dispatch({ type: FETCH_ORDERS_SUCCESS, payload: response.data });
     } catch (error) {
         dispatch({ type: FETCH_ORDERS_FAIL, payload: error.message });

@@ -8,7 +8,7 @@ import {
 } from '../actions/orderActions';
 
 const initialState = {
-    orders: [],
+    orders: JSON.parse(localStorage.getItem('orders')) || [],
     isLoading: false,
     error: null
 };
