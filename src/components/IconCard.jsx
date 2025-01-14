@@ -17,32 +17,32 @@ const IconCard = ({ imageSrc, link, altText }) => {
 const IconList = () => {
   const icons = [
     {
-      imageSrc: './images/logo1.svg',
+      imageSrc: '/images/logo1.svg',
       link: '#',
       altText: 'Icon 1',
     },
     {
-      imageSrc: './images/logo2.svg',
+      imageSrc: '/images/logo2.svg',
       link: '#',
       altText: 'Icon 2',
     },
     {
-      imageSrc: './images/logo3.svg',
+      imageSrc: '/images/logo3.svg',
       link: '#',
       altText: 'Icon 3',
     },
     {
-      imageSrc: './images/logo4.svg',
+      imageSrc: '/images/logo4.svg',
       link: '#',
       altText: 'Icon 4',
     },
     {
-      imageSrc: './images/logo5.svg',
+      imageSrc: '/images/logo5.svg',
       link: '#',
       altText: 'Icon 5',
     },
     {
-      imageSrc: './images/logo6.svg',
+      imageSrc: '/images/logo6.svg',
       link: '#',
       altText: 'Icon 6',
     },
