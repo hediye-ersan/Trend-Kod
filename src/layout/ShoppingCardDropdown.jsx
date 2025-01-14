@@ -17,9 +17,9 @@ const ShoppingCartDropdown = () => {
           <li key={item.id} className="flex items-center gap-4 p-4">
             <img src={item.images[0].url} alt={item.name} className="w-16 h-16 object-cover rounded-md" />
             <div className="flex-1">
-              <h4 className="text-sm font-semibold">{item.name}</h4>
-              <p className="text-gray-600">Adet: {item.quantity}</p>
-              <p className="text-gray-800 font-bold">{item.price} TL</p>
+              <h4 className="text-h4 font-semibold">{item.name}</h4>
+              <p className="text-secondText">Adet: {item.quantity}</p>
+              <p className=" font-bold">{item.price} TL</p>
             </div>
             <button
               onClick={() => dispatch(removeFromCart(item.id))}
