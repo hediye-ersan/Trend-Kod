@@ -32,16 +32,16 @@ const OrderPage = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-h2 font-bold mb-8 text-blueText">Geçmiş Siparişler</h1>
+    <div className="container mx-auto px-4 py-8 bg-custom-gradient">
+      <h1 className="text-h2 font-bold mb-8  ">Geçmiş Siparişler</h1>
       {orders.length === 0 ? (
         <p>Henüz siparişiniz bulunmamaktadır.</p>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-6 ">
           {orders.map((order) => (
             <div
               key={order.id}
-              className=" shadow-md rounded-lg p-6 border border-gray-200"
+              className=" shadow-md rounded-lg p-6 border border-gray-200 bg-gray-50"
             >
               {/* Sipariş Özeti */}
               <div className="flex justify-between items-center">
