@@ -75,7 +75,7 @@ const LoginForm = () => {
         <div className="mb-4">
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Email(customer@commerce.com)"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-500"
@@ -85,7 +85,7 @@ const LoginForm = () => {
         <div className="mb-6">
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Password(123456)"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-500"
