@@ -1,8 +1,48 @@
-# React + Vite
+# 🛒 Trend Kod
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Trend Kod**, React ve Redux kullanılarak geliştirilmiş tam yığın bir e-ticaret uygulamasıdır. Modern kullanıcı arayüzü ve güçlü durum yönetimi sayesinde kullanıcı dostu ve dinamik bir alışveriş deneyimi sunar.
 
-Currently, two official plugins are available:
+🔗 [Canlı Demo](https://trend-kod.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
+
+## 🚀 Özellikler
+
+- 🧠 **React + Redux** ile güçlü ve sürdürülebilir durum yönetimi
+- 🎯 **Ürün filtreleme** ve **sayfalama** ile büyük veri setlerinin verimli kullanımı
+- 🔄 **API entegrasyonu**: GET, POST, PUT, DELETE istekleriyle dinamik veri yönetimi
+- 🧪 **Postman** ile test edilmiş uç noktalar
+- 👤 **Kullanıcı yönetimi** ve temel güvenlik önlemleri
+- 🎨 **Tailwind CSS** ile modern, responsive ve yeniden kullanılabilir arayüz bileşenleri
+
+---
+
+## 🧰 Kullanılan Teknolojiler
+
+- React
+- Redux
+- JavaScript (ES6+)
+- Tailwind CSS
+- RESTful API
+- Postman (API testleri için)
+- Vercel (Deploy)
+
+---
+
+## ⚙️ Kurulum ve Çalıştırma
+
+Projeyi kendi bilgisayarınızda çalıştırmak için şu adımları izleyebilirsiniz:
+
+```bash
+# 1. Repoyu klonlayın
+git clone https://github.com/hediye-ersan/Trend-Kod.git
+
+# 2. Proje klasörüne girin
+cd Trend-Kod
+
+# 3. Bağımlılıkları yükleyin
+npm install
+
+# 4. Uygulamayı başlatın
+npm run dev
+
