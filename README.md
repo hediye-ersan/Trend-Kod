@@ -1,6 +1,6 @@
 # 🛒 Trend Kod
 
-**Trend Kod**, React ve Redux kullanılarak geliştirilmiş tam yığın bir e-ticaret uygulamasıdır. Modern kullanıcı arayüzü ve güçlü durum yönetimi sayesinde kullanıcı dostu ve dinamik bir alışveriş deneyimi sunar.
+**Trend Kod**, React ve Redux kullanılarak geliştirilmiş bir e-ticaret uygulamasıdır. Modern kullanıcı arayüzü ve güçlü durum yönetimi sayesinde kullanıcı dostu ve dinamik bir alışveriş deneyimi sunar.
 
 🔗 [Canlı Demo](https://trend-kod.vercel.app/)
 
